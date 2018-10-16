@@ -14,17 +14,21 @@ public class Submit : MonoBehaviour {
 		int passWordCheck = 1;
 		param[0] = InputValue("usernameInput");
 		Debug.Log(param[0]);
+
+		param[1] = InputValue("userEmailInput");
+		Debug.Log(param[1]);
+
+		param[2] = InputValue("userFNameInput");
+		Debug.Log(param[2]);
+
+		param[3] = InputValue("userLNameInput");
+		Debug.Log(param[3]);
+
 		passOne = InputValue("userPasswordInputOne");
 		passTwo = InputValue("userPasswordInputTwo");
-		param[2] = InputValue("userEmailInput");
-		Debug.Log(param[2]);
-		param[3] = InputValue("userFNameInput");
-		Debug.Log(param[3]);
-		param[4] = InputValue("userLNameInput");
-		Debug.Log(param[4]);
 		if(string.Equals(passOne, passTwo)){
-			param[1] = passOne;
-			Debug.Log(param[1]);
+			param[4] = passOne;
+			Debug.Log(param[4]);
 		}else{
 			passWordCheck = 0;
 		}
@@ -40,6 +44,9 @@ public class Submit : MonoBehaviour {
 				if(responses.Length > 0){
 					for(int i = 0; i < 5; i++){
 						Debug.Log(responses[i]);
+						if(responses[i].Equals("User added successfully")){
+							Debug.Log("Catching that user was added and able to create an event here");
+						}
 					}
 				}
 			}
