@@ -43,31 +43,51 @@ namespace ConnectionManager{
             string[] response = new string[7];
 			Console.WriteLine("Socket connected to {0}", sender.RemoteEndPoint.ToString());
 			// Data buffer for incoming data.  
-            byte[] msgFunctoin = Encoding.ASCII.GetBytes("Login");
-            response[0] = Messenger(msgFunctoin);
-			byte[] msgEmail = Encoding.ASCII.GetBytes(param[0]);
-			response[1] = Messenger(msgEmail);
-			byte[] msgUsername = Encoding.ASCII.GetBytes(param[1]);
-			response[2] = Messenger(msgUsername);
-			byte[] msgPassword = Encoding.ASCII.GetBytes(param[2]);
-			response[3] = Messenger(msgPassword);
-			byte[] msgFName = Encoding.ASCII.GetBytes(param[3]);
-			response[4] = Messenger(msgFName);
-			byte[] msgLName = Encoding.ASCII.GetBytes(param[4]);
-			response[5] = Messenger(msgLName);
+            byte[] msgFunction = Encoding.ASCII.GetBytes("CreateAccount");
+            response[0] = Messenger(msgFunction);
+
+			byte[] msgUsername = Encoding.ASCII.GetBytes(param[0]);
+			response[1] = Messenger(msgUsername);
+
+			byte[] msgEmail = Encoding.ASCII.GetBytes(param[1]);
+			response[2] = Messenger(msgEmail);
+
+			byte[] msgFName = Encoding.ASCII.GetBytes(param[2]);
+			response[3] = Messenger(msgFName);
+
+			byte[] msgLName = Encoding.ASCII.GetBytes(param[3]);
+			response[4] = Messenger(msgLName);
+
+			byte[] msgPassword = Encoding.ASCII.GetBytes(param[4]);
+			response[5] = Messenger(msgPassword);
+			
+			EndMessages();
 			//byte[] msgAge = Encoding.ASCII.GetBytes(param[5]);
-			//response[6] = Messenger(msgAge);
+			response[6] = receive();
             return response;
 		}
 
+		private void EndMessages(){
+			Messenger(Encoding.ASCII.GetBytes("end"));
+		}
+
+		private int send(byte[] msg){
+				int bytesSent = sender.Send(msg);
+				return bytesSent;
+		}
+
+		private string receive(){
+			byte[] bytes = new byte[1024];
+			int bytesRec = sender.Receive(bytes);
+			Console.WriteLine("Response = {0}", 
+                        Encoding.ASCII.GetString(bytes, 0, bytes.Length));
+            return (Encoding.ASCII.GetString(bytes, 0, bytes.Length));
+		}
 		private string Messenger(byte[] msg){
             try{
-			    byte[] bytes = new byte[1024];
-			    int bytesSent = sender.Send(msg);
-			    int bytesRec = sender.Receive(bytes); 
-                Console.WriteLine("Response = {0}", 
-                        Encoding.ASCII.GetString(bytes, 0, bytesRec));
-                return (Encoding.ASCII.GetString(bytes, 0, bytesRec));
+			    int bytesSent = send(msg);
+			    string response = receive(); 
+                return response;
             }catch (ArgumentNullException ane) {
                 Console.WriteLine("ArgumentNullException : {0}", ane.ToString());
                 return ane.ToString();
