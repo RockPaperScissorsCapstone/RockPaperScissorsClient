@@ -3,9 +3,13 @@ using System.Collections.Generic;
 using UnityEngine.Events;
 using UnityEngine;
 using UnityEngine.UI;
+using System.IO;
 using ConnectionManager;
 
 public class Submit : MonoBehaviour {
+
+    userInfo myinfo;
+
 	public void sumbitIn(){
 		string[] responses = new string[6];
 		string[] param = new string[6];
@@ -28,6 +32,8 @@ public class Submit : MonoBehaviour {
 		passTwo = InputValue("userPasswordInputTwo");
 		if(string.Equals(passOne, passTwo)){
 			param[4] = passOne;
+            myinfo = new userInfo(param[2], param[3], param[1], param[0]);
+            SaveInfo(myinfo);
 			Debug.Log(param[4]);
 		}else{
 			passWordCheck = 0;
@@ -78,4 +84,13 @@ public class Submit : MonoBehaviour {
 
 		}
 	}
+
+    public void SaveInfo(userInfo playerinfo)
+    {
+        string json = JsonUtility.ToJson(playerinfo);
+        StreamWriter sw = File.CreateText(Application.dataPath + "/playerInfo.json");
+        sw.Close();
+        File.WriteAllText(Application.dataPath + "/playerInfo.json", json);
+
+    }
 }
