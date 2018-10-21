@@ -150,6 +150,7 @@ RectTransform:
   - {fileID: 1627772398}
   - {fileID: 243631700}
   - {fileID: 1864003927}
+  - {fileID: 1893031529}
   m_Father: {fileID: 359482169}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -280,7 +281,7 @@ GameObject:
   - component: {fileID: 149947870}
   m_Layer: 5
   m_Name: First_Name_Input
-  m_TagString: Untagged
+  m_TagString: userFNameInput
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -415,7 +416,7 @@ GameObject:
   - component: {fileID: 173767226}
   m_Layer: 5
   m_Name: Username_Input
-  m_TagString: Untagged
+  m_TagString: usernameInput
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -687,7 +688,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 243631702}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1359028638}
+        m_MethodName: sumbitIn
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!114 &243631702
@@ -975,7 +987,7 @@ GameObject:
   - component: {fileID: 424358795}
   m_Layer: 5
   m_Name: Password_Input
-  m_TagString: Untagged
+  m_TagString: userPasswordInputOne
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1632,6 +1644,7 @@ GameObject:
   - component: {fileID: 1359028637}
   - component: {fileID: 1359028636}
   - component: {fileID: 1359028635}
+  - component: {fileID: 1359028638}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -1699,6 +1712,17 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1359028638
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1359028634}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 60e5470d36be6ad498e90570c42c7439, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1380680576
 GameObject:
   m_ObjectHideFlags: 0
@@ -1862,7 +1886,7 @@ GameObject:
   - component: {fileID: 1443473425}
   m_Layer: 5
   m_Name: Email_Input
-  m_TagString: Untagged
+  m_TagString: userEmailInput
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1997,7 +2021,7 @@ GameObject:
   - component: {fileID: 1523198861}
   m_Layer: 5
   m_Name: Last_Name_Input
-  m_TagString: Untagged
+  m_TagString: userLNameInput
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2508,7 +2532,7 @@ GameObject:
   - component: {fileID: 1815431683}
   m_Layer: 5
   m_Name: Confirm_Password_Input
-  m_TagString: Untagged
+  m_TagString: userPasswordInputTwo
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2803,6 +2827,81 @@ CanvasRenderer:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1864003926}
+  m_CullTransparentMesh: 0
+--- !u!1 &1893031528
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1893031529}
+  - component: {fileID: 1893031531}
+  - component: {fileID: 1893031530}
+  m_Layer: 5
+  m_Name: Text
+  m_TagString: errorPasswordMisMatch
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1893031529
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1893031528}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 21313580}
+  m_RootOrder: 10
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: -199.98, y: 78.4}
+  m_SizeDelta: {x: 399.95, y: 31.3}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1893031530
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1893031528}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 708705254, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
+  m_RaycastTarget: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
+      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+  m_FontData:
+    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+    m_FontSize: 30
+    m_FontStyle: 0
+    m_BestFit: 0
+    m_MinSize: 3
+    m_MaxSize: 40
+    m_Alignment: 0
+    m_AlignByGeometry: 0
+    m_RichText: 1
+    m_HorizontalOverflow: 0
+    m_VerticalOverflow: 0
+    m_LineSpacing: 1
+  m_Text: '* Passwords did not match'
+--- !u!222 &1893031531
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1893031528}
   m_CullTransparentMesh: 0
 --- !u!1 &2116006433
 GameObject:
