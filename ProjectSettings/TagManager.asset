@@ -11,6 +11,7 @@ TagManager:
   - userFNameInput
   - userLNameInput
   - errorPasswordMisMatch
+  - profileName
   layers:
   - Default
   - TransparentFX
