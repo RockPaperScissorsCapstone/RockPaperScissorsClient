@@ -4,10 +4,10 @@ using UnityEngine;
 
 public class userInfo {
 
-    string firstname;
-    string lastname;
-    string email;
-    string username;
+   public string firstname;
+   public string lastname;
+   public string email;
+   public string username;
 
     public userInfo(string firstname, string lastname, string email, string username)
     {
