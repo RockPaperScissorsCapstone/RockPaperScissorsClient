@@ -2,14 +2,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class userInfo {
+public class UserInfo {
 
    public string firstname;
    public string lastname;
    public string email;
    public string username;
 
-    public userInfo(string firstname, string lastname, string email, string username)
+    public UserInfo(string firstname, string lastname, string email, string username)
     {
         this.firstname = firstname;
         this.lastname = lastname;

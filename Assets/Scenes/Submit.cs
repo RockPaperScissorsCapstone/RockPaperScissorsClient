@@ -8,7 +8,7 @@ using ConnectionManager;
 
 public class Submit : MonoBehaviour {
 
-    userInfo myinfo;
+    UserInfo myinfo;
 
 	public void sumbitIn(){
 		string[] responses = new string[6];
@@ -32,7 +32,7 @@ public class Submit : MonoBehaviour {
 		passTwo = InputValue("userPasswordInputTwo");
 		if(string.Equals(passOne, passTwo)){
 			param[4] = passOne;
-            myinfo = new userInfo(param[2], param[3], param[1], param[0]);
+            myinfo = new UserInfo(param[2], param[3], param[1], param[0]);
             SaveInfo(myinfo);
 			Debug.Log(param[4]);
 		}else{
@@ -85,12 +85,12 @@ public class Submit : MonoBehaviour {
 		}
 	}
 
-    public void SaveInfo(userInfo playerinfo)
+    public void SaveInfo(UserInfo playerinfo)
     {
         string json = JsonUtility.ToJson(playerinfo);
-        StreamWriter sw = File.CreateText(Application.dataPath + "/playerInfo.json");
+        StreamWriter sw = File.CreateText(Application.dataPath + "/MyInfo.json");
         sw.Close();
-        File.WriteAllText(Application.dataPath + "/playerInfo.json", json);
+        File.WriteAllText(Application.dataPath + "/MyInfo.json", json);
 
     }
 }
