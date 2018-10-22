@@ -14,8 +14,8 @@ public class playerProfileScene : MonoBehaviour {
 		
 	}
 
-    public void loadPlayerProfileScene()
+    public void loadPlayerProfileScene(string sceneName)
     {
-        UnityEngine.SceneManagement.SceneManager.LoadScene("PlayerProfile");
+        UnityEngine.SceneManagement.SceneManager.LoadScene(sceneName);
     }
 }
