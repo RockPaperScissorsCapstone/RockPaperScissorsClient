@@ -20,7 +20,7 @@ namespace ConnectionManager{
             // Connect to a remote device.  
                 // Establish the remote endpoint for the socket.  
                 // This example uses port 11000 on the local computer.  
-                ipHostInfo = Dns.GetHostEntry("ec2-18-217-146-155.us-east-2.compute.amazonaws.com"); 
+                ipHostInfo = Dns.GetHostEntry("ec2-18-191-245-66.us-east-2.compute.amazonaws.com");
                 ipAddress = ipHostInfo.AddressList[0]; 
                 remoteEP = new IPEndPoint(ipAddress, 65432); 
 
