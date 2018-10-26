@@ -48,7 +48,7 @@ public class Submit : MonoBehaviour {
 			if(accepted == 1){
 				responses = CM.SubmitRegisteration(param);
 				if(responses.Length > 0){
-					for(int i = 0; i < 5; i++){
+					for(int i = 0; i < 7; i++){
 						Debug.Log(responses[i]);
 						if(responses[i].Equals("User added successfully")){
 							Debug.Log("Catching that user was added and able to create an event here");

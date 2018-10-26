@@ -20,7 +20,7 @@ namespace ConnectionManager{
             // Connect to a remote device.  
                 // Establish the remote endpoint for the socket.  
                 // This example uses port 11000 on the local computer.  
-                ipHostInfo = Dns.GetHostEntry("ec2-18-191-245-66.us-east-2.compute.amazonaws.com");
+                ipHostInfo = Dns.GetHostEntry("ec2-18-221-141-4.us-east-2.compute.amazonaws.com");
                 ipAddress = ipHostInfo.AddressList[0]; 
                 remoteEP = new IPEndPoint(ipAddress, 65432); 
 
@@ -80,8 +80,8 @@ namespace ConnectionManager{
 			byte[] bytes = new byte[1024];
 			int bytesRec = sender.Receive(bytes);
 			Console.WriteLine("Response = {0}", 
-                        Encoding.ASCII.GetString(bytes, 0, bytes.Length));
-            return (Encoding.ASCII.GetString(bytes, 0, bytes.Length));
+                        Encoding.ASCII.GetString(bytes, 0, bytesRec));
+            return (Encoding.ASCII.GetString(bytes, 0, bytesRec));
 		}
 		private string Messenger(byte[] msg){
             try{
@@ -106,5 +106,28 @@ namespace ConnectionManager{
                     sender.Shutdown(SocketShutdown.Both); 
                     sender.Close(); 
 		}
+
+        public string[] SubmitLogin(string[] param) {
+            string[] response = new string[4];
+            Console.WriteLine("Socket connected to {0}", sender.RemoteEndPoint.ToString());
+
+            //prepare to send Login info to server
+
+            //refer to server's ConnectionManager's main if/else statement to see which function name to match
+            byte[] msgFunction = Encoding.ASCII.GetBytes("Login"); 
+            response[0] = Messenger(msgFunction);
+
+            byte[] msgUsername = Encoding.ASCII.GetBytes(param[0]);
+            response[1] = Messenger(msgUsername);
+
+            byte[] msgPassword = Encoding.ASCII.GetBytes(param[1]);
+            response[2] = Messenger(msgPassword);
+
+            EndMessages();
+
+            response[3] = receive();
+
+            return response;
+        }
     }
 }

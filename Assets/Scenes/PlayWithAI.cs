@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using ConnectionManager;
 
 public class PlayWithAI : MonoBehaviour {
@@ -17,13 +18,18 @@ public class PlayWithAI : MonoBehaviour {
 
     public void playWithAI()
     {
-        ConnectionsManager connectionsManager = new ConnectionsManager();
-        if (connectionsManager.StartClient() == 1) //successful start of client
-        {
+        // ConnectionsManager connectionsManager = new ConnectionsManager();
+        // if (connectionsManager.StartClient() == 1) //successful start of client
+        // {
 
-        } else //failed start of client
-        {
-            Debug.Log("Failed to start ConnectionsManager Client");
-        }
+        // } else //failed start of client
+        // {
+        //     Debug.Log("Failed to start ConnectionsManager Client");
+        // }
+    }
+
+    public void goToGameScreen() {
+        //first, direct the user to game screen
+        SceneManager.LoadScene("GameScreen");
     }
 }
