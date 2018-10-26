@@ -67,19 +67,24 @@ namespace ConnectionManager{
             return response;
 		}
 
-        public string[] getAccoutInformation(){
-            string[] response = new string[3];
-
+        public string[] GetAccountInfo(string[] param) {
+            string[] response = new string[5];
+            Console.WriteLine("Socket connected to {0}", sender.RemoteEndPoint.ToString());
+            //Data buffer for incoming data.
             byte[] msgFunction = Encoding.ASCII.GetBytes("GetAccountInfo");
-            Debug.Log(Encoding.ASCII.GetString(msgFunction));
             response[0] = Messenger(msgFunction);
 
-            byte[] msgPlayersID = Encoding.ASCII.GetBytes("2");
-            Debug.Log(Encoding.ASCII.GetString(msgPlayersID));
-            response[1] = Messenger(msgPlayersID);
+            byte[] msgUserID = Encoding.ASCII.GetBytes(param[0]);
+            response[1] = Messenger(msgUserID);
+
+            byte[] msgUserWin = Encoding.ASCII.GetBytes(param[1]);
+            response[2] = Messenger(msgUserWin);
+
+            byte[] msgUserLoss = Encoding.ASCII.GetBytes(param[2]);
+            response[3] = Messenger(msgUserLoss);
+
             EndMessages();
-            response[2] = receive();
-            Debug.Log("Response: " + response[2]);
+            response[4] = receive();
             return response;
         }
 
