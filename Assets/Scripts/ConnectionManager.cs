@@ -67,8 +67,24 @@ namespace ConnectionManager{
             return response;
 		}
 
+        public string[] getAccoutInformation(){
+            string[] response = new string[3];
+
+            byte[] msgFunction = Encoding.ASCII.GetBytes("GetAccountInfo");
+            Debug.Log(Encoding.ASCII.GetString(msgFunction));
+            response[0] = Messenger(msgFunction);
+
+            byte[] msgPlayersID = Encoding.ASCII.GetBytes("2");
+            Debug.Log(Encoding.ASCII.GetString(msgPlayersID));
+            response[1] = Messenger(msgPlayersID);
+            EndMessages();
+            response[2] = receive();
+            Debug.Log("Response: " + response[2]);
+            return response;
+        }
+
 		private void EndMessages(){
-			Messenger(Encoding.ASCII.GetBytes("end"));
+			send(Encoding.ASCII.GetBytes("end"));
 		}
 
 		private int send(byte[] msg){
@@ -79,9 +95,14 @@ namespace ConnectionManager{
 		private string receive(){
 			byte[] bytes = new byte[1024];
 			int bytesRec = sender.Receive(bytes);
-			Console.WriteLine("Response = {0}", 
-                        Encoding.ASCII.GetString(bytes, 0, bytesRec));
-            return (Encoding.ASCII.GetString(bytes, 0, bytesRec));
+            if(bytes.Length > 0){
+			string results = (Encoding.ASCII.GetString(bytes, 0, bytes.Length));
+            Debug.Log("This is in the recieve class" + results);
+            return (Encoding.ASCII.GetString(bytes, 0, bytes.Length));
+            }
+            else{
+                return ("We received nothing from python");
+            }
 		}
 		private string Messenger(byte[] msg){
             try{
