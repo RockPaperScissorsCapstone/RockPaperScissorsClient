@@ -67,6 +67,27 @@ namespace ConnectionManager{
             return response;
 		}
 
+        public string[] GetAccountInfo(string[] param) {
+            string[] response = new string[5];
+            Console.WriteLine("Socket connected to {0}", sender.RemoteEndPoint.ToString());
+            //Data buffer for incoming data.
+            byte[] msgFunction = Encoding.ASCII.GetBytes("GetAccountInfo");
+            response[0] = Messenger(msgFunction);
+
+            byte[] msgUserID = Encoding.ASCII.GetBytes(param[0]);
+            response[1] = Messenger(msgUserID);
+
+            byte[] msgUserWin = Encoding.ASCII.GetBytes(param[1]);
+            response[2] = Messenger(msgUserWin);
+
+            byte[] msgUserLoss = Encoding.ASCII.GetBytes(param[2]);
+            response[3] = Messenger(msgUserLoss);
+
+            EndMessages();
+            response[4] = receive();
+            return response;
+        }
+
 		private void EndMessages(){
 			Messenger(Encoding.ASCII.GetBytes("end"));
 		}
