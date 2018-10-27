@@ -12,7 +12,7 @@ public class GetAccountInfo : MonoBehaviour {
 		ConnectionsManager CM = new ConnectionsManager();
 		int result = CM.StartClient();
 		Debug.Log(result);
-		string[] playerInfo = CM.getAccoutInformation();
+		string[] playerInfo = CM.GetAccountInfo("2");
 		for(int i = 0; i<3; i++){
 			Debug.Log("playerInfo[" + i + "]: " + playerInfo[i]);
 		}
