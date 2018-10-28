@@ -3,7 +3,21 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - userFNameInput
+  - usernameInput
+  - userPasswordInputOne
+  - userEmailInput
+  - userLNameInput
+  - userPasswordInputTwo
+  - errorPasswordMisMatch
+  - profileUserName
+  - profileScore
+  - profileCurrency
+  - profileWins
+  - profileLosses
+  - loginUserName
+  - loginPassword
   layers:
   - Default
   - TransparentFX
