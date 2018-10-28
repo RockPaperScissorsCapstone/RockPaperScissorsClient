@@ -14,6 +14,9 @@ public class playerProfileScene : MonoBehaviour {
 		
 	}
 
+	//this method takes a string sceneName and tells Unity to Load the matching SceneName
+	//For this method to work, both main menu scene and profile page scene must be loaded
+	//in the build settings.
     public void loadPlayerProfileScene(string sceneName)
     {
         UnityEngine.SceneManagement.SceneManager.LoadScene(sceneName);

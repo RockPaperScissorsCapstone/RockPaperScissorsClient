@@ -4,72 +4,103 @@ using UnityEngine.Events;
 using UnityEngine;
 using UnityEngine.UI;
 using System.IO;
-using ConnectionManager;
+using ServerManager;
+using UnityShortCuts;
+using Navigator;
 
-public class Submit : MonoBehaviour {
+public class CreateAccount : MonoBehaviour 
+{
 
     UserInfo myinfo;
 
-	public void sumbitIn(){
+	public void submitBTN()
+	{
+		UnityShortCuts.ShortCuts finder = new ShortCuts();
 		string[] responses = new string[6];
 		string[] param = new string[6];
 		string passOne;
 		string passTwo;
 		int passWordCheck = 1;
-		param[0] = InputValue("usernameInput");
+		param[0] = finder.InputValue("usernameInput");
 		Debug.Log(param[0]);
 
-		param[1] = InputValue("userEmailInput");
+		param[1] = finder.InputValue("userEmailInput");
 		Debug.Log(param[1]);
 
-		param[2] = InputValue("userFNameInput");
+		param[2] = finder.InputValue("userFNameInput");
 		Debug.Log(param[2]);
 
-		param[3] = InputValue("userLNameInput");
+		param[3] = finder.InputValue("userLNameInput");
 		Debug.Log(param[3]);
 
-		passOne = InputValue("userPasswordInputOne");
-		passTwo = InputValue("userPasswordInputTwo");
-		if(string.Equals(passOne, passTwo)){
+		passOne = finder.InputValue("userPasswordInputOne");
+		passTwo = finder.InputValue("userPasswordInputTwo");
+		if(string.Equals(passOne, passTwo))
+		{
 			param[4] = passOne;
             myinfo = new UserInfo(param[2], param[3], param[1], param[0]);
-            SaveInfo(myinfo);
+            //SaveInfo(myinfo);
 			Debug.Log(param[4]);
-		}else{
+		}
+		else
+		{
 			passWordCheck = 0;
 		}
 
 		//param[5] = InputValue("userAgeInput");
 		//Debug.Log(param[5]);
 
-		if(passWordCheck == 1){
-			ConnectionsManager CM = new ConnectionsManager();
+		if(passWordCheck == 1)
+		{
+			ConnectionManager CM = new ConnectionManager();
+			SceneNavigator navi = new SceneNavigator();
 			int accepted = CM.StartClient();
-			if(accepted == 1){
+			if(accepted == 1)
+			{
 				responses = CM.SubmitRegisteration(param);
-				if(responses.Length > 0){
-					for(int i = 0; i < 5; i++){
+				if(responses.Length > 0)
+				{
+					/* for(int i = 0; i < 7; i++)
+					{
 						Debug.Log(responses[i]);
-						if(responses[i].Equals("User added successfully")){
+						string result = responses[i];
+						Debug.Log(result.Trim());
+						if(string.Equals(result, "1"))
+						{
 							Debug.Log("Catching that user was added and able to create an event here");
+							navi.GoToScene("LoginScreen");
 						}
+						else
+						{
+							Debug.Log("Not catching success");
+						}
+					}*/
+					int desiredResult = 1;
+					int result = System.Convert.ToInt32(responses[6]);
+					Debug.Log(result == desiredResult);
+					if(result == desiredResult)
+					{
+						navi.GoToScene("LoginScreen");
+					}
+					else
+					{
+						Debug.Log("Failed to create Account");
 					}
 				}
 			}
-		}else{
+		}
+		else
+		{
 			showError("passwordMatch");
 		}
 
 	}
 
-	private string InputValue(string tagName){
-		GameObject inputField = GameObject.FindGameObjectWithTag(tagName);
-		InputField iput = inputField.GetComponent<InputField>();
-		return iput.text.ToString();
-	}
 
-	private void showError(string ErrorType){
-		if(string.Equals(ErrorType,"passwordMatch")){
+	private void showError(string ErrorType)
+	{
+		if(string.Equals(ErrorType,"passwordMatch"))
+		{
 			GameObject inputPassFieldOne = GameObject.FindGameObjectWithTag("userPasswordInputOne");
 			GameObject inputPassFieldTwo = GameObject.FindGameObjectWithTag("userPasswordInputTwo");
 			GameObject errorPassMatchTextField = GameObject.FindGameObjectWithTag("errorPasswordMisMatch");
@@ -84,13 +115,4 @@ public class Submit : MonoBehaviour {
 
 		}
 	}
-
-    public void SaveInfo(UserInfo playerinfo)
-    {
-        string json = JsonUtility.ToJson(playerinfo);
-        StreamWriter sw = File.CreateText(Application.dataPath + "/MyInfo.json");
-        sw.Close();
-        File.WriteAllText(Application.dataPath + "/MyInfo.json", json);
-
-    }
 }
