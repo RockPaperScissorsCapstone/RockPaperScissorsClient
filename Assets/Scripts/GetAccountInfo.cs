@@ -1,30 +1,64 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
+using System.IO;
 using System.Text;
-using ConnectionManager;
+using ServerManager;
+using UnityShortCuts;
 public class GetAccountInfo : MonoBehaviour {
 
 	// Use this for initialization
-	void Start () {
-		ConnectionsManager CM = new ConnectionsManager();
-		int result = CM.StartClient();
-		Debug.Log(result);
-		string[] playerInfo = CM.GetAccountInfo("2");
-		for(int i = 0; i<3; i++){
-			Debug.Log("playerInfo[" + i + "]: " + playerInfo[i]);
-		}
-
-		showUserInfo(playerInfo);
-
+	string user_id;
+	ShortCuts usc;
+	string data;
+	UserInfo playerinfo;
+	void Start() 
+	{
+		usc = new ShortCuts(); 
+		data = File.ReadAllText(Application.dataPath + "/MyInfo.json");
+		Debug.Log(data);
+		playerinfo = JsonUtility.FromJson<UserInfo>(data);
+		Debug.Log(playerinfo.getFirstName());
+		string param = playerinfo.getUsername();
+		user_id = playerinfo.getUserId();
+		usc.updateInputValue("profileUserName", param);
+		string[] tagNames = {"profileScore", "profileCurrency", "profileWins", "profileLosses"};
+		string[] userParams = {playerinfo.getScore(), playerinfo.getCurrency(), playerinfo.getWins(), playerinfo.getLosses()};
+		usc.updateTextValue(tagNames, userParams);
 	}
+	public void UpdateUserInfo () 
+	{
+		ConnectionManager CM = new ConnectionManager();
+		int connectionResult = CM.StartClient();
+		Debug.Log(connectionResult);
+		string new_username = usc.InputValue("profileUserName");
+		string[] param = {user_id, new_username};
+		string updateResult = (CM.UpdateAccountInfo(param)).Trim();
 
-	private void showUserInfo(string[] playerInfo){
-		GameObject userNameField = GameObject.FindGameObjectWithTag("profileName");
-		InputField userNameIput = userNameField.GetComponent<InputField>();
-		userNameIput.text = playerInfo[2];
+		try
+		{
+			if(Convert.ToInt32(updateResult) == 1)
+			{
+				playerinfo.setUsername(new_username);
+				Debug.Log(playerinfo.getUsername());
+				string json = JsonUtility.ToJson(playerinfo);
+        		StreamWriter sw = File.CreateText(Application.dataPath + "/MyInfo.json");
+        		sw.Close();
+        		File.WriteAllText(Application.dataPath + "/MyInfo.json", json);
+			}
+			else
+			{
+				Debug.Log(updateResult);
+			}
+		} 
+		catch (OverflowException error) 
+		{
+			Debug.Log(updateResult);
+		} 
+		
 	}
 
 	// Update is called once per frame
