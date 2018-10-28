@@ -1,8 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
-using ConnectionManager;
+using ServerManager;
+using Navigator;
 
 public class PlayWithAI : MonoBehaviour {
 
@@ -30,6 +30,7 @@ public class PlayWithAI : MonoBehaviour {
 
     public void goToGameScreen() {
         //first, direct the user to game screen
-        SceneManager.LoadScene("GameScreen");
+        SceneNavigator navi = new SceneNavigator();
+        navi.GoToScene("GameScreen");
     }
 }
