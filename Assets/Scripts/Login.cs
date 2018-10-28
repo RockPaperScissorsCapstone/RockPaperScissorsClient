@@ -4,7 +4,9 @@ using UnityEngine.Events;
 using UnityEngine;
 using UnityEngine.UI;
 using System.IO;
-using ConnectionManager;
+using ServerManager;
+using UnityShortCuts;
+using Navigator;
 
 public class Login : MonoBehaviour {
 
@@ -12,29 +14,38 @@ public class Login : MonoBehaviour {
 		//this is the parameter sent to the server to verify credentials for login
 		string[] param = new string[2];
 		string[] responses = new string[4];
+		ShortCuts usc = new ShortCuts();
 
 		//get the input field value from Login Scene
-		param[0] = InputValue("Username_Input");
-		param[1] = InputValue("Password_Input");
-
+		param[0] = usc.InputValue("loginUserName");
+		Debug.Log(param[0]);
+		param[1] = usc.InputValue("loginPassword");
+		Debug.Log(param[1]);
 		//start the Connections Manager
-		ConnectionsManager CM = new ConnectionsManager();
+		ConnectionManager CM = new ConnectionManager();
 		if (CM.StartClient() == 1) {
 			responses = CM.SubmitLogin(param);
 			if (responses.Length > 0) { //there is good response!
 				for (int i = 0; i < 4; i++) {
 					Debug.Log(responses[i]);
 				}
+				UserInfo accountInfo = JsonUtility.FromJson<UserInfo>(responses[3]);
+				SaveInfo(accountInfo);
+				SceneNavigator navi = new SceneNavigator();
+				navi.GoToScene("MainMenu");
 			}
 		} else {
 			Debug.Log("Failed to start ConnectionsManager Client");
 		}
 	}
 
-	//this helper function gets the string text value of the gameobject with type of InputField
-	private string InputValue(string name){
-		GameObject inputField = GameObject.Find(name);
-		InputField iput = inputField.GetComponent<InputField>();
-		return iput.text.ToString();
-	}
+	private void SaveInfo(UserInfo playerinfo)
+    {
+        string json = JsonUtility.ToJson(playerinfo);
+        StreamWriter sw = File.CreateText(Application.dataPath + "/MyInfo.json");
+        sw.Close();
+        File.WriteAllText(Application.dataPath + "/MyInfo.json", json);
+
+    }
+
 }
