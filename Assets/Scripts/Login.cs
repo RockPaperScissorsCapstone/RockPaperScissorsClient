@@ -21,21 +21,29 @@ public class Login : MonoBehaviour {
 		Debug.Log(param[0]);
 		param[1] = usc.InputValue("loginPassword");
 		Debug.Log(param[1]);
+		if(!param[0].Contains(" ") && !param[1].Contains(" "))
+		{
 		//start the Connections Manager
-		ConnectionManager CM = new ConnectionManager();
-		if (CM.StartClient() == 1) {
-			responses = CM.SubmitLogin(param);
-			if (responses.Length > 0) { //there is good response!
-				for (int i = 0; i < 4; i++) {
-					Debug.Log(responses[i]);
+			ConnectionManager CM = new ConnectionManager();
+			if (CM.StartClient() == 1) 
+			{
+				responses = CM.SubmitLogin(param);
+				if (responses.Length > 0) 
+				{ //there is good response!
+					for (int i = 0; i < 4; i++) 
+					{
+						Debug.Log(responses[i]);
+					}
+					UserInfo accountInfo = JsonUtility.FromJson<UserInfo>(responses[3]);
+					SaveInfo(accountInfo);
+					SceneNavigator navi = new SceneNavigator();
+					navi.GoToScene("MainMenu");
 				}
-				UserInfo accountInfo = JsonUtility.FromJson<UserInfo>(responses[3]);
-				SaveInfo(accountInfo);
-				SceneNavigator navi = new SceneNavigator();
-				navi.GoToScene("MainMenu");
+			} 
+			else 
+			{
+				Debug.Log("Failed to start ConnectionsManager Client");
 			}
-		} else {
-			Debug.Log("Failed to start ConnectionsManager Client");
 		}
 	}
 
