@@ -49,5 +49,17 @@ namespace UnityShortCuts{
 			}
 		}
 
+		public void showTextObject(string tagName){
+			GameObject textObject = GameObject.FindGameObjectWithTag(tagName);
+			Text textObjectComponent = textObject.GetComponent<Text>();
+			textObjectComponent.enabled = true;
+		}
+
+		public void hideTextObject(string tagName){
+			GameObject textObject = GameObject.FindGameObjectWithTag(tagName);
+			Text textObjectComponent = textObject.GetComponent<Text>();
+			textObjectComponent.enabled = false;
+		}
+
 	}
 }

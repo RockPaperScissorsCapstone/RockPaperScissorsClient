@@ -6,6 +6,7 @@ using Navigator;
 using System;
 using System.IO;
 using UnityEngine.UI;
+using UnityShortCuts;
 
 public class PlayWithAI : MonoBehaviour {
     public Button Rock_Button, Paper_Button, Scissors_Button;
@@ -15,35 +16,46 @@ public class PlayWithAI : MonoBehaviour {
     string losses = "";
     int matchNumber = 1;
     int sessionResponse = 2;
+    int playerWins = 0;
+    int playerLosses = 0;
+    int aiWins = 0;
+    int aiLosses = 0;
+    int winner = 0;
 
     ConnectionManager connectionManager;
     UserInfo userInfo;
+    ShortCuts usc;
 
 	// Use this for initialization
 	void Start () {
         //initially, store the necessary info (user_id) into local variable to be ready to pass to playWithAI()
         try {
-            using (StreamReader streamReader = new StreamReader(Application.dataPath + "/MyInfo.json")){
-                String line = streamReader.ReadToEnd();
-                userInfo = JsonUtility.FromJson<UserInfo>(line);
-                userId = userInfo.getUserId();
-                wins = userInfo.getWins();
-                losses = userInfo.getLosses();
+            Debug.Log("About access json file");
+            string data = File.ReadAllText(Application.dataPath + "/MyInfo.json");
+            //String line = streamReader.ReadToEnd();
+            userInfo = JsonUtility.FromJson<UserInfo>(data);
+            userId = userInfo.getUserId();
+            wins = userInfo.getWins();
+            losses = userInfo.getLosses();
 
-                Rock_Button.onClick.AddListener(delegate {TaskWithParameters("1");});
-                Paper_Button.onClick.AddListener(delegate {TaskWithParameters("2");});
-                Scissors_Button.onClick.AddListener(delegate {TaskWithParameters("3");});
+            Debug.Log("About to add listners");
+            /*Rock_Button.onClick.AddListener(delegate {TaskWithParameters("1");});
+            Paper_Button.onClick.AddListener(delegate {TaskWithParameters("2");});
+            Scissors_Button.onClick.AddListener(delegate {TaskWithParameters("3");});*/
 
-                connectionManager = new ConnectionManager();
-                if (connectionManager.StartClient() == 1) //successful start of client
-                {
-                    connectionManager.startGameSession();
+            Debug.Log("About to create ConnectionManager");
+            connectionManager = new ConnectionManager();
+            if (connectionManager.StartClient() == 1) //successful start of client
+            {
+                Debug.Log("About to start Game Session");
+                string response = connectionManager.startGameSession();
 
-                } else //failed start of client
-                {
-                    Debug.Log("Failed to start ConnectionManager Client");
-                }
+            } 
+            else //failed start of client
+            {
+                Debug.Log("Failed to start ConnectionManager Client");
             }
+            usc = new ShortCuts();
         } catch(Exception e) {
             Debug.Log("MyInfo.json could not be read.");
             Debug.Log(e.Message);
@@ -61,10 +73,14 @@ public class PlayWithAI : MonoBehaviour {
         Debug.Log("Sent User Id");
         connectionManager.sendMove(move);
         Debug.Log("Sent Move");
+        string computerMove = connectionManager.getResponse();
+        Debug.Log(computerMove);
 
         // string playerWinResponse = connectionManager.getResponse();
         // string AIWinResponse = connectionManager.getResponse();
+
         string stringResponse = connectionManager.getResponse();
+
 
         sessionResponse = int.Parse(stringResponse);
 
@@ -72,25 +88,60 @@ public class PlayWithAI : MonoBehaviour {
         // Debug.Log(AIWinResponse);
         Debug.Log(sessionResponse);
 
-        if (sessionResponse == 2) {
+        if (sessionResponse == 9) {
+            stringResponse = connectionManager.getResponse();
+
             matchNumber++;
             Match_Number_Text.text = matchNumber.ToString();
-            // Human_Number_Text.text = playerWinResponse;
-            // AI_Number_Text.text = AIWinResponse;
+            if(int.Parse(stringResponse) == 0)
+            {
+                aiWins++;
+                aiLosses++;
+                winner = 0;
+                usc.updateTextValue("gameMatchResult", "AI Wins");
+                usc.showTextObject("gameMatchResult");
+            }
+            else
+            {
+                playerWins++;
+                playerLosses++;
+                winner = 1;
+                usc.updateTextValue("gameMatchResult", "Player Wins");
+                usc.showTextObject("gameMatchResult");
+            }
+            Human_Number_Text.text = playerWins.ToString();
+            AI_Number_Text.text = aiWins.ToString();
+            EndGame(winner);
+
         } else {
-            Debug.Log(sessionResponse);
-            EndGame();
+            if(int.Parse(stringResponse) == 0)
+            {
+                aiWins++;
+                aiLosses++;
+                usc.updateTextValue("gameMatchResult", "AI Wins");
+                usc.showTextObject("gameMatchResult");
+            }
+            else
+            {
+                playerWins++;
+                playerLosses++;
+                usc.updateTextValue("gameMatchResult", "Player Wins");
+                usc.showTextObject("gameMatchResult");
+            }
         }
     }
 
-    public void EndGame() {
-        if (sessionResponse == 1) {
+    public void EndGame(int winer) {
+        string watedReceive = connectionManager.getResponse();
+        if (winner == 1) {
+            usc.hideTextObject("gameMatchResult");
             Help_Text.text = "You won!";
             int newWin = int.Parse(wins);
             newWin++;
             userInfo.setWins(newWin.ToString());
             wins = newWin.ToString();
-        } else if (sessionResponse == 0){
+        } else if (winner == 0){
+            usc.hideTextObject("gameMatchResult");
             Help_Text.text = "AI won!";
             int newLosses = int.Parse(losses);
             newLosses++;

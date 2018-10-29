@@ -49,6 +49,7 @@ public class Login : MonoBehaviour {
 
 	private void SaveInfo(UserInfo playerinfo)
     {
+		File.Delete(Application.dataPath + "/MyInfo.json");
         string json = JsonUtility.ToJson(playerinfo);
         StreamWriter sw = File.CreateText(Application.dataPath + "/MyInfo.json");
         sw.Close();

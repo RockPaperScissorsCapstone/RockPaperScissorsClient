@@ -18,6 +18,7 @@ TagManager:
   - profileLosses
   - loginUserName
   - loginPassword
+  - gameMatchResult
   layers:
   - Default
   - TransparentFX

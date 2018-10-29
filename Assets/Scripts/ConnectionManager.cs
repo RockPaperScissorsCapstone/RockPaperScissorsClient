@@ -22,15 +22,15 @@ namespace ServerManager{
                 // This example uses port 11000 on the local computer.  
              
                 //Production
-                ipHostInfo = Dns.GetHostEntry("ec2-18-221-141-4.us-east-2.compute.amazonaws.com");
-                ipAddress = ipHostInfo.AddressList[0]; 
-                remoteEP = new IPEndPoint(ipAddress, 65432); 
+                //ipHostInfo = Dns.GetHostEntry("ec2-18-221-141-4.us-east-2.compute.amazonaws.com");
+                //ipAddress = ipHostInfo.AddressList[0]; 
+                //remoteEP = new IPEndPoint(ipAddress, 65432); 
            
 
-                /* //Nick's Test environment
+                //Nick's Test environment
                 ipHostInfo = Dns.GetHostEntry("ec2-18-217-146-155.us-east-2.compute.amazonaws.com");
                 ipAddress = ipHostInfo.AddressList[0]; 
-                remoteEP = new IPEndPoint(ipAddress, 65432);  */
+                remoteEP = new IPEndPoint(ipAddress, 65432);
 
                 // Create a TCP/IP  socket.  
                 sender = new Socket(ipAddress.AddressFamily, 
@@ -118,6 +118,7 @@ namespace ServerManager{
 		private string Messenger(byte[] msg){
             try{
 			    int bytesSent = send(msg);
+                Debug.Log("About to receive message");
 			    string response = receive(); 
                 return response;
             }catch (ArgumentNullException ane) {
@@ -161,13 +162,18 @@ namespace ServerManager{
 
         public string startGameSession() {
             string[] response = new string[2];
-
+            Debug.Log("sending message to Server");
             byte[] msgFunction = EncodeToBytes("Session");
             response[0] = Messenger(msgFunction);
+            Debug.Log("Message Received from server");
+            Debug.Log(response[0]);
+
 
             EndMessages();
 
-            Debug.Log(response[0]);
+            //response[1] = receive();
+
+            //Debug.Log(response[0]);
 
             return response[0];
         }
