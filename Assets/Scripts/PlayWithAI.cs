@@ -15,6 +15,8 @@ public class PlayWithAI : MonoBehaviour {
     string losses = "";
     int matchNumber = 1;
     int sessionResponse = 2;
+    int localAiWin = 0;
+    int localHumanWin = 0;
 
     ConnectionManager connectionManager;
     UserInfo userInfo;
@@ -25,28 +27,33 @@ public class PlayWithAI : MonoBehaviour {
         try {
             using (StreamReader streamReader = new StreamReader(Application.dataPath + "/MyInfo.json")){
                 String line = streamReader.ReadToEnd();
+                streamReader.Close();
                 userInfo = JsonUtility.FromJson<UserInfo>(line);
                 userId = userInfo.getUserId();
                 wins = userInfo.getWins();
                 losses = userInfo.getLosses();
 
+                Debug.Log("add listener");
+                // Rock_Button = Rock_Button.GetComponent<Button>();
+                // Paper_Button = Paper_Button.GetComponent<Button>();
+                // Scissors_Button = Scissors_Button.GetComponent<Button>();
                 Rock_Button.onClick.AddListener(delegate {TaskWithParameters("1");});
                 Paper_Button.onClick.AddListener(delegate {TaskWithParameters("2");});
                 Scissors_Button.onClick.AddListener(delegate {TaskWithParameters("3");});
+                Debug.Log("done adding listener");
 
                 connectionManager = new ConnectionManager();
                 if (connectionManager.StartClient() == 1) //successful start of client
                 {
-                    connectionManager.startGameSession();
-
+                    string sessionStartResponse = connectionManager.startGameSession();
+                    Debug.Log(sessionStartResponse);
                 } else //failed start of client
                 {
                     Debug.Log("Failed to start ConnectionManager Client");
                 }
             }
         } catch(Exception e) {
-            Debug.Log("MyInfo.json could not be read.");
-            Debug.Log(e.Message);
+            Debug.Log(e.Message, gameObject);
         }
 	}
 	
@@ -62,8 +69,7 @@ public class PlayWithAI : MonoBehaviour {
         connectionManager.sendMove(move);
         Debug.Log("Sent Move");
 
-        // string playerWinResponse = connectionManager.getResponse();
-        // string AIWinResponse = connectionManager.getResponse();
+        
         string stringResponse = connectionManager.getResponse();
 
         sessionResponse = int.Parse(stringResponse);
@@ -75,8 +81,14 @@ public class PlayWithAI : MonoBehaviour {
         if (sessionResponse == 2) {
             matchNumber++;
             Match_Number_Text.text = matchNumber.ToString();
-            // Human_Number_Text.text = playerWinResponse;
-            // AI_Number_Text.text = AIWinResponse;
+            string playerWinResponse = connectionManager.getResponse();
+            string AIWinResponse = connectionManager.getResponse();
+
+            localHumanWin = int.Parse(playerWinResponse);
+            localAiWin = int.Parse(AIWinResponse);
+
+            Human_Number_Text.text = playerWinResponse;
+            AI_Number_Text.text = AIWinResponse;
         } else {
             Debug.Log(sessionResponse);
             EndGame();
@@ -90,12 +102,16 @@ public class PlayWithAI : MonoBehaviour {
             newWin++;
             userInfo.setWins(newWin.ToString());
             wins = newWin.ToString();
+            localHumanWin++;
+            Human_Number_Text.text = (localHumanWin).ToString();
         } else if (sessionResponse == 0){
             Help_Text.text = "AI won!";
             int newLosses = int.Parse(losses);
             newLosses++;
             userInfo.setLosses(newLosses.ToString());
             losses = newLosses.ToString();
+            localAiWin++;
+            AI_Number_Text.text = (localAiWin).ToString();
         }
         string json = JsonUtility.ToJson(userInfo);
         File.WriteAllText(Application.dataPath + "/MyInfo.json", json);
@@ -109,5 +125,7 @@ public class PlayWithAI : MonoBehaviour {
         param[2] = userId;
         string updateWinLossResponse = connectionManager.updateWinLoss(param);
         Debug.Log(updateWinLossResponse);
+
+        //disable move buttons
     }
 }

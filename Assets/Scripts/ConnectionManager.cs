@@ -173,7 +173,17 @@ namespace ServerManager{
         }
 
         public string getResponse(){
-            return receive();
+            byte[] bytes = new byte[1];
+			int bytesRec = sender.Receive(bytes);
+            Debug.Log(bytesRec);
+            if(bytes.Length > 0){
+			    string results = (DecodeToString(bytes));
+                Debug.Log("This is in the getResponse method " + results);
+                return (results);
+            }
+            else{
+                return ("We received nothing from python");
+            }
         }
 
         public int sendMove(string currentMove){
