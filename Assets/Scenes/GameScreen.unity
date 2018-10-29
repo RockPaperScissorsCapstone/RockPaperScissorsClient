@@ -223,7 +223,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &65448721
 RectTransform:
   m_ObjectHideFlags: 0
@@ -381,6 +381,8 @@ MonoBehaviour:
   Scissors_Button: {fileID: 164869610}
   Match_Number_Text: {fileID: 1833930923}
   Help_Text: {fileID: 762482856}
+  Human_Number_Text: {fileID: 0}
+  AI_Number_Text: {fileID: 0}
 --- !u!1 &158758655
 GameObject:
   m_ObjectHideFlags: 0
@@ -946,7 +948,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1004581735
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1100,6 +1102,8 @@ MonoBehaviour:
   Scissors_Button: {fileID: 0}
   Match_Number_Text: {fileID: 0}
   Help_Text: {fileID: 0}
+  Human_Number_Text: {fileID: 0}
+  AI_Number_Text: {fileID: 0}
 --- !u!114 &1266375084
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1422,7 +1426,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1768663389
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1647,7 +1651,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &2019240636
 RectTransform:
   m_ObjectHideFlags: 0
