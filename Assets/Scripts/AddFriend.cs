@@ -8,6 +8,7 @@ using Navigator;
 
 public class AddFriend : MonoBehaviour {
 
+    public GameObject addFriendPanel;
     string user_id;
     ShortCuts usc;
     string data;
@@ -26,8 +27,9 @@ public class AddFriend : MonoBehaviour {
         param[1] = usc.InputValue("usernameFriend");
         Debug.Log(param[1]);
 
-
-        Debug.Log(param);
-
+    }
+    public void HideAddFriendDialogueBox()
+    {
+        addFriendPanel.SetActive(false);
     }
 }
