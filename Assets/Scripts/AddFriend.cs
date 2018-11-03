@@ -9,10 +9,18 @@ using Navigator;
 public class AddFriend : MonoBehaviour {
 
     public GameObject addFriendPanel;
-    string user_id;
     ShortCuts usc;
     string data;
     UserInfo playerinfo;
+    bool foo;
+
+    public void Start()
+    {
+        while (!foo)
+        {
+            HideAddFriendDialogueBox();
+        }
+    }
 
     public void AddNewFriend()
     {
@@ -21,7 +29,7 @@ public class AddFriend : MonoBehaviour {
         
         data = File.ReadAllText(Application.dataPath + "/MyInfo.json");
         playerinfo = JsonUtility.FromJson<UserInfo>(data);
-        param[0] = playerinfo.getUserId();
+        param[0] = playerinfo.getUsername();
         Debug.Log(param[0]);
 
         param[1] = usc.InputValue("usernameFriend");
@@ -30,6 +38,14 @@ public class AddFriend : MonoBehaviour {
     }
     public void HideAddFriendDialogueBox()
     {
+        
         addFriendPanel.SetActive(false);
+        foo = false;
+    }
+
+    public void ShowAddFriendDialogueBox()
+    {
+        addFriendPanel.SetActive(true);
+        foo = true;
     }
 }
