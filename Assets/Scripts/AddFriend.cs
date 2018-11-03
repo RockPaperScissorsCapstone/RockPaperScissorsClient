@@ -45,7 +45,6 @@ public class AddFriend : MonoBehaviour {
 
     public void HideAddFriendDialogueBox()
     {
-        
         addFriendPanel.SetActive(false);
         foo = false;
     }
