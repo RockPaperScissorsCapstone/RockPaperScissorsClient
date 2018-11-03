@@ -16,7 +16,7 @@ public class AddFriend : MonoBehaviour {
 
     public void Start()
     {
-        while (!foo)
+        if (!foo)
         {
             HideAddFriendDialogueBox();
         }
@@ -26,16 +26,23 @@ public class AddFriend : MonoBehaviour {
     {
         string[] param = new string[2];
         usc = new ShortCuts();
-        
+
         data = File.ReadAllText(Application.dataPath + "/MyInfo.json");
         playerinfo = JsonUtility.FromJson<UserInfo>(data);
         param[0] = playerinfo.getUsername();
         Debug.Log(param[0]);
-
         param[1] = usc.InputValue("usernameFriend");
         Debug.Log(param[1]);
 
+        ConnectionManager CM = new ConnectionManager();
+        if (CM.StartClient() == 1)
+        {
+           string response = CM.AddNewFriend(param);
+           Debug.Log(response);
+        }
+
     }
+
     public void HideAddFriendDialogueBox()
     {
         
