@@ -12,19 +12,19 @@ public class AddFriend : MonoBehaviour {
     ShortCuts usc;
     string data;
     UserInfo playerinfo;
-    bool foo;
+    bool displayBox;
 
     public void Start()
     {
-        if (!foo)
+        if (!displayBox)
         {
             HideAddFriendDialogueBox();
         }
     }
-
     public void AddNewFriend()
     {
         string[] param = new string[2];
+        string[] responses = new string[4];
         usc = new ShortCuts();
 
         data = File.ReadAllText(Application.dataPath + "/MyInfo.json");
@@ -37,8 +37,7 @@ public class AddFriend : MonoBehaviour {
         ConnectionManager CM = new ConnectionManager();
         if (CM.StartClient() == 1)
         {
-           string response = CM.AddNewFriend(param);
-           Debug.Log(response);
+            responses = CM.AddNewFriend(param);
         }
 
     }
@@ -46,12 +45,12 @@ public class AddFriend : MonoBehaviour {
     public void HideAddFriendDialogueBox()
     {
         addFriendPanel.SetActive(false);
-        foo = false;
+        displayBox = false;
     }
 
     public void ShowAddFriendDialogueBox()
     {
         addFriendPanel.SetActive(true);
-        foo = true;
+        displayBox = true;
     }
 }
