@@ -224,7 +224,7 @@ namespace ServerManager{
             string[] response = new string[4];
             Console.WriteLine("Socket connected to {0}", sender.RemoteEndPoint.ToString());
             //Data buffer for incoming data.
-            byte[] msgFunction = EncodeToBytes("AddFriend");
+            byte[] msgFunction = EncodeToBytes("addFriend");
             response[0] = Messenger(msgFunction);
 
             byte[] myUsername = EncodeToBytes(param[0]);
