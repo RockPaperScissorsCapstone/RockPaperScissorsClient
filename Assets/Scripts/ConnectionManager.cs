@@ -20,17 +20,17 @@ namespace ServerManager{
             // Connect to a remote device.  
                 // Establish the remote endpoint for the socket.  
                 // This example uses port 11000 on the local computer.  
-            /*  
+             
                 //Production
                 ipHostInfo = Dns.GetHostEntry("ec2-18-221-141-4.us-east-2.compute.amazonaws.com");
                 ipAddress = ipHostInfo.AddressList[0]; 
                 remoteEP = new IPEndPoint(ipAddress, 65432); 
-            */
+           
 
-                //Nick's Test environment
+                /* //Nick's Test environment
                 ipHostInfo = Dns.GetHostEntry("ec2-18-217-146-155.us-east-2.compute.amazonaws.com");
                 ipAddress = ipHostInfo.AddressList[0]; 
-                remoteEP = new IPEndPoint(ipAddress, 65432); 
+                remoteEP = new IPEndPoint(ipAddress, 65432);  */
 
                 // Create a TCP/IP  socket.  
                 sender = new Socket(ipAddress.AddressFamily, 
@@ -105,10 +105,11 @@ namespace ServerManager{
 		private string receive(){
 			byte[] bytes = new byte[1024];
 			int bytesRec = sender.Receive(bytes);
+            Debug.Log(bytesRec);
             if(bytes.Length > 0){
-			string results = (DecodeToString(bytes));
-            Debug.Log("This is in the recieve class" + results);
-            return (DecodeToString(bytes));
+			    string results = (DecodeToString(bytes));
+                Debug.Log("This is in the receive class" + results);
+                return (results);
             }
             else{
                 return ("We received nothing from python");
@@ -156,6 +157,65 @@ namespace ServerManager{
             Debug.Log(response[3]);
 
             return response;
+        }
+
+        public string startGameSession() {
+            string[] response = new string[2];
+
+            byte[] msgFunction = EncodeToBytes("Session");
+            response[0] = Messenger(msgFunction);
+
+            EndMessages();
+
+            Debug.Log(response[0]);
+
+            return response[0];
+        }
+
+        public string getResponse(){
+            byte[] bytes = new byte[1];
+			int bytesRec = sender.Receive(bytes);
+            Debug.Log(bytesRec);
+            if(bytes.Length > 0){
+			    string results = (DecodeToString(bytes));
+                Debug.Log("This is in the getResponse method " + results);
+                return (results);
+            }
+            else{
+                return ("We received nothing from python");
+            }
+        }
+
+        public int sendMove(string currentMove){
+            byte[] move = EncodeToBytes(currentMove.ToString());
+            return send(move);
+        }
+
+        public int sendUserId(string userID) {
+            byte[] userId = EncodeToBytes(userID);
+            return send(userId);
+        }
+
+        public string updateWinLoss(string[] param) {
+            string[] response = new string[6];
+            Console.WriteLine("Socket connected to {0}", sender.RemoteEndPoint.ToString());
+            //Data buffer for incoming data.
+            byte[] msgFunction = EncodeToBytes("UpdateWinLoss");
+            response[0] = Messenger(msgFunction);
+
+            byte[] msgWin = EncodeToBytes(param[0]);
+            response[1] = Messenger(msgWin);
+
+            byte[] msgLoss = EncodeToBytes(param[1]);
+            response[2] = Messenger(msgLoss);
+
+            byte[] msgUserID = EncodeToBytes(param[2]);
+            response[3] = Messenger(msgUserID);
+
+            EndMessages();
+
+            response[4] = receive();
+            return response[4];
         }
 
         private byte[] EncodeToBytes(string param)
