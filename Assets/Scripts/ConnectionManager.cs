@@ -93,6 +93,20 @@ namespace ServerManager{
             return response[3];
         }
 
+        public string GetLeaderboard()
+        {
+            string[] response = new string[2];
+            Console.WriteLine("Socket connected to {0}", sender.RemoteEndPoint.ToString());
+
+            byte[] msgFunction = EncodeToBytes("GetLeaderboard");
+            response[0] = Messenger(msgFunction);
+
+            EndMessages();
+
+            response[1] = receive();
+            return response[1];
+        }
+
 		private void EndMessages(){
 			send(EncodeToBytes("end"));
 		}
