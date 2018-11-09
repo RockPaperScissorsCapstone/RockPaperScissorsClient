@@ -46,6 +46,11 @@ public class GetFriendsList : MonoBehaviour {
 		} else {
 			Debug.Log("Connection Manager start client failed.");
 		}
+
+		//testing
+		// string response = "Steve,Jason,Illya,Nick";
+		// string[] friendsList = response.Split(',');
+		// fillFriends(friendsList);
 	}
 
 	//update the UI with the friends list
