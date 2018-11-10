@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657874, g: 0.49641258, b: 0.5748172, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657868, g: 0.49641263, b: 0.57481706, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -281,6 +281,8 @@ GameObject:
   - component: {fileID: 347755125}
   - component: {fileID: 347755124}
   - component: {fileID: 347755123}
+  - component: {fileID: 347755126}
+  - component: {fileID: 347755127}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -348,6 +350,28 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &347755126
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 347755122}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 24e0126c8cd1b6b41b4bbe11a91874a0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &347755127
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 347755122}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bb8a0f6898fdc34408c02c7370c480c2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &404467763
 GameObject:
   m_ObjectHideFlags: 0
@@ -563,12 +587,12 @@ Prefab:
     - target: {fileID: 224714980795313532, guid: 2fb3888d023408d46a7fb4fc16c22f88,
         type: 2}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: 449.99997
       objectReference: {fileID: 0}
     - target: {fileID: 224714980795313532, guid: 2fb3888d023408d46a7fb4fc16c22f88,
         type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: -60.011047
       objectReference: {fileID: 0}
     - target: {fileID: 224714980795313532, guid: 2fb3888d023408d46a7fb4fc16c22f88,
         type: 2}
@@ -588,7 +612,7 @@ Prefab:
     - target: {fileID: 224714980795313532, guid: 2fb3888d023408d46a7fb4fc16c22f88,
         type: 2}
       propertyPath: m_AnchorMin.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 224714980795313532, guid: 2fb3888d023408d46a7fb4fc16c22f88,
         type: 2}
@@ -598,7 +622,7 @@ Prefab:
     - target: {fileID: 224714980795313532, guid: 2fb3888d023408d46a7fb4fc16c22f88,
         type: 2}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 224714980795313532, guid: 2fb3888d023408d46a7fb4fc16c22f88,
         type: 2}
@@ -724,7 +748,7 @@ RectTransform:
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 20, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -836,7 +860,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1240258743}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 347755126}
+        m_MethodName: GoToScene
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: AddFriendUI
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!114 &1240258743
@@ -1273,6 +1308,7 @@ GameObject:
   - component: {fileID: 1740409318}
   - component: {fileID: 1740409317}
   - component: {fileID: 1740409316}
+  - component: {fileID: 1740409319}
   m_Layer: 5
   m_Name: Main_Menu_Button
   m_TagString: Untagged
@@ -1336,7 +1372,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1740409317}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 347755126}
+        m_MethodName: GoToScene
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: MainMenu
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!114 &1740409317
@@ -1373,6 +1420,17 @@ CanvasRenderer:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1740409314}
   m_CullTransparentMesh: 0
+--- !u!114 &1740409319
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1740409314}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 24e0126c8cd1b6b41b4bbe11a91874a0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2012985556
 GameObject:
   m_ObjectHideFlags: 0
