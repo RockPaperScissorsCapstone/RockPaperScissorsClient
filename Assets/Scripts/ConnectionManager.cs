@@ -22,7 +22,7 @@ namespace ServerManager{
                 // This example uses port 11000 on the local computer.  
              
                 //Production
-                ipHostInfo = Dns.GetHostEntry("ec2-18-221-141-4.us-east-2.compute.amazonaws.com");
+                ipHostInfo = Dns.GetHostEntry("ec2-18-191-245-66.us-east-2.compute.amazonaws.com");
                 ipAddress = ipHostInfo.AddressList[0]; 
                 remoteEP = new IPEndPoint(ipAddress, 65432); 
            
@@ -216,6 +216,26 @@ namespace ServerManager{
 
             response[4] = receive();
             return response[4];
+        }
+
+        public string[] AddNewFriend(string[] param){
+            string[] response = new string[4];
+            Console.WriteLine("Socket connected to {0}", sender.RemoteEndPoint.ToString());
+            //Data buffer for incoming data.
+            byte[] msgFunction = EncodeToBytes("addFriend");
+            response[0] = Messenger(msgFunction);
+
+            byte[] myUsername = EncodeToBytes(param[0]);
+            response[1] = Messenger(myUsername);
+
+            byte[] friendUsername = EncodeToBytes(param[1]);
+            response[2] = Messenger(friendUsername);
+
+            EndMessages();
+
+            response[3] = receive();
+
+            return response;
         }
 
         private byte[] EncodeToBytes(string param)
