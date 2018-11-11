@@ -172,6 +172,19 @@ namespace ServerManager{
             return response[0];
         }
 
+        public string startPlayerWithRandom() {
+            string[] response = new string[2];
+
+            byte[] msgFunction = EncodeToBytes("PlayWithRandom");
+            response[0] = Messenger(msgFunction);
+
+            EndMessages();
+
+            Debug.Log(response[0]);
+
+            return response[0];
+        }
+
         public string getResponse(){
             byte[] bytes = new byte[1];
 			int bytesRec = sender.Receive(bytes);
