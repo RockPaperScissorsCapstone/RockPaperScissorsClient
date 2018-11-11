@@ -230,6 +230,26 @@ namespace ServerManager{
             EndMessages();
 
             response = receive();
+
+            return response;
+        }
+        public string[] AddNewFriend(string[] param){
+            string[] response = new string[4];
+            Console.WriteLine("Socket connected to {0}", sender.RemoteEndPoint.ToString());
+            //Data buffer for incoming data.
+            byte[] msgFunction = EncodeToBytes("addFriend");
+            response[0] = Messenger(msgFunction);
+
+            byte[] myUsername = EncodeToBytes(param[0]);
+            response[1] = Messenger(myUsername);
+
+            byte[] friendUsername = EncodeToBytes(param[1]);
+            response[2] = Messenger(friendUsername);
+
+            EndMessages();
+
+            response[3] = receive();
+
             return response;
         }
 
