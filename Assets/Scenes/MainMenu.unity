@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657868, g: 0.49641263, b: 0.57481706, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -861,8 +861,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2074820652}
-        m_MethodName: ChangeScene
+      - m_Target: {fileID: 2074820653}
+        m_MethodName: GoToScene
         m_Mode: 5
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1365,7 +1365,6 @@ GameObject:
   - component: {fileID: 2074820649}
   - component: {fileID: 2074820648}
   - component: {fileID: 2074820652}
-  - component: {fileID: 2074820651}
   - component: {fileID: 2074820653}
   m_Layer: 0
   m_Name: Main Camera
@@ -1434,24 +1433,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2074820651
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 2074820647}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fdc8ac5f3a57ae04991f08aa21bac108, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Rock_Button: {fileID: 0}
-  Paper_Button: {fileID: 0}
-  Scissors_Button: {fileID: 0}
-  Match_Number_Text: {fileID: 0}
-  Help_Text: {fileID: 0}
-  Human_Number_Text: {fileID: 0}
-  AI_Number_Text: {fileID: 0}
 --- !u!114 &2074820652
 MonoBehaviour:
   m_ObjectHideFlags: 0
