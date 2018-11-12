@@ -70,9 +70,10 @@ public class PlayWithAI : MonoBehaviour {
         Debug.Log("Sent Move");
 
         
-        string stringResponse = connectionManager.getResponse();
+        string stringResponse = connectionManager.getOneResponse();
+        Debug.Log(stringResponse);
 
-        sessionResponse = int.Parse(stringResponse);
+        sessionResponse = Convert.ToInt32(stringResponse);
 
         // Debug.Log(playerWinResponse);
         // Debug.Log(AIWinResponse);
@@ -81,11 +82,11 @@ public class PlayWithAI : MonoBehaviour {
         if (sessionResponse == 2) {
             matchNumber++;
             Match_Number_Text.text = matchNumber.ToString();
-            string playerWinResponse = connectionManager.getResponse();
-            string AIWinResponse = connectionManager.getResponse();
+            string playerWinResponse = connectionManager.getOneResponse();
+            string AIWinResponse = connectionManager.getOneResponse();
 
-            localHumanWin = int.Parse(playerWinResponse);
-            localAiWin = int.Parse(AIWinResponse);
+            localHumanWin = Convert.ToInt32(playerWinResponse);
+            localAiWin = Convert.ToInt32(AIWinResponse);
 
             Human_Number_Text.text = playerWinResponse;
             AI_Number_Text.text = AIWinResponse;
