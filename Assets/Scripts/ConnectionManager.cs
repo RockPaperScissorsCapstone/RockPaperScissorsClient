@@ -26,15 +26,15 @@ namespace ServerManager{
                 // This example uses port 11000 on the local computer.  
              
                 //Production
-                // ipHostInfo = Dns.GetHostEntry("ec2-18-224-97-127.us-east-2.compute.amazonaws.com");
-                // ipAddress = ipHostInfo.AddressList[0]; 
-                // remoteEP = new IPEndPoint(ipAddress, 65432); 
+                ipHostInfo = Dns.GetHostEntry("ec2-18-224-97-127.us-east-2.compute.amazonaws.com");
+                ipAddress = ipHostInfo.AddressList[0]; 
+                remoteEP = new IPEndPoint(ipAddress, 65432);
            
 
                 //Nick's Test environment
-                ipHostInfo = Dns.GetHostEntry("ec2-18-217-146-155.us-east-2.compute.amazonaws.com");
-                ipAddress = ipHostInfo.AddressList[0]; 
-                remoteEP = new IPEndPoint(ipAddress, 65432); 
+                //ipHostInfo = Dns.GetHostEntry("ec2-18-217-146-155.us-east-2.compute.amazonaws.com");
+                //ipAddress = ipHostInfo.AddressList[0]; 
+                //remoteEP = new IPEndPoint(ipAddress, 65432); 
 
                 // Create a TCP/IP  socket.  
                 sender = new Socket(ipAddress.AddressFamily, 
@@ -315,35 +315,53 @@ namespace ServerManager{
             return response[4];
         }
 
-        public Socket ClientListener() {
-            Debug.Log("In Client Listener");
-            IPHostEntry localIpHostInfo = Dns.GetHostEntry(Dns.GetHostName());
-            //.AddressList.FirstOrDefault(ip => ip.AddressFamily == AddressFamily.InterNetwork);
-            hostIPAddress = localIpHostInfo.AddressList[0];
-            Debug.Log(localIpHostInfo);
+        public string getFriendsList(string username) {
+            string response;
+            
+            byte[] msgFunction = EncodeToBytes("findFriends");
+            response = Messenger(msgFunction);
 
-            IPEndPoint localClientEndPoint = new IPEndPoint(hostIPAddress, 65431);
-            Debug.Log(localClientEndPoint);
+            byte[] msgUserID = EncodeToBytes(username);
+            response = Messenger(msgUserID);
 
-            Socket listener = new Socket(hostIPAddress.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
-            Socket multiplayer = null;
-            try{
-                Debug.Log("before Bind");
-                listener.Bind(localClientEndPoint);
-                Debug.Log("before Listen");
-                listener.Listen(100);
-                Debug.Log("before Accept");
-                Debug.Log(listener.ToString());
-                multiplayer = listener.Accept();
-                Debug.Log("Accepted");
-            } catch(Exception e) {
-                Debug.Log(e);
+            EndMessages();
+
+            response = steve_receive();
+
+            return response;
+        }
+
+        private string steve_receive(){
+			byte[] bytes = new byte[1024];
+			int bytesRec = sender.Receive(bytes);
+            Debug.Log(bytesRec);
+            if(bytesRec > 0){
+			    string results = (DecodeToString(bytes));
+                Debug.Log("This is in the receive class " + results);
+                return (results);
             }
+            else{
+                return ("");
+            }
+		}
+        public string[] AddNewFriend(string[] param){
+            string[] response = new string[4];
+            Console.WriteLine("Socket connected to {0}", sender.RemoteEndPoint.ToString());
+            //Data buffer for incoming data.
+            byte[] msgFunction = EncodeToBytes("addFriend");
+            response[0] = Messenger(msgFunction);
 
-            string data = receive(multiplayer);
-            Debug.Log(data);
-            int bytesSent = send(EncodeToBytes("1"), multiplayer);
-            return multiplayer;
+            byte[] myUsername = EncodeToBytes(param[0]);
+            response[1] = Messenger(myUsername);
+
+            byte[] friendUsername = EncodeToBytes(param[1]);
+            response[2] = Messenger(friendUsername);
+
+            EndMessages();
+
+            response[3] = receive();
+
+            return response;
         }
 
         private byte[] EncodeToBytes(string param)
