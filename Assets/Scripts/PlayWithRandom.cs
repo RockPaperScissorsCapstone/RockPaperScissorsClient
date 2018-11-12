@@ -69,6 +69,7 @@ public class PlayWithRandom : MonoBehaviour {
 
             //receive okay from the server to start game
             sessionResponse = int.Parse(connectionManager.getResponse());
+            Debug.Log(sessionResponse);
             if (sessionResponse == 1) {
                 Debug.Log("Multiplayer Session Start Complete. User can choose moves now");
                 Help_Text.text = "Choose your move!";
@@ -77,6 +78,8 @@ public class PlayWithRandom : MonoBehaviour {
                 Paper_Button.onClick.AddListener(delegate {TaskWithParameters("2");});
                 Scissors_Button.onClick.AddListener(delegate {TaskWithParameters("3");});
                 Debug.Log("done adding listener");
+            } else {
+                Debug.Log("REJECTED");
             }
         } else //failed start of client
         {
@@ -110,18 +113,23 @@ public class PlayWithRandom : MonoBehaviour {
 
             localPlayer1Win++;
             Player1_Number_Text.text = localPlayer1Win.ToString();
+            if (localPlayer1Win == 2) {
+                EndGame();
+            }
         } else if (sessionResponse == -1) { //a loss
             matchNumber++;
             Match_Number_Text.text = matchNumber.ToString();
 
             localPlayer2Win++;
             Player2_Number_Text.text = localPlayer2Win.ToString();
-        } else {
-            EndGame();
+            if (localPlayer2Win == 2) {
+                EndGame();
+            }
         }
     }
 
     public void EndGame() {
+        sessionResponse = int.Parse(connectionManager.getResponse());
         if (sessionResponse == 2) { //Player1 Won! Good ending.
             localPlayer1Win++;
             Player1_Number_Text.text = localPlayer1Win.ToString();
