@@ -212,6 +212,7 @@ namespace ServerManager{
             return response[0];
         }
 
+
         public string startPlayerWithRandom() {
             string[] response = new string[2];
 
@@ -237,6 +238,10 @@ namespace ServerManager{
             else{
                 return ("We received nothing from python");
             }
+        }
+
+        public void sendResponse(string param){
+            send(EncodeToBytes(param));
         }
 
         public string getResponse(Socket multiplayer){

@@ -56,17 +56,19 @@ public class PlayWithRandom : MonoBehaviour {
             string multiplayerSessionStartResponse = connectionManager.startPlayerWithRandom();
             Debug.Log(multiplayerSessionStartResponse);
 
-            playWithRandom = connectionManager.ClientListener();
+            //playWithRandom = connectionManager.ClientListener();
 
             //this follow the sequence of MultiplayerSession.py in the server
             //send player1ID
-            connectionManager.sendUserId(player1Id, playWithRandom);
+            connectionManager.getResponse();
+            connectionManager.sendResponse("1");
+            connectionManager.sendUserId(player1Id);
             //receive other player's ID
-            player2Id = connectionManager.getResponse(playWithRandom);
+            player2Id = connectionManager.getResponse();
             Player2_ID_Text.text = player2Id;
 
             //receive okay from the server to start game
-            sessionResponse = int.Parse(connectionManager.getResponse(playWithRandom));
+            sessionResponse = int.Parse(connectionManager.getResponse());
             if (sessionResponse == 1) {
                 Debug.Log("Multiplayer Session Start Complete. User can choose moves now");
                 Help_Text.text = "Choose your move!";
@@ -90,11 +92,11 @@ public class PlayWithRandom : MonoBehaviour {
     public void TaskWithParameters(string move) {
         //send the move to server
         Debug.Log(move);
-        connectionManager.sendMove(move, playWithRandom);
+        connectionManager.sendMove(move);
         Debug.Log("Sent Move");
 
         //receive response
-        string stringResponse = connectionManager.getResponse(playWithRandom);
+        string stringResponse = connectionManager.getResponse();
         sessionResponse = int.Parse(stringResponse);
         Debug.Log(sessionResponse);
 
