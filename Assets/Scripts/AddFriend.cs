@@ -27,8 +27,8 @@ public class AddFriend : MonoBehaviour {
 
         ConnectionManager CM = new ConnectionManager();
             if(CM.StartClient() == 1){
-            responses = CM.AddNewFriend(param);
-            Debug.Log(responses[3]);
+                responses = CM.AddNewFriend(param);
+                Debug.Log(responses[3]);
             }
         }
     }

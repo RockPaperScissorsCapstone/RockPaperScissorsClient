@@ -22,7 +22,7 @@ namespace ServerManager{
                 // This example uses port 11000 on the local computer.  
              
                 //Production
-                ipHostInfo = Dns.GetHostEntry("ec2-18-191-245-66.us-east-2.compute.amazonaws.com");
+                ipHostInfo = Dns.GetHostEntry("ec2-18-224-97-127.us-east-2.compute.amazonaws.com");
                 ipAddress = ipHostInfo.AddressList[0]; 
                 remoteEP = new IPEndPoint(ipAddress, 65432);
            
@@ -218,21 +218,35 @@ namespace ServerManager{
             return response[4];
         }
 
-        public string getFriendsList(string userId) {
+        public string getFriendsList(string username) {
             string response;
             
             byte[] msgFunction = EncodeToBytes("findFriends");
             response = Messenger(msgFunction);
 
-            byte[] msgUserID = EncodeToBytes(userId);
+            byte[] msgUserID = EncodeToBytes(username);
             response = Messenger(msgUserID);
 
             EndMessages();
 
-            response = receive();
+            response = steve_receive();
 
             return response;
         }
+
+        private string steve_receive(){
+			byte[] bytes = new byte[1024];
+			int bytesRec = sender.Receive(bytes);
+            Debug.Log(bytesRec);
+            if(bytesRec > 0){
+			    string results = (DecodeToString(bytes));
+                Debug.Log("This is in the receive class " + results);
+                return (results);
+            }
+            else{
+                return ("");
+            }
+		}
         public string[] AddNewFriend(string[] param){
             string[] response = new string[4];
             Console.WriteLine("Socket connected to {0}", sender.RemoteEndPoint.ToString());
