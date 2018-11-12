@@ -22,7 +22,7 @@ namespace ServerManager{
                 // This example uses port 11000 on the local computer.  
              
                 //Production
-                ipHostInfo = Dns.GetHostEntry("ec2-18-221-141-4.us-east-2.compute.amazonaws.com");
+                ipHostInfo = Dns.GetHostEntry("ec2-18-218-9-3.us-east-2.compute.amazonaws.com");
                 ipAddress = ipHostInfo.AddressList[0]; 
                 remoteEP = new IPEndPoint(ipAddress, 65432); 
            
@@ -98,7 +98,7 @@ namespace ServerManager{
             string[] response = new string[2];
             Console.WriteLine("Socket connected to {0}", sender.RemoteEndPoint.ToString());
 
-            byte[] msgFunction = EncodeToBytes("GetLeaderboard");
+            byte[] msgFunction = EncodeToBytes("Leaderboard");
             response[0] = Messenger(msgFunction);
 
             EndMessages();
