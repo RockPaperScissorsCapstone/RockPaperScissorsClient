@@ -12,7 +12,7 @@ public class PopulateLeaderboard : MonoBehaviour {
     string response;
     UserInfo playerinfo;
 
-    enum user {userPoints, userName} //userPoints is 0, userName is 1
+    enum user { userName, userPoints} //userPoints is 0, userName is 1
 
     // Use this for initialization
     void Start () {
@@ -27,7 +27,6 @@ public class PopulateLeaderboard : MonoBehaviour {
         }
 
         //response = "500,player1;400,another user;300,player2"; // for testing
-
         int count = 0;
         string[] leaderboardPlayers = response.Split(';');
         foreach (string User in leaderboardPlayers) {
