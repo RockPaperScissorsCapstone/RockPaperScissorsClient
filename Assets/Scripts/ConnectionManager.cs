@@ -4,6 +4,7 @@ using System.Net.Sockets;
 using System.Text; 
 using System.Collections; 
 using System.Collections.Generic; 
+using System.Linq;
 using UnityEngine; 
 
 namespace ServerManager{
@@ -22,15 +23,15 @@ namespace ServerManager{
                 // This example uses port 11000 on the local computer.  
              
                 //Production
-                ipHostInfo = Dns.GetHostEntry("ec2-18-221-141-4.us-east-2.compute.amazonaws.com");
+                ipHostInfo = Dns.GetHostEntry("ec2-18-224-97-127.us-east-2.compute.amazonaws.com");
                 ipAddress = ipHostInfo.AddressList[0]; 
                 remoteEP = new IPEndPoint(ipAddress, 65432); 
            
 
-                /* //Nick's Test environment
-                ipHostInfo = Dns.GetHostEntry("ec2-18-217-146-155.us-east-2.compute.amazonaws.com");
-                ipAddress = ipHostInfo.AddressList[0]; 
-                remoteEP = new IPEndPoint(ipAddress, 65432);  */
+                //Nick's Test environment
+                // ipHostInfo = Dns.GetHostEntry("ec2-18-217-146-155.us-east-2.compute.amazonaws.com");
+                // ipAddress = ipHostInfo.AddressList[0]; 
+                // remoteEP = new IPEndPoint(ipAddress, 65432); 
 
                 // Create a TCP/IP  socket.  
                 sender = new Socket(ipAddress.AddressFamily, 
@@ -229,6 +230,25 @@ namespace ServerManager{
 
             response[4] = receive();
             return response[4];
+        }
+
+        public int ClientListener() {
+            IPAddress localIpHostInfo = Dns.GetHostEntry(Dns.GetHostName()).AddressList.FirstOrDefault(ip => ip.AddressFamily == AddressFamily.InterNetwork);
+            IPEndPoint localClientEndPoint = new IPEndPoint(localIpHostInfo, 65431);
+
+            Socket listener = new Socket(localIpHostInfo.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
+            try{
+                listener.Bind(localClientEndPoint);
+                listener.Listen(1);
+                sender = listener.Accept();
+            } catch(Exception e) {
+                Debug.Log(e);
+            }
+
+            string data = receive();
+            Debug.Log(data);
+            int bytesSent = send(EncodeToBytes("1"));
+            return bytesSent;
         }
 
         private byte[] EncodeToBytes(string param)

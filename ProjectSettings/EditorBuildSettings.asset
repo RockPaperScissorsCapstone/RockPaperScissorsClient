@@ -18,6 +18,9 @@ EditorBuildSettings:
     path: Assets/Scenes/PlayerProfile.unity
     guid: 959b27952b90a4e4196ef13779666d37
   - enabled: 1
-    path: Assets/Scenes/GameScreen.unity
+    path: Assets/Scenes/GameScreen_AI.unity
     guid: b32811ae6f125094db05b2ca043e651e
+  - enabled: 1
+    path: Assets/Scenes/GameScreen_Random.unity
+    guid: 96f08d119b42ccd47a1624efd21c1aec
   m_configObjects: {}

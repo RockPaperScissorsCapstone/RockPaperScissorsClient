@@ -15,6 +15,8 @@ public class PlayWithRandom : MonoBehaviour {
 	string wins = ""; //local reference to wins
     string losses = ""; //local reference to losses
 	string player1Id = "";
+    string player1Username = "";
+    string player2Username = "";
 	string player2Id = "";
 	int matchNumber = 1;
 	int sessionResponse = 2;
@@ -45,13 +47,13 @@ public class PlayWithRandom : MonoBehaviour {
         Debug.Log("Changing Help Text to show server is finding a match");
         Help_Text.text = "Finding a Random Player...";
 
-        
-
         connectionManager = new ConnectionManager();
         if (connectionManager.StartClient() == 1) //successful start of client
         {
             string multiplayerSessionStartResponse = connectionManager.startPlayerWithRandom();
             Debug.Log(multiplayerSessionStartResponse);
+
+            int playWithRandomResponse = connectionManager.ClientListener();
 
             //this follow the sequence of MultiplayerSession.py in the server
             //send player1ID
