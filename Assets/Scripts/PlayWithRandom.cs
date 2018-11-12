@@ -108,30 +108,31 @@ public class PlayWithRandom : MonoBehaviour {
             matchNumber++;
             Match_Number_Text.text = matchNumber.ToString();
         } else if (sessionResponse == 1) { //a win
-            matchNumber++;
-            Match_Number_Text.text = matchNumber.ToString();
-
             localPlayer1Win++;
             Player1_Number_Text.text = localPlayer1Win.ToString();
             if (localPlayer1Win == 2) {
                 EndGame();
+            } else {
+                matchNumber++;
+                Match_Number_Text.text = matchNumber.ToString();
             }
         } else if (sessionResponse == -1) { //a loss
-            matchNumber++;
-            Match_Number_Text.text = matchNumber.ToString();
-
             localPlayer2Win++;
             Player2_Number_Text.text = localPlayer2Win.ToString();
             if (localPlayer2Win == 2) {
                 EndGame();
+            } else {
+                matchNumber++;
+                Match_Number_Text.text = matchNumber.ToString();
             }
         }
     }
 
     public void EndGame() {
         sessionResponse = int.Parse(connectionManager.getResponse());
+        connectionManager.LogOff();
         if (sessionResponse == 2) { //Player1 Won! Good ending.
-            localPlayer1Win++;
+            // localPlayer1Win++;
             Player1_Number_Text.text = localPlayer1Win.ToString();
             Help_Text.text = "You won!";
 
@@ -140,7 +141,7 @@ public class PlayWithRandom : MonoBehaviour {
             newWin++;
             userInfo.setWins(newWin.ToString());
         } else if (sessionResponse == -2) { //Player2 Won! Bad ending.
-            localPlayer2Win++;
+            // localPlayer2Win++;
             Player2_Number_Text.text = localPlayer2Win.ToString();
             Help_Text.text = "You lost...";
 
