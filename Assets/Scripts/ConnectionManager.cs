@@ -13,6 +13,8 @@ namespace ServerManager{
 		private IPHostEntry ipHostInfo;
 		private IPAddress ipAddress;
 		private IPEndPoint remoteEP;
+
+        private IPAddress hostIPAddress;
 		private Socket sender;
 
         public ConnectionManager(){
@@ -135,6 +137,42 @@ namespace ServerManager{
 
 		}
 
+        private int send(byte[] msg, Socket multiplayer){
+				int bytesSent = multiplayer.Send(msg);
+				return bytesSent;
+		}
+
+		private string receive(Socket multiplayer){
+			byte[] bytes = new byte[1024];
+			int bytesRec = multiplayer.Receive(bytes);
+            Debug.Log(bytesRec);
+            if(bytes.Length > 0){
+			    string results = (DecodeToString(bytes));
+                Debug.Log("This is in the receive class" + results);
+                return (results);
+            }
+            else{
+                return ("We received nothing from python");
+            }
+		}
+		private string Messenger(byte[] msg, Socket multiplayer){
+            try{
+			    int bytesSent = send(msg, multiplayer);
+			    string response = receive(multiplayer); 
+                return response;
+            }catch (ArgumentNullException ane) {
+                Console.WriteLine("ArgumentNullException : {0}", ane.ToString());
+                return ane.ToString();
+            }catch (SocketException se) {
+                Console.WriteLine("SocketException : {0}", se.ToString());
+                return se.ToString();
+            }catch (Exception e) {
+                Console.WriteLine("Unexpected exception : {0}", e.ToString());
+                return e.ToString(); 
+            }
+
+		}
+
 
         public string[] SubmitLogin(string[] param) {
             string[] response = new string[4];
@@ -201,6 +239,20 @@ namespace ServerManager{
             }
         }
 
+        public string getResponse(Socket multiplayer){
+            byte[] bytes = new byte[1];
+			int bytesRec = sender.Receive(bytes, multiplayer);
+            Debug.Log(bytesRec);
+            if(bytes.Length > 0){
+			    string results = (DecodeToString(bytes));
+                Debug.Log("This is in the getResponse method " + results);
+                return (results);
+            }
+            else{
+                return ("We received nothing from python");
+            }
+        }
+
         public int sendMove(string currentMove){
             byte[] move = EncodeToBytes(currentMove.ToString());
             return send(move);
@@ -210,6 +262,17 @@ namespace ServerManager{
             byte[] userId = EncodeToBytes(userID);
             return send(userId);
         }
+
+        public int sendMove(string currentMove, Socket multiplayer){
+            byte[] move = EncodeToBytes(currentMove.ToString());
+            return send(move, multiplayer);
+        }
+
+        public int sendUserId(string userID, Socket multiplayer) {
+            byte[] userId = EncodeToBytes(userID);
+            return send(userId, multiplayer);
+        }
+
 
         public string updateWinLoss(string[] param) {
             string[] response = new string[6];
@@ -233,27 +296,35 @@ namespace ServerManager{
             return response[4];
         }
 
-        public int ClientListener() {
+        public Socket ClientListener() {
             Debug.Log("In Client Listener");
-            IPAddress localIpHostInfo = Dns.GetHostEntry(Dns.GetHostName()).AddressList.FirstOrDefault(ip => ip.AddressFamily == AddressFamily.InterNetwork);
+            IPAddress localIpHostInfo = Dns.GetHostEntry(Dns.GetHostName());
+            //.AddressList.FirstOrDefault(ip => ip.AddressFamily == AddressFamily.InterNetwork);
+            hostIPAddress = localIpHostInfo.AddressList[0];
             Debug.Log(localIpHostInfo);
 
-            IPEndPoint localClientEndPoint = new IPEndPoint(localIpHostInfo, 65431);
+            IPEndPoint localClientEndPoint = new IPEndPoint(hostIPAddress, 65431);
             Debug.Log(localClientEndPoint);
 
             Socket listener = new Socket(localIpHostInfo.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
+            Socket multiplayer;
             try{
+                Debug.Log("before Bind");
                 listener.Bind(localClientEndPoint);
-                listener.Listen(1);
-                sender = listener.Accept();
+                Debug.Log("before Listen");
+                listener.Listen(100);
+                Debug.Log("before Accept");
+                Debug.Log(listener.ToString());
+                multiplayer = listener.Accept();
+                Debug.Log("Accepted");
             } catch(Exception e) {
                 Debug.Log(e);
             }
 
-            string data = receive();
+            string data = receive(multiplayer);
             Debug.Log(data);
-            int bytesSent = send(EncodeToBytes("1"));
-            return bytesSent;
+            int bytesSent = send(EncodeToBytes("1"), multiplayer);
+            return multiplayer;
         }
 
         private byte[] EncodeToBytes(string param)

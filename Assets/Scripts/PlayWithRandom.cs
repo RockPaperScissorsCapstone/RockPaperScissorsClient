@@ -6,6 +6,7 @@ using ServerManager;
 using Navigator;
 using System;
 using System.IO;
+using System.Net.Sockets;
 
 public class PlayWithRandom : MonoBehaviour {
 	//Player 1 is the player running this instance.
@@ -24,6 +25,8 @@ public class PlayWithRandom : MonoBehaviour {
 	int localPlayer2Win = 0;
 	ConnectionManager connectionManager;
     UserInfo userInfo;
+
+    Socket playWithRandom;
 
 	// Use this for initialization
 	void Start () {
@@ -53,17 +56,17 @@ public class PlayWithRandom : MonoBehaviour {
             string multiplayerSessionStartResponse = connectionManager.startPlayerWithRandom();
             Debug.Log(multiplayerSessionStartResponse);
 
-            int playWithRandomResponse = connectionManager.ClientListener();
+            playWithRandom = connectionManager.ClientListener();
 
             //this follow the sequence of MultiplayerSession.py in the server
             //send player1ID
-            connectionManager.sendUserId(player1Id);
+            connectionManager.sendUserId(player1Id, playWithRandom);
             //receive other player's ID
-            player2Id = connectionManager.getResponse();
+            player2Id = connectionManager.getResponse(playWithRandom);
             Player2_ID_Text.text = player2Id;
 
             //receive okay from the server to start game
-            sessionResponse = int.Parse(connectionManager.getResponse());
+            sessionResponse = int.Parse(connectionManager.getResponse(playWithRandom));
             if (sessionResponse == 1) {
                 Debug.Log("Multiplayer Session Start Complete. User can choose moves now");
                 Help_Text.text = "Choose your move!";
@@ -87,11 +90,11 @@ public class PlayWithRandom : MonoBehaviour {
     public void TaskWithParameters(string move) {
         //send the move to server
         Debug.Log(move);
-        connectionManager.sendMove(move);
+        connectionManager.sendMove(move, playWithRandom);
         Debug.Log("Sent Move");
 
         //receive response
-        string stringResponse = connectionManager.getResponse();
+        string stringResponse = connectionManager.getResponse(playWithRandom);
         sessionResponse = int.Parse(stringResponse);
         Debug.Log(sessionResponse);
 
