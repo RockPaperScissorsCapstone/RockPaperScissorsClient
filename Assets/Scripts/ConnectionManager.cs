@@ -1,9 +1,11 @@
 ﻿using System; 
+using System.IO;
 using System.Net; 
 using System.Net.Sockets; 
 using System.Text; 
 using System.Collections; 
 using System.Collections.Generic; 
+using System.Linq;
 using UnityEngine; 
 
 namespace ServerManager{
@@ -11,6 +13,8 @@ namespace ServerManager{
 		private IPHostEntry ipHostInfo;
 		private IPAddress ipAddress;
 		private IPEndPoint remoteEP;
+
+        private IPAddress hostIPAddress;
 		private Socket sender;
 
         public ConnectionManager(){
@@ -20,17 +24,17 @@ namespace ServerManager{
             // Connect to a remote device.  
                 // Establish the remote endpoint for the socket.  
                 // This example uses port 11000 on the local computer.  
-            /*  
-                //Production
-                ipHostInfo = Dns.GetHostEntry("ec2-18-221-141-4.us-east-2.compute.amazonaws.com");
+             
+                // //Production (Steve's Server)
+                ipHostInfo = Dns.GetHostEntry("ec2-18-224-97-127.us-east-2.compute.amazonaws.com");
                 ipAddress = ipHostInfo.AddressList[0]; 
-                remoteEP = new IPEndPoint(ipAddress, 65432); 
-            */
+                remoteEP = new IPEndPoint(ipAddress, 65432);
+           
 
                 //Nick's Test environment
-                ipHostInfo = Dns.GetHostEntry("ec2-18-217-146-155.us-east-2.compute.amazonaws.com");
-                ipAddress = ipHostInfo.AddressList[0]; 
-                remoteEP = new IPEndPoint(ipAddress, 65432); 
+                //ipHostInfo = Dns.GetHostEntry("ec2-18-217-146-155.us-east-2.compute.amazonaws.com");
+                //ipAddress = ipHostInfo.AddressList[0]; 
+                //remoteEP = new IPEndPoint(ipAddress, 65432); 
 
                 // Create a TCP/IP  socket.  
                 sender = new Socket(ipAddress.AddressFamily, 
@@ -93,6 +97,20 @@ namespace ServerManager{
             return response[3];
         }
 
+        public string GetLeaderboard()
+        {
+            string[] response = new string[2];
+            Console.WriteLine("Socket connected to {0}", sender.RemoteEndPoint.ToString());
+
+            byte[] msgFunction = EncodeToBytes("Leaderboard");
+            response[0] = Messenger(msgFunction);
+
+            EndMessages();
+
+            response[1] = receive();
+            return response[1];
+        }
+
 		private void EndMessages(){
 			send(EncodeToBytes("end"));
 		}
@@ -105,10 +123,11 @@ namespace ServerManager{
 		private string receive(){
 			byte[] bytes = new byte[1024];
 			int bytesRec = sender.Receive(bytes);
+            Debug.Log(bytesRec);
             if(bytes.Length > 0){
-			string results = (DecodeToString(bytes));
-            Debug.Log("This is in the recieve class" + results);
-            return (DecodeToString(bytes));
+			    string results = (DecodeToString(bytes));
+                Debug.Log("This is in the receive class" + results);
+                return (results);
             }
             else{
                 return ("We received nothing from python");
@@ -118,6 +137,42 @@ namespace ServerManager{
             try{
 			    int bytesSent = send(msg);
 			    string response = receive(); 
+                return response;
+            }catch (ArgumentNullException ane) {
+                Console.WriteLine("ArgumentNullException : {0}", ane.ToString());
+                return ane.ToString();
+            }catch (SocketException se) {
+                Console.WriteLine("SocketException : {0}", se.ToString());
+                return se.ToString();
+            }catch (Exception e) {
+                Console.WriteLine("Unexpected exception : {0}", e.ToString());
+                return e.ToString(); 
+            }
+
+		}
+
+        private int send(byte[] msg, Socket multiplayer){
+				int bytesSent = multiplayer.Send(msg);
+				return bytesSent;
+		}
+
+		private string receive(Socket multiplayer){
+			byte[] bytes = new byte[1024];
+			int bytesRec = multiplayer.Receive(bytes);
+            Debug.Log(bytesRec);
+            if(bytes.Length > 0){
+			    string results = (DecodeToString(bytes));
+                Debug.Log("This is in the receive class" + results);
+                return (results);
+            }
+            else{
+                return ("We received nothing from python");
+            }
+		}
+		private string Messenger(byte[] msg, Socket multiplayer){
+            try{
+			    int bytesSent = send(msg, multiplayer);
+			    string response = receive(multiplayer); 
                 return response;
             }catch (ArgumentNullException ane) {
                 Console.WriteLine("ArgumentNullException : {0}", ane.ToString());
@@ -154,6 +209,171 @@ namespace ServerManager{
             response[3] = receive();
             
             Debug.Log(response[3]);
+
+            return response;
+        }
+
+        public string startGameSession() {
+            string[] response = new string[2];
+
+            byte[] msgFunction = EncodeToBytes("Session");
+            response[0] = Messenger(msgFunction);
+
+            EndMessages();
+
+            Debug.Log(response[0]);
+
+            return response[0];
+        }
+
+
+        public string startPlayerWithRandom() {
+            string[] response = new string[2];
+
+            byte[] msgFunction = EncodeToBytes("PlayWithRandom");
+            response[0] = Messenger(msgFunction);
+
+            EndMessages();
+
+            Debug.Log(response[0]);
+
+            return response[0];
+        }
+
+        public string getResponse(){
+            byte[] bytes = new byte[10];
+			int bytesRec = sender.Receive(bytes);
+            Debug.Log(bytesRec);
+            if(bytes.Length > 0){
+			    string results = (DecodeToString(bytes));
+                Debug.Log("This is in the getResponse method " + results);
+                return (results);
+            }
+            else{
+                return ("We received nothing from python");
+            }
+        }
+
+        public string getOneResponse(){
+            byte[] bytes = new byte[1];
+			int bytesRec = sender.Receive(bytes);
+            Debug.Log(bytesRec);
+            if(bytes.Length > 0){
+			    string results = (DecodeToString(bytes));
+                Debug.Log("This is in the getResponse method " + results);
+                return (results);
+            }
+            else{
+                return ("We received nothing from python");
+            }
+        }
+
+        public void sendResponse(string param){
+            send(EncodeToBytes(param));
+        }
+
+        public string getResponse(Socket multiplayer){
+            byte[] bytes = new byte[1];
+			int bytesRec = multiplayer.Receive(bytes);
+            Debug.Log(bytesRec);
+            if(bytes.Length > 0){
+			    string results = (DecodeToString(bytes));
+                Debug.Log("This is in the getResponse method " + results);
+                return (results);
+            }
+            else{
+                return ("We received nothing from python");
+            }
+        }
+
+        public int sendMove(string currentMove){
+            byte[] move = EncodeToBytes(currentMove.ToString());
+            return send(move);
+        }
+
+        public int sendUserId(string userID) {
+            byte[] userId = EncodeToBytes(userID);
+            return send(userId);
+        }
+
+        public int sendMove(string currentMove, Socket multiplayer){
+            byte[] move = EncodeToBytes(currentMove.ToString());
+            return send(move, multiplayer);
+        }
+
+        public int sendUserId(string userID, Socket multiplayer) {
+            byte[] userId = EncodeToBytes(userID);
+            return send(userId, multiplayer);
+        }
+
+
+        public string updateWinLoss(string[] param) {
+            string[] response = new string[6];
+            Console.WriteLine("Socket connected to {0}", sender.RemoteEndPoint.ToString());
+            //Data buffer for incoming data.
+            byte[] msgFunction = EncodeToBytes("UpdateWinLoss");
+            response[0] = Messenger(msgFunction);
+
+            byte[] msgWin = EncodeToBytes(param[0]);
+            response[1] = Messenger(msgWin);
+
+            byte[] msgLoss = EncodeToBytes(param[1]);
+            response[2] = Messenger(msgLoss);
+
+            byte[] msgUserID = EncodeToBytes(param[2]);
+            response[3] = Messenger(msgUserID);
+
+            EndMessages();
+
+            response[4] = receive();
+            return response[4];
+        }
+
+        public string getFriendsList(string username) {
+            string response;
+            
+            byte[] msgFunction = EncodeToBytes("findFriends");
+            response = Messenger(msgFunction);
+
+            byte[] msgUserID = EncodeToBytes(username);
+            response = Messenger(msgUserID);
+
+            EndMessages();
+
+            response = steve_receive();
+
+            return response;
+        }
+
+        private string steve_receive(){
+			byte[] bytes = new byte[1024];
+			int bytesRec = sender.Receive(bytes);
+            Debug.Log(bytesRec);
+            if(bytesRec > 0){
+			    string results = (DecodeToString(bytes));
+                Debug.Log("This is in the receive class " + results);
+                return (results);
+            }
+            else{
+                return ("");
+            }
+		}
+        public string[] AddNewFriend(string[] param){
+            string[] response = new string[4];
+            Console.WriteLine("Socket connected to {0}", sender.RemoteEndPoint.ToString());
+            //Data buffer for incoming data.
+            byte[] msgFunction = EncodeToBytes("addFriend");
+            response[0] = Messenger(msgFunction);
+
+            byte[] myUsername = EncodeToBytes(param[0]);
+            response[1] = Messenger(myUsername);
+
+            byte[] friendUsername = EncodeToBytes(param[1]);
+            response[2] = Messenger(friendUsername);
+
+            EndMessages();
+
+            response[3] = receive();
 
             return response;
         }
