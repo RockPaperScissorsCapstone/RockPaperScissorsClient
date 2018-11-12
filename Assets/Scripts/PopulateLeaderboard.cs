@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
@@ -30,24 +31,25 @@ public class PopulateLeaderboard : MonoBehaviour {
         int count = 0;
         string[] leaderboardPlayers = response.Split(';');
         foreach (string User in leaderboardPlayers) {
-            string[] UserData = User.Split(',');
-            ++count;
-  
-            GameObject leaderboardItem = (GameObject)Instantiate(Resources.Load("Prefabs/Leaderboard_Item"));
-            GameObject place = leaderboardItem.transform.Find("Leaderboard_Place").gameObject;
-            GameObject points = leaderboardItem.transform.Find("Leaderboard_Points").gameObject;
-            GameObject name = leaderboardItem.transform.Find("Leaderboard_Name").gameObject;
+            if (User.Contains(",")){
+                string[] UserData = User.Split(',');
+                Debug.Log(UserData[0]);
+                Debug.Log(UserData[1]);
+                ++count;
+    
+                GameObject leaderboardItem = (GameObject)Instantiate(Resources.Load("Prefabs/Leaderboard_Item"));
+                GameObject place = leaderboardItem.transform.Find("Leaderboard_Place").gameObject;
+                GameObject points = leaderboardItem.transform.Find("Leaderboard_Points").gameObject;
+                GameObject name = leaderboardItem.transform.Find("Leaderboard_Name").gameObject;
 
-            place.GetComponent<Text>().text = "" + count;
-            points.GetComponent<Text>().text = UserData[(int)user.userPoints];
-            name.GetComponent<Text>().text = UserData[(int)user.userName];
+                place.GetComponent<Text>().text = "" + count;
+                points.GetComponent<Text>().text = UserData[1];
+                name.GetComponent<Text>().text = UserData[0];
 
-            leaderboardItem.transform.parent = leaderboardContent.transform;
-            leaderboardItem.transform.localScale = new Vector3(1, 1, 1);
+                leaderboardItem.transform.parent = leaderboardContent.transform;
+                leaderboardItem.transform.localScale = new Vector3(1, 1, 1);
+            }
         }
-        
-        
-
     }
 	
 	// Update is called once per frame
