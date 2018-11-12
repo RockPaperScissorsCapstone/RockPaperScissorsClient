@@ -233,27 +233,27 @@ namespace ServerManager{
             return response[4];
         }
 
-        public void ClientListener() {
+        public int ClientListener() {
             Debug.Log("In Client Listener");
             IPAddress localIpHostInfo = Dns.GetHostEntry(Dns.GetHostName()).AddressList.FirstOrDefault(ip => ip.AddressFamily == AddressFamily.InterNetwork);
             Debug.Log(localIpHostInfo);
 
-            // IPEndPoint localClientEndPoint = new IPEndPoint(localIpHostInfo, 65431);
-            // Debug.Log(localClientEndPoint);
+            IPEndPoint localClientEndPoint = new IPEndPoint(localIpHostInfo, 65431);
+            Debug.Log(localClientEndPoint);
 
-            // Socket listener = new Socket(localIpHostInfo.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
-            // try{
-            //     listener.Bind(localClientEndPoint);
-            //     listener.Listen(1);
-            //     sender = listener.Accept();
-            // } catch(Exception e) {
-            //     Debug.Log(e);
-            // }
+            Socket listener = new Socket(localIpHostInfo.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
+            try{
+                listener.Bind(localClientEndPoint);
+                listener.Listen(1);
+                sender = listener.Accept();
+            } catch(Exception e) {
+                Debug.Log(e);
+            }
 
-            // string data = receive();
-            // Debug.Log(data);
-            // int bytesSent = send(EncodeToBytes("1"));
-            // return bytesSent;
+            string data = receive();
+            Debug.Log(data);
+            int bytesSent = send(EncodeToBytes("1"));
+            return bytesSent;
         }
 
         private byte[] EncodeToBytes(string param)
