@@ -241,7 +241,7 @@ namespace ServerManager{
 
         public string getResponse(Socket multiplayer){
             byte[] bytes = new byte[1];
-			int bytesRec = sender.Receive(bytes, multiplayer);
+			int bytesRec = multiplayer.Receive(bytes);
             Debug.Log(bytesRec);
             if(bytes.Length > 0){
 			    string results = (DecodeToString(bytes));
@@ -298,7 +298,7 @@ namespace ServerManager{
 
         public Socket ClientListener() {
             Debug.Log("In Client Listener");
-            IPAddress localIpHostInfo = Dns.GetHostEntry(Dns.GetHostName());
+            IPHostEntry localIpHostInfo = Dns.GetHostEntry(Dns.GetHostName());
             //.AddressList.FirstOrDefault(ip => ip.AddressFamily == AddressFamily.InterNetwork);
             hostIPAddress = localIpHostInfo.AddressList[0];
             Debug.Log(localIpHostInfo);
@@ -306,8 +306,8 @@ namespace ServerManager{
             IPEndPoint localClientEndPoint = new IPEndPoint(hostIPAddress, 65431);
             Debug.Log(localClientEndPoint);
 
-            Socket listener = new Socket(localIpHostInfo.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
-            Socket multiplayer;
+            Socket listener = new Socket(hostIPAddress.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
+            Socket multiplayer = null;
             try{
                 Debug.Log("before Bind");
                 listener.Bind(localClientEndPoint);
