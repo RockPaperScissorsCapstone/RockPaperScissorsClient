@@ -1,4 +1,5 @@
 ﻿using System; 
+using System.IO;
 using System.Net; 
 using System.Net.Sockets; 
 using System.Text; 
@@ -233,10 +234,25 @@ namespace ServerManager{
         }
 
         public int ClientListener() {
-            IPAddress localIpHostInfo = Dns.GetHostEntry(Dns.GetHostName()).AddressList.FirstOrDefault(ip => ip.AddressFamily == AddressFamily.InterNetwork);
-            IPEndPoint localClientEndPoint = new IPEndPoint(localIpHostInfo, 65431);
+            Debug.Log("In Client Listener");
+            WebRequest request = WebRequest.Create("http://checkip.dyndns.org");
+            WebResponse response = request.GetResponse();
+            Stream dataStream = response.GetResponseStream();
+            StreamReader reader = new StreamReader(dataStream);
+            string responseForIP = reader.ReadToEnd();
+            string[] a = responseForIP.Split(':');
+            string a2 = a[1].Substring(1);
+            string[] a3 = a2.Split('<');
+            string actualIP = a3[0];
+            reader.Close();
+            response.Close();
 
-            Socket listener = new Socket(localIpHostInfo.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
+            IPAddress actualIPAddress = IPAddress.Parse(actualIP);
+
+            IPEndPoint localClientEndPoint = new IPEndPoint(actualIPAddress, 65431);
+            Debug.Log(localClientEndPoint);
+
+            Socket listener = new Socket(actualIPAddress.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
             try{
                 listener.Bind(localClientEndPoint);
                 listener.Listen(1);
