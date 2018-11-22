@@ -378,6 +378,46 @@ namespace ServerManager{
             return response;
         }
 
+        public string CheckChallengesUpdate(string userId)
+        {
+            string response;
+            Console.WriteLine("Socket connected to {0}", sender.RemoteEndPoint.ToString());
+            //Data buffer for incoming data.
+            byte[] msgFunction = EncodeToBytes("CheckNewChallenges");
+            response = Messenger(msgFunction);
+
+            byte[] myUserId = EncodeToBytes(userId);
+            response = Messenger(myUserId);
+
+            EndMessages();
+
+            response = receive();
+            return response;
+        }
+
+        public string[] ChallengeFriend(string[] param)
+        {
+            string[] response = new string[5];
+            Console.WriteLine("Socket connected to {0}", sender.RemoteEndPoint.ToString());
+            //Data buffer for incoming data.
+            byte[] msgFunction = EncodeToBytes("challengeFriend");
+            response[0] = Messenger(msgFunction);
+
+            byte[] myUserId = EncodeToBytes(param[0]);
+            response[1] = Messenger(myUserId);
+
+            byte[] friendUsername = EncodeToBytes(param[1]);
+            response[2] = Messenger(friendUsername);
+
+            byte[] message = EncodeToBytes(param[2]);
+            response[3] = Messenger(message);
+
+            EndMessages();
+
+            response[4] = receive();
+            return response;
+        }
+
         private byte[] EncodeToBytes(string param)
         {
             return Encoding.ASCII.GetBytes(param);
