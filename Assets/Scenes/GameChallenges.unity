@@ -327,6 +327,10 @@ Prefab:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
+    - target: {fileID: 1655181009654230, guid: 964860881e7b20a41875600883db2cbf, type: 2}
+      propertyPath: m_Name
+      value: Friend_Username
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 964860881e7b20a41875600883db2cbf, type: 2}
   m_IsPrefabAsset: 0
@@ -600,6 +604,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a52406ba5a8403f4298a658bb2e4b0ae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  scrollView: {fileID: 0}
+  Challenge_Item: {fileID: 0}
+  ScrollViewContent: {fileID: 0}
 --- !u!81 &598255704
 AudioListener:
   m_ObjectHideFlags: 0

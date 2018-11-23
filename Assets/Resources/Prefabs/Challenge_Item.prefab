@@ -56,6 +56,7 @@ GameObject:
   - component: {fileID: 224793051493887692}
   - component: {fileID: 222631449346778268}
   - component: {fileID: 114292661262317146}
+  - component: {fileID: 114723435817514660}
   m_Layer: 5
   m_Name: Challenge_Item
   m_TagString: Untagged
@@ -379,6 +380,22 @@ MonoBehaviour:
   m_Text: 'Friend Name
 
 '
+--- !u!114 &114723435817514660
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1311527387960050}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a52406ba5a8403f4298a658bb2e4b0ae, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  scrollView: {fileID: 0}
+  Challenge_Item: {fileID: 0}
+  ScrollViewContent: {fileID: 0}
+  FriendUsername: {fileID: 0}
+  ChallengeButton: {fileID: 0}
 --- !u!222 &222241161280461074
 CanvasRenderer:
   m_ObjectHideFlags: 1

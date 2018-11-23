@@ -12,12 +12,16 @@ public class GetFriendsList : MonoBehaviour {
 	public ScrollRect scrollView;
 	public GameObject Friend_Item;
 	public GameObject ScrollViewContent;
+    public GameObject FriendUsername;
+    public Button ChallengeButton;
+    string userId;
 
-	// Use this for initialization
-	void Start () {
+    // Use this for initialization
+    void Start () {
 		string data = File.ReadAllText(Application.dataPath + "/MyInfo.json");
 		UserInfo playerinfo = JsonUtility.FromJson<UserInfo>(data);
 		string username = playerinfo.getUsername();
+        userId = playerinfo.getUserId();
 		getFriends(username);
 	}
 	
@@ -68,4 +72,24 @@ public class GetFriendsList : MonoBehaviour {
 			}
 		}
 	}
+
+    public void ChallengeFriend()
+    {
+        string[] param = new string[3];
+        string friendUsername = FriendUsername.GetComponent<Text>().text;
+        param[0] = userId;
+        param[1] = friendUsername;
+        param[3] = "Challenge Message";
+
+
+        Debug.Log(friendUsername);
+        ConnectionManager CM = new ConnectionManager();
+
+        if (CM.StartClient() == 1)
+        {
+            string[] response = CM.ChallengeFriend(param);
+            Debug.Log(response[4]);
+        }
+        
+    }
 }

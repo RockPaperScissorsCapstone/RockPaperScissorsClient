@@ -18,6 +18,7 @@ public class FriendChallenges : MonoBehaviour {
     public ScrollRect scrollView;
     public GameObject Challenge_Item;
     public GameObject ScrollViewContent;
+   
 
     void Start () {
         //get userID from json file
@@ -83,28 +84,12 @@ public class FriendChallenges : MonoBehaviour {
                     Debug.Log(challenge);
 
                     //instantiate a Friend_Item prefab, set the parent to scrollview's content, and change the text to friend var from friendsList
-                    GameObject ChallengeObject = Instantiate(Challenge_Item);
+                GameObject ChallengeObject = Instantiate(Challenge_Item);
                 ChallengeObject.transform.SetParent(ScrollViewContent.transform, false);
                 ChallengeObject.transform.Find("Friend_Username").gameObject.GetComponent<Text>().text = challenge;
                 }
             }
     }
 
-    public void ChallengeFriend()
-    {
-        string[] param = new string[3];
-        string friendUsername = "";
-        param[0] = userId;
-        param[1] = friendUsername;
-        param[3] = "Challenge Message";
-
-        ConnectionManager CM = new ConnectionManager();
-
-        if (CM.StartClient() == 1)
-        {
-            string[] response = CM.ChallengeFriend(param);
-            Debug.Log(response[4]);
-        }
-
-    }
+   
 }

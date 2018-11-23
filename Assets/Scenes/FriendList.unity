@@ -283,7 +283,6 @@ GameObject:
   - component: {fileID: 347755123}
   - component: {fileID: 347755127}
   - component: {fileID: 347755126}
-  - component: {fileID: 347755128}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -377,17 +376,8 @@ MonoBehaviour:
   Friend_Item: {fileID: 1802133379763484, guid: 2fb3888d023408d46a7fb4fc16c22f88,
     type: 2}
   ScrollViewContent: {fileID: 404467763}
---- !u!114 &347755128
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 347755122}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a52406ba5a8403f4298a658bb2e4b0ae, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  FriendUsername: {fileID: 684009991}
+  ChallengeButton: {fileID: 728240203}
 --- !u!1 &404467763
 GameObject:
   m_ObjectHideFlags: 0
@@ -459,6 +449,11 @@ MonoBehaviour:
   m_ChildForceExpandHeight: 1
   m_ChildControlWidth: 0
   m_ChildControlHeight: 0
+--- !u!1 &684009991 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1173440405194472, guid: 2fb3888d023408d46a7fb4fc16c22f88,
+    type: 2}
+  m_PrefabInternal: {fileID: 728240201}
 --- !u!1 &704360902
 GameObject:
   m_ObjectHideFlags: 0
@@ -560,6 +555,11 @@ Prefab:
   m_Modification:
     m_TransformParent: {fileID: 404467764}
     m_Modifications:
+    - target: {fileID: 114835999727040606, guid: 2fb3888d023408d46a7fb4fc16c22f88,
+        type: 2}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 224714980795313532, guid: 2fb3888d023408d46a7fb4fc16c22f88,
         type: 2}
       propertyPath: m_LocalPosition.x
@@ -650,6 +650,47 @@ Prefab:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: ChallengeButton
+      value: 
+      objectReference: {fileID: 114835999727040606, guid: 2fb3888d023408d46a7fb4fc16c22f88,
+        type: 2}
+    - target: {fileID: 0}
+      propertyPath: FriendUsername
+      value: 
+      objectReference: {fileID: 1173440405194472, guid: 2fb3888d023408d46a7fb4fc16c22f88,
+        type: 2}
+    - target: {fileID: 0}
+      propertyPath: Challenge_Item
+      value: 
+      objectReference: {fileID: 1802133379763484, guid: 2fb3888d023408d46a7fb4fc16c22f88,
+        type: 2}
+    - target: {fileID: 114835999727040606, guid: 2fb3888d023408d46a7fb4fc16c22f88,
+        type: 2}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114835999727040606, guid: 2fb3888d023408d46a7fb4fc16c22f88,
+        type: 2}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 114835999727040606, guid: 2fb3888d023408d46a7fb4fc16c22f88,
+        type: 2}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 114105707066157424, guid: 2fb3888d023408d46a7fb4fc16c22f88,
+        type: 2}
+    - target: {fileID: 114835999727040606, guid: 2fb3888d023408d46a7fb4fc16c22f88,
+        type: 2}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: ChallengeFriend
+      objectReference: {fileID: 0}
+    - target: {fileID: 114835999727040606, guid: 2fb3888d023408d46a7fb4fc16c22f88,
+        type: 2}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2fb3888d023408d46a7fb4fc16c22f88, type: 2}
   m_IsPrefabAsset: 0
@@ -658,6 +699,12 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 224714980795313532, guid: 2fb3888d023408d46a7fb4fc16c22f88,
     type: 2}
   m_PrefabInternal: {fileID: 728240201}
+--- !u!114 &728240203 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 114835999727040606, guid: 2fb3888d023408d46a7fb4fc16c22f88,
+    type: 2}
+  m_PrefabInternal: {fileID: 728240201}
+  m_Script: {fileID: 1392445389, guid: f70555f144d8491a825f0804e09c671c, type: 3}
 --- !u!1 &828462303
 GameObject:
   m_ObjectHideFlags: 0
