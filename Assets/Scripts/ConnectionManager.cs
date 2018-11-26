@@ -187,7 +187,6 @@ namespace ServerManager{
 
 		}
 
-
         public string[] SubmitLogin(string[] param) {
             string[] response = new string[4];
             Console.WriteLine("Socket connected to {0}", sender.RemoteEndPoint.ToString());
