@@ -418,6 +418,52 @@ namespace ServerManager{
             return response;
         }
 
+
+        public string ChallengeDenied(string [] param)
+        {
+            string response;
+            Console.WriteLine("Socket connected to {0}", sender.RemoteEndPoint.ToString());
+            //Data buffer for incoming data.
+            byte[] msgFunction = EncodeToBytes("ChallengeDenied");
+            response = Messenger(msgFunction);
+
+            byte[] myUserId = EncodeToBytes(param[0]);
+            response = Messenger(myUserId);
+
+            byte[] ChallengerUsername = EncodeToBytes(param[1]);
+            response = Messenger(ChallengerUsername);
+
+            byte[] message = EncodeToBytes(param[2]);
+            response = Messenger(message);
+            EndMessages();
+
+            response = receive();
+            return response;
+        }
+
+        public string ChallengeAccepted(string[] param)
+        {
+            string response;
+            Console.WriteLine("Socket connected to {0}", sender.RemoteEndPoint.ToString());
+            //Data buffer for incoming data.
+            byte[] msgFunction = EncodeToBytes("ChallengeAccepted");
+            response = Messenger(msgFunction);
+
+            byte[] myUserId = EncodeToBytes(param[0]);
+            response = Messenger(myUserId);
+
+            byte[] ChallengerUsername = EncodeToBytes(param[1]);
+            response = Messenger(ChallengerUsername);
+
+            byte[] message = EncodeToBytes(param[2]);
+            response = Messenger(message);
+            EndMessages();
+
+            response = receive();
+            return response;
+        }
+
+
         private byte[] EncodeToBytes(string param)
         {
             return Encoding.ASCII.GetBytes(param);

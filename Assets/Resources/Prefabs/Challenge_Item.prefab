@@ -56,7 +56,7 @@ GameObject:
   - component: {fileID: 224793051493887692}
   - component: {fileID: 222631449346778268}
   - component: {fileID: 114292661262317146}
-  - component: {fileID: 114723435817514660}
+  - component: {fileID: 114039131371609270}
   m_Layer: 5
   m_Name: Challenge_Item
   m_TagString: Untagged
@@ -93,7 +93,7 @@ GameObject:
   - component: {fileID: 222541201340766788}
   - component: {fileID: 114641055572699996}
   m_Layer: 5
-  m_Name: Friend_Name
+  m_Name: Friend_Username
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -116,6 +116,21 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!114 &114039131371609270
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1311527387960050}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7b7fab62246041a44beb1a99715280cb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Challenge_Item: {fileID: 1311527387960050}
+  ChallengerUsername: {fileID: 1655181009654230}
+  Accept: {fileID: 114354212469784390}
+  Deny: {fileID: 114201304695354008}
 --- !u!114 &114201304695354008
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -154,7 +169,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 114514723529187894}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 114039131371609270}
+        m_MethodName: RejectChallenge
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!114 &114292661262317146
@@ -222,7 +248,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 114425400438592932}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 114039131371609270}
+        m_MethodName: AcceptChallenge
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!114 &114361490821894158
@@ -380,22 +417,6 @@ MonoBehaviour:
   m_Text: 'Friend Name
 
 '
---- !u!114 &114723435817514660
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1311527387960050}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a52406ba5a8403f4298a658bb2e4b0ae, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  scrollView: {fileID: 0}
-  Challenge_Item: {fileID: 0}
-  ScrollViewContent: {fileID: 0}
-  FriendUsername: {fileID: 0}
-  ChallengeButton: {fileID: 0}
 --- !u!222 &222241161280461074
 CanvasRenderer:
   m_ObjectHideFlags: 1

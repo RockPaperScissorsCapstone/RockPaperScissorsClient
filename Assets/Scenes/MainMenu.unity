@@ -350,6 +350,17 @@ MonoBehaviour:
           m_StringArgument: GameChallenges
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 0}
+        m_MethodName: 
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!114 &425120285
@@ -1538,7 +1549,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1926974652}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 2074820651}
+        m_MethodName: GoToScene
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: FriendList
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!114 &1926974652
@@ -1586,7 +1608,6 @@ GameObject:
   - component: {fileID: 2074820649}
   - component: {fileID: 2074820648}
   - component: {fileID: 2074820651}
-  - component: {fileID: 2074820652}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -1665,17 +1686,3 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 24e0126c8cd1b6b41b4bbe11a91874a0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &2074820652
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 2074820647}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a52406ba5a8403f4298a658bb2e4b0ae, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  scrollView: {fileID: 0}
-  Challenge_Item: {fileID: 0}
-  ScrollViewContent: {fileID: 0}

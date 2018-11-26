@@ -15,17 +15,20 @@ public class FriendChallenges : MonoBehaviour {
     string userId;
     string[] challengeusernames;
 
-    public ScrollRect scrollView;
     public GameObject Challenge_Item;
+    public ScrollRect scrollView;
     public GameObject ScrollViewContent;
-   
-
-    void Start () {
+    
+    void Start() {
         //get userID from json file
         Debug.Log("Started");
+
         string data = File.ReadAllText(Application.dataPath + "/MyInfo.json");
         UserInfo playerinfo = JsonUtility.FromJson<UserInfo>(data);
         userId = playerinfo.getUserId();
+       // string response = "Ram,Sam,Ham,Gam,Tam,Pam";
+       //challengeusernames = response.Split(',');
+       // addNewChallengesUI();
         
     }
 	
@@ -41,14 +44,13 @@ public class FriendChallenges : MonoBehaviour {
         //Update method stopped for every five seconds.
         checkupdates = 0;
         yield return new WaitForSeconds(6f);
-        Debug.Log(userId);
         checkupdates = getChallenges();
     }
-
+    //Receives all challenging usernames from the backend.
     public int getChallenges()
     {
         //get data from the bacck end
-
+        int returnvalue = 0;
         ConnectionManager CM = new ConnectionManager();
         if (CM.StartClient() == 1)
         {
@@ -58,38 +60,36 @@ public class FriendChallenges : MonoBehaviour {
             //split the response by comma
             challengeusernames = response.Split(',');
 
-            foreach (var challenge in challengeusernames)
-            {
-                Debug.Log(challenge);
-            }
-
             //update UI method
-            addNewChallengesUI();
+            returnvalue = addNewChallengesUI();
 
             scrollView.verticalNormalizedPosition = 1;
+
+            return returnvalue;
         }
         else
         {
             Debug.Log("Connection Manager start client failed.");
+            return 1;
         }
         
-        return 1;
     }
-    public void addNewChallengesUI()
+    //Updates UI with new sets of challenges received from backend.
+    public int addNewChallengesUI()
     {
+        
         foreach(var challenge in challengeusernames) {
                 Debug.Log(challenge.Length);
                 if (challenge.Length > 0 & challenge.Length < 45)
                 {
                     Debug.Log(challenge);
-
-                    //instantiate a Friend_Item prefab, set the parent to scrollview's content, and change the text to friend var from friendsList
+                
                 GameObject ChallengeObject = Instantiate(Challenge_Item);
                 ChallengeObject.transform.SetParent(ScrollViewContent.transform, false);
                 ChallengeObject.transform.Find("Friend_Username").gameObject.GetComponent<Text>().text = challenge;
                 }
+            
             }
+        return 1;
     }
-
-   
 }

@@ -72,7 +72,7 @@ public class GetFriendsList : MonoBehaviour {
 			}
 		}
 	}
-
+    //Called when challenge button is pressed and sends Challenger's userid, challengee's username and message "Challenge Message" to the backend
     public void ChallengeFriend()
     {
         string[] param = new string[3];
