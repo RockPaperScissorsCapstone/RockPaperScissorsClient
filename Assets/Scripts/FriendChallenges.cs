@@ -13,9 +13,12 @@ public class FriendChallenges : MonoBehaviour {
     // Use this for initialization
     int checkupdates = 1;
     string userId;
-    string[] challengeusernames;
+    public NotificationList notifications = new NotificationList();
+  
 
     public GameObject Challenge_Item;
+    public GameObject Friend_Request;
+    public GameObject Response;
     public ScrollRect scrollView;
     public GameObject ScrollViewContent;
     
@@ -26,10 +29,7 @@ public class FriendChallenges : MonoBehaviour {
         string data = File.ReadAllText(Application.dataPath + "/MyInfo.json");
         UserInfo playerinfo = JsonUtility.FromJson<UserInfo>(data);
         userId = playerinfo.getUserId();
-       // string response = "Ram,Sam,Ham,Gam,Tam,Pam";
-       //challengeusernames = response.Split(',');
-       // addNewChallengesUI();
-        
+    
     }
 	
 	// Update is called once per frame
@@ -55,11 +55,11 @@ public class FriendChallenges : MonoBehaviour {
         if (CM.StartClient() == 1)
         {
             //the server spits back comma separated string of friends
-            string response = CM.CheckChallengesUpdate(userId);
+            string response = CM.CheckChallengesFriendRquestsMessages(userId);
 
             //split the response by comma
-            challengeusernames = response.Split(',');
-
+            notifications = JsonUtility.FromJson<NotificationList>(response);
+            
             //update UI method
             returnvalue = addNewChallengesUI();
 
@@ -78,18 +78,40 @@ public class FriendChallenges : MonoBehaviour {
     public int addNewChallengesUI()
     {
         
-        foreach(var challenge in challengeusernames) {
-                Debug.Log(challenge.Length);
-                if (challenge.Length > 0 & challenge.Length < 45)
-                {
-                    Debug.Log(challenge);
+        foreach(Notification notification in notifications.Notification) {
+                if(notification.messagetype.Equals("Game Challenge"))
+            {
+                ChallengeMaker(notification.username);
+            } else if (notification.messagetype.Equals("Friend Request"))
+            {
+                FriendRequestMaker(notification.username);
+            } else
+            {
+                ResponseMaker(notification.username, notification.messagetype);
+            }
                 
-                GameObject ChallengeObject = Instantiate(Challenge_Item);
-                ChallengeObject.transform.SetParent(ScrollViewContent.transform, false);
-                ChallengeObject.transform.Find("Friend_Username").gameObject.GetComponent<Text>().text = challenge;
-                }
-            
             }
         return 1;
+    }
+
+    public void ChallengeMaker(string username)
+    {
+        GameObject ChallengeObject = Instantiate(Challenge_Item);
+        ChallengeObject.transform.SetParent(ScrollViewContent.transform, false);
+        ChallengeObject.transform.Find("Friend_Username").gameObject.GetComponent<Text>().text = username;
+    }
+    public void FriendRequestMaker(string username)
+    {
+        GameObject FriendObject = Instantiate(Friend_Request);
+        FriendObject.transform.SetParent(ScrollViewContent.transform, false);
+        FriendObject.transform.Find("Friend_Username").gameObject.GetComponent<Text>().text = username;
+    }
+    public void ResponseMaker(string username, string message)
+    {
+        GameObject ResponseObject = Instantiate(Response);
+        ResponseObject.transform.SetParent(ScrollViewContent.transform, false);
+        ResponseObject.transform.Find("Friend_Username").gameObject.GetComponent<Text>().text = username;
+        ResponseObject.transform.Find("ResponseMessage").gameObject.GetComponent<Text>().text = message;
+
     }
 }
