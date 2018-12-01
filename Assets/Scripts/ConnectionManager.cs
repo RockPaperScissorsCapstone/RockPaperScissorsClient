@@ -395,6 +395,24 @@ namespace ServerManager{
             return response;
         }
 
+        public string[] UpdateCurrency(string[] param) {
+            string[] response = new string[4];
+            byte[] msgFunction = EncodeToBytes("UpdateCurrency");
+            response[0] = Messenger(msgFunction);
+
+            byte[] winnerId = EncodeToBytes(param[0]);
+            response[1] = Messenger(winnerId);
+
+            byte[] loserId = EncodeToBytes(param[1]);
+            response[2] = Messenger(loserId);
+
+            EndMessages();
+
+            response[3] = receive();
+
+            return response;
+        }
+
         private byte[] EncodeToBytes(string param)
         {
             return Encoding.ASCII.GetBytes(param);
