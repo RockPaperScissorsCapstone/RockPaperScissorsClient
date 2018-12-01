@@ -69,21 +69,22 @@ public class GetFriendsList : MonoBehaviour {
 				GameObject friendObject = Instantiate(Friend_Item);
 				friendObject.transform.SetParent(ScrollViewContent.transform, false);
 				friendObject.transform.Find("Friend_Name").gameObject.GetComponent<Text>().text = friend;
-                //friendObject.transform.Find("ChallengeButton").gameObject.GetComponent<Button>().OnPointerClick
+                Button challengeFriendButton = friendObject.transform.Find("ChallengeButton").gameObject.GetComponent<Button>();
+				challengeFriendButton.onClick.AddListener(delegate {ChallengeFriend(friend); });
 			}
 		}
 	}
     //Called when challenge button is pressed and sends Challenger's userid, challengee's username and message "Challenge Message" to the backend
-    public void ChallengeFriend()
+    public void ChallengeFriend(string friendUsername)
     {
         string[] param = new string[3];
-        string friendUsername = FriendUsername.GetComponent<Text>().text;
+        //string friendUsername = FriendUsername.GetComponent<Text>().text;
         param[0] = userId;
         param[1] = friendUsername;
         param[2] = "Challenge Message";
 
 
-        Debug.Log(friendUsername);
+        Debug.Log("This is the Username of the challenged player: " + friendUsername);
         ConnectionManager CM = new ConnectionManager();
 
         if (CM.StartClient() == 1)
