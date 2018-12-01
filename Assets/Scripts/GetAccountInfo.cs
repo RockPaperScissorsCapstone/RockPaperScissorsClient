@@ -18,7 +18,7 @@ public class GetAccountInfo : MonoBehaviour {
 	void Start() 
 	{
 		usc = new ShortCuts(); 
-		data = File.ReadAllText(Application.dataPath + "/MyInfo.json");
+		data = File.ReadAllText(Application.persistentDataPath + "/MyInfo.json");
 		Debug.Log(data);
 		playerinfo = JsonUtility.FromJson<UserInfo>(data);
 		Debug.Log(playerinfo.getFirstName());
@@ -45,9 +45,9 @@ public class GetAccountInfo : MonoBehaviour {
 				playerinfo.setUsername(new_username);
 				Debug.Log(playerinfo.getUsername());
 				string json = JsonUtility.ToJson(playerinfo);
-        		StreamWriter sw = File.CreateText(Application.dataPath + "/MyInfo.json");
+        		StreamWriter sw = File.CreateText(Application.persistentDataPath + "/MyInfo.json");
         		sw.Close();
-        		File.WriteAllText(Application.dataPath + "/MyInfo.json", json);
+        		File.WriteAllText(Application.persistentDataPath + "/MyInfo.json", json);
 			}
 			else
 			{

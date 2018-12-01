@@ -26,7 +26,7 @@ namespace ServerManager{
                 // This example uses port 11000 on the local computer.  
              
                 // //Production (Steve's Server)
-                ipHostInfo = Dns.GetHostEntry("ec2-18-220-56-132.us-east-2.compute.amazonaws.com");
+                ipHostInfo = Dns.GetHostEntry("ec2-18-224-97-127.us-east-2.compute.amazonaws.com");
                 ipAddress = ipHostInfo.AddressList[0]; 
                 remoteEP = new IPEndPoint(ipAddress, 65432);
            
