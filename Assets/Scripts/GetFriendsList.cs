@@ -47,7 +47,7 @@ public class GetFriendsList : MonoBehaviour {
 			//update UI method
 			fillFriends(friendsList);
 
-			scrollView.verticalNormalizedPosition = 1;
+			//scrollView.verticalNormalizedPosition = 1;
 		} else {
 			Debug.Log("Connection Manager start client failed.");
 		}
@@ -69,6 +69,7 @@ public class GetFriendsList : MonoBehaviour {
 				GameObject friendObject = Instantiate(Friend_Item);
 				friendObject.transform.SetParent(ScrollViewContent.transform, false);
 				friendObject.transform.Find("Friend_Name").gameObject.GetComponent<Text>().text = friend;
+                //friendObject.transform.Find("ChallengeButton").gameObject.GetComponent<Button>().OnPointerClick
 			}
 		}
 	}
@@ -79,7 +80,7 @@ public class GetFriendsList : MonoBehaviour {
         string friendUsername = FriendUsername.GetComponent<Text>().text;
         param[0] = userId;
         param[1] = friendUsername;
-        param[3] = "Challenge Message";
+        param[2] = "Challenge Message";
 
 
         Debug.Log(friendUsername);
