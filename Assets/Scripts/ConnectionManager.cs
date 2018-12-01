@@ -97,6 +97,23 @@ namespace ServerManager{
             return response[3];
         }
 
+        public string GetAccountInfo(string userID)
+        {
+            string[] response = new string[3];
+            Console.WriteLine("Socket connected to {0}", sender.RemoteEndPoint.ToString());
+            //Data buffer for incoming data.
+            byte[] msgFunction = EncodeToBytes("GetAccountInfo");
+            response[0] = Messenger(msgFunction);
+
+            byte[] msgUserID = EncodeToBytes(userID);
+            response[1] = Messenger(msgUserID);
+
+            EndMessages();
+
+            response[2] = receive();
+            return response[2];
+        }
+
         public string GetLeaderboard()
         {
             string[] response = new string[2];
@@ -370,6 +387,24 @@ namespace ServerManager{
 
             byte[] friendUsername = EncodeToBytes(param[1]);
             response[2] = Messenger(friendUsername);
+
+            EndMessages();
+
+            response[3] = receive();
+
+            return response;
+        }
+
+        public string[] UpdateCurrency(string[] param) {
+            string[] response = new string[4];
+            byte[] msgFunction = EncodeToBytes("UpdateCurrency");
+            response[0] = Messenger(msgFunction);
+
+            byte[] winnerId = EncodeToBytes(param[0]);
+            response[1] = Messenger(winnerId);
+
+            byte[] loserId = EncodeToBytes(param[1]);
+            response[2] = Messenger(loserId);
 
             EndMessages();
 

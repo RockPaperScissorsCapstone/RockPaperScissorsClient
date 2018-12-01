@@ -32,7 +32,7 @@ public class PlayWithRandom : MonoBehaviour {
 	void Start () {
 		//initially, store the necessary info (user_id) into local variable to be ready to pass to playWithAI()
         try {
-            using (StreamReader streamReader = new StreamReader(Application.dataPath + "/MyInfo.json")){
+            using (StreamReader streamReader = new StreamReader(Application.persistentDataPath + "/MyInfo.json")){
                 String line = streamReader.ReadToEnd();
                 streamReader.Close();
                 userInfo = JsonUtility.FromJson<UserInfo>(line);
@@ -131,6 +131,9 @@ public class PlayWithRandom : MonoBehaviour {
     public void EndGame() {
         sessionResponse = int.Parse(connectionManager.getResponse());
         connectionManager.LogOff();
+
+        connectionManager = new ConnectionManager();
+        connectionManager.StartClient();
         if (sessionResponse == 2) { //Player1 Won! Good ending.
             // localPlayer1Win++;
             Player1_Number_Text.text = localPlayer1Win.ToString();
@@ -140,6 +143,12 @@ public class PlayWithRandom : MonoBehaviour {
             int newWin = int.Parse(wins);
             newWin++;
             userInfo.setWins(newWin.ToString());
+
+            //update currency
+            string[] currencyParam = new string[2];
+            currencyParam[0] = player1Id;
+            currencyParam[1] = player2Id;
+            connectionManager.UpdateCurrency(currencyParam);
         } else if (sessionResponse == -2) { //Player2 Won! Bad ending.
             // localPlayer2Win++;
             Player2_Number_Text.text = localPlayer2Win.ToString();
@@ -153,11 +162,9 @@ public class PlayWithRandom : MonoBehaviour {
             Debug.Log("Something wrong");
         }
         string json = JsonUtility.ToJson(userInfo);
-        File.WriteAllText(Application.dataPath + "/MyInfo.json", json);
+        File.WriteAllText(Application.persistentDataPath + "/MyInfo.json", json);
 
-        //update to the DB
-        connectionManager = new ConnectionManager();
-        connectionManager.StartClient();
+        //update to the DB Win and Loss
         string[] param = new string[4];
         param[0] = wins;
         param[1] = losses;

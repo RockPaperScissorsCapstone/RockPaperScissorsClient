@@ -1,7 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
 using System.IO;
@@ -12,10 +11,11 @@ public class GetFriendsList : MonoBehaviour {
 	public ScrollRect scrollView;
 	public GameObject Friend_Item;
 	public GameObject ScrollViewContent;
+	public Sprite Online_Icon;
 
 	// Use this for initialization
 	void Start () {
-		string data = File.ReadAllText(Application.dataPath + "/MyInfo.json");
+		string data = File.ReadAllText(Application.persistentDataPath + "/MyInfo.json");
 		UserInfo playerinfo = JsonUtility.FromJson<UserInfo>(data);
 		string username = playerinfo.getUsername();
 		getFriends(username);
@@ -65,7 +65,17 @@ public class GetFriendsList : MonoBehaviour {
 				GameObject friendObject = Instantiate(Friend_Item);
 				friendObject.transform.SetParent(ScrollViewContent.transform, false);
 				friendObject.transform.Find("Friend_Name").gameObject.GetComponent<Text>().text = friend;
+				friendObject.tag = "Friend_Item";
 			}
+		}
+	}
+
+	public void getOnlineStatus(){
+		ConnectionManager connectionManager = new ConnectionManager();
+		if (connectionManager.StartClient() == 1) {
+			
+		} else {
+			Debug.Log("Within getOnlineStatus. Unable to Start Client");
 		}
 	}
 }
