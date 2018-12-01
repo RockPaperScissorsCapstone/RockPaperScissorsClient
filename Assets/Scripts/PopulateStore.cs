@@ -16,9 +16,12 @@ public class PopulateStore : MonoBehaviour {
     public GameObject ScrollViewContent;
     public SkinList skinlist = new SkinList();
 	void Start () {
-        ConnectionManager CM = new ConnectionManager();
-        if(CM.StartClient() == 1)
-        {
+         ConnectionManager CM = new ConnectionManager();
+         if(CM.StartClient() == 1)
+         {
+
+        //test string
+        //string response = "{\r\n\t\"Skin\": [{\r\n\t\t\t\"id\": 1,\r\n\t\t\t\"name\": \"Krishna\",\r\n\t\t\t\"price\": \"100\"\r\n\t\t},\r\n\t\t{\r\n\t\t\t\"id\": 2,\r\n\t\t\t\"name\": \"Sam\",\r\n\t\t\t\"price\": \"200\"\r\n\t\t}\r\n\t]\r\n}";
             string response = CM.getSkinList();
             skinlist = JsonUtility.FromJson<SkinList>(response);
 
