@@ -19,6 +19,13 @@ TagManager:
   - loginUserName
   - loginPassword
   - leaderboardContent
+  - MovePanel
+  - MoveWinLoss
+  - PlayerSprite
+  - OpponentSprite
+  - Paper
+  - Scissors
+  - Rock
   layers:
   - Default
   - TransparentFX
