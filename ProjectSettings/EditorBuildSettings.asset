@@ -32,4 +32,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/AddFriendUI.unity
     guid: 21235ec3fd37b433ea0a577005c36fd9
+  - enabled: 1
+    path: Assets/Scenes/Shop.unity
+    guid: 1704de8f5e1842345bbf75c717d6aa2d
   m_configObjects: {}
