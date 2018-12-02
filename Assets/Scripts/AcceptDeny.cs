@@ -14,6 +14,7 @@ public class AcceptDeny : MonoBehaviour {
     // Use this for initialization
     public GameObject notice_Item;
     public GameObject friendUsername;
+    public GameObject messageLabel;
     public Button Accept;
     public Button Deny;
 
@@ -27,18 +28,33 @@ public class AcceptDeny : MonoBehaviour {
 
     public void RejectChallenge()
     {
+        //Rejects both challenges and friend requests and adds a message for sender.
         Destroy(notice_Item);
         string[] param = new string[3];
         param[0] = userId;
+        Debug.Log(param[0]);
         param[1] = friendUsername.GetComponent<Text>().text;
-        param[2] = "Challenge Rejected";
+        Debug.Log(param[1]);
+        param[2] = messageLabel.GetComponent<Text>().text;
+        Debug.Log(param[2]);
+
+        // Rejecting a challenge deleting from messages
         ConnectionManager CM = new ConnectionManager();
+        if (CM.StartClient() == 1)
+        {
+            string response = CM.ChallengeDenied(param);
 
-        string response = CM.ChallengeDenied(param);
+            Debug.Log(response);
 
-        Debug.Log(response);
-        
-
+        } else {
+            Debug.Log("You messed up again");
+        }
+        param[2] = "Challenge Rejected";
+        Debug.Log(param[2]);
+        if (CM.StartClient() == 1)
+        {
+            string[] responses = CM.ChallengeFriend(param);
+        }
     }
 
     public void RejectedFriendRequest()
@@ -46,15 +62,32 @@ public class AcceptDeny : MonoBehaviour {
         Destroy(notice_Item);
         string[] param = new string[3];
         param[0] = userId;
+        Debug.Log(param[0]);
         param[1] = friendUsername.GetComponent<Text>().text;
-        param[2] = "Friend Request Rejected";
+        Debug.Log(param[1]);
+        param[2] = messageLabel.GetComponent<Text>().text;
+        Debug.Log(param[2]);
+
+        // Rejecting a challenge deleting from messages
         ConnectionManager CM = new ConnectionManager();
+        if (CM.StartClient() == 1)
+        {
+            string response = CM.ChallengeDenied(param);
 
-        string response = CM.FriendRequestRejected(param);
-
-        Debug.Log(response);
+            Debug.Log(response);
 
 
+        }
+        else
+        {
+            Debug.Log("You messed up again");
+        }
+        param[2] = "Friend Request Rejected";
+        Debug.Log(param[2]);
+        if (CM.StartClient() == 1)
+        {
+            string[] responses = CM.ChallengeFriend(param);
+        }
     }
 
     public void AcceptChallenge()

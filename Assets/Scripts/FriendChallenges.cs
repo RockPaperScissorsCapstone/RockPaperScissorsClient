@@ -46,7 +46,7 @@ public class FriendChallenges : MonoBehaviour {
     {
         //Update method stopped for every five seconds.
         checkupdates = 0;
-        yield return new WaitForSeconds(6f);
+        yield return new WaitForSeconds(2f);
         checkupdates = getChallenges();
     }
     //Receives all challenging usernames from the backend.
@@ -108,13 +108,13 @@ public class FriendChallenges : MonoBehaviour {
                // if(notification.messagetype.Equals("Challenge Message"))
         if(message.Equals("Challenge Message"))
             {
-            ChallengeMaker(username);
+            ChallengeMaker(username, message);
 
               //  ChallengeMaker(notification.username);
         } else if  (message.Equals("Friend Request"))
             //(notification.messagetype.Equals("Friend Request"))
             {
-            FriendRequestMaker(username);
+            FriendRequestMaker(username, message);
            // FriendRequestMaker(notification.username);
             } else
             {
@@ -126,17 +126,19 @@ public class FriendChallenges : MonoBehaviour {
        // return 1;
     }
 
-    public void ChallengeMaker(string username)
+    public void ChallengeMaker(string username, string message)
     {
         GameObject ChallengeObject = Instantiate(Challenge_Item);
         ChallengeObject.transform.SetParent(ScrollViewContent.transform, false);
         ChallengeObject.transform.Find("Friend_Username").gameObject.GetComponent<Text>().text = username;
+        ChallengeObject.transform.Find("ChallengeLabel").gameObject.GetComponent<Text>().text = message;
     }
-    public void FriendRequestMaker(string username)
+    public void FriendRequestMaker(string username, string message)
     {
         GameObject FriendObject = Instantiate(Friend_Request);
         FriendObject.transform.SetParent(ScrollViewContent.transform, false);
         FriendObject.transform.Find("Friend_Username").gameObject.GetComponent<Text>().text = username;
+        FriendObject.transform.Find("FriendRequestLabel").gameObject.GetComponent<Text>().text = message;
     }
     public void ResponseMaker(string username, string message)
     {

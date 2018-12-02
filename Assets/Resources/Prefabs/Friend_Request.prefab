@@ -146,6 +146,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   notice_Item: {fileID: 1039175972291866}
   friendUsername: {fileID: 1869019342940650}
+  messageLabel: {fileID: 1159957954593232}
   Accept: {fileID: 114573375399213972}
   Deny: {fileID: 114708778468630540}
 --- !u!114 &114241957446260404
@@ -360,7 +361,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 114051192455546838}
-        m_MethodName: RejectChallenge
+        m_MethodName: RejectedFriendRequest
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

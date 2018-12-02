@@ -418,13 +418,12 @@ namespace ServerManager{
             return response;
         }
 
-
-        public string ChallengeDenied(string [] param)
+        public string ChallengeDenied(string[] param)
         {
             string response;
-            Console.WriteLine("Socket connected to {0}", sender.RemoteEndPoint.ToString());
+           // Console.WriteLine("Socket connected to {0}", sender.RemoteEndPoint.ToString());
             //Data buffer for incoming data.
-            byte[] msgFunction = EncodeToBytes("ChallengeDenied");
+            byte[] msgFunction = EncodeToBytes("deleteMessage");
             response = Messenger(msgFunction);
 
             byte[] myUserId = EncodeToBytes(param[0]);

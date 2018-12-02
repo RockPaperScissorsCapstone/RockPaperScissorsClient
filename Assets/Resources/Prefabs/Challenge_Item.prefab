@@ -146,6 +146,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   notice_Item: {fileID: 1311527387960050}
   friendUsername: {fileID: 1968099356435934}
+  messageLabel: {fileID: 1655181009654230}
   Accept: {fileID: 114354212469784390}
   Deny: {fileID: 114201304695354008}
 --- !u!114 &114201304695354008
