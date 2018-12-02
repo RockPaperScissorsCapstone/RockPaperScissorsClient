@@ -382,11 +382,12 @@ namespace ServerManager{
             string response;
             Console.WriteLine("Socket connected to {0}", sender.RemoteEndPoint.ToString());
             //Data buffer for incoming data.
-            byte[] msgFunction = EncodeToBytes("getAllNotifications");
+            byte[] msgFunction = EncodeToBytes("returnMessages");
             response = Messenger(msgFunction);
 
             byte[] myUserId = EncodeToBytes(userId);
             response = Messenger(myUserId);
+            Debug.Log(response);
 
             EndMessages();
 
@@ -399,7 +400,7 @@ namespace ServerManager{
             string[] response = new string[5];
             Console.WriteLine("Socket connected to {0}", sender.RemoteEndPoint.ToString());
             //Data buffer for incoming data.
-            byte[] msgFunction = EncodeToBytes("addMessages");
+            byte[] msgFunction = EncodeToBytes("addMessage");
             response[0] = Messenger(msgFunction);
 
             byte[] myUserId = EncodeToBytes(param[0]);
