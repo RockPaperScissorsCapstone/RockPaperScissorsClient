@@ -19,6 +19,7 @@ TagManager:
   - loginUserName
   - loginPassword
   - leaderboardContent
+  - currentSkinDisplay
   layers:
   - Default
   - TransparentFX

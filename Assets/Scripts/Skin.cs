@@ -63,6 +63,27 @@ public class Skin {
         image.sprite = Resources.Load<Sprite>(url);
     }
 
+    public static void writeSkinToJson(Skin skin)
+    {
+        //read userinfo from json and set the new skin tag
+        string data = File.ReadAllText(Application.dataPath + "/MyInfo.json");
+        UserInfo userInfo = JsonUtility.FromJson<UserInfo>(data);
+        userInfo.setSkinTag(skin.getSkinTag());
+
+        //save the modified userinfo
+        data = JsonUtility.ToJson(userInfo);
+        StreamWriter sw = File.CreateText(Application.dataPath + "MyInfo.json");
+        sw.Close();
+        File.WriteAllText(Application.dataPath + "/MyInfo.json", data);
+
+    }
+    public static string getCurrentSkinFromJson()
+    {
+        string data = File.ReadAllText(Application.dataPath + "/MyInfo.json");
+        UserInfo userInfo = JsonUtility.FromJson<UserInfo>(data);
+        return userInfo.getSkintag();
+    }
+
     public static LinkedList<Skin> getAllSkins()
     {
         LinkedList<Skin> skinList = new LinkedList<Skin>();

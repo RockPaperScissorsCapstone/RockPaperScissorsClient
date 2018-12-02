@@ -7,6 +7,7 @@ using UnityEngine.UI;
 using System.IO;
 using System.Text;
 using ServerManager;
+using UnityEngine.EventSystems;
 
 public class PopulateStore : MonoBehaviour {
 
@@ -14,6 +15,7 @@ public class PopulateStore : MonoBehaviour {
     public GameObject SkinObject;
     public ScrollRect scrollView;
     public GameObject ScrollViewContent;
+    public GameObject skinDisplay;
     public LinkedList<Skin> skinList;
     public SkinList skinlist = new SkinList();
 	void Start () {
@@ -31,9 +33,10 @@ public class PopulateStore : MonoBehaviour {
        {
            print("Connection manager failed on client.");
        } */
-        Debug.Log("about to start populating skins");
+        skinDisplay = GameObject.FindGameObjectWithTag("currentSkinDisplay");
+        skinDisplay.GetComponent<Text>().text = Skin.getCurrentSkinFromJson();
+
         populateLocalSkins();
-        Debug.Log("populate local skins was run");
     }
 
     public void populateLocalSkins()
@@ -57,6 +60,18 @@ public class PopulateStore : MonoBehaviour {
             newSkinName.GetComponent<Text>().text = skin.getSkinTag();
             newSkinCost.GetComponent<Text>().text = skin.price;
             Skin.setImageSkin(newSkinRock.GetComponent<Image>(), newSkinScissors.GetComponent<Image>(), newSkinPaper.GetComponent<Image>(), skin);
+
+            //add onclick listener to set the skin
+            newSkin.AddComponent(typeof(EventTrigger));
+            EventTrigger trigger = newSkin.GetComponent<EventTrigger>();
+            EventTrigger.Entry entry = new EventTrigger.Entry();
+            entry.eventID = EventTriggerType.PointerClick;
+            entry.callback.AddListener((eventData) => 
+            {
+                Skin.writeSkinToJson(skin);
+                skinDisplay.GetComponent<Text>().text = skin.getSkinTag();
+            });
+            trigger.triggers.Add(entry);
 
             newSkin.transform.parent = ScrollViewContent.transform;
             newSkin.transform.localScale = new Vector3(1, 1, 1);
