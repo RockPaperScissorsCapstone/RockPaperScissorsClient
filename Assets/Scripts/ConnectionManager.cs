@@ -26,15 +26,15 @@ namespace ServerManager{
                 // This example uses port 11000 on the local computer.  
              
                 // //Production (Steve's Server)
-                ipHostInfo = Dns.GetHostEntry("ec2-18-224-97-127.us-east-2.compute.amazonaws.com");
-                ipAddress = ipHostInfo.AddressList[0]; 
-                remoteEP = new IPEndPoint(ipAddress, 65432);
+                //ipHostInfo = Dns.GetHostEntry("ec2-18-224-97-127.us-east-2.compute.amazonaws.com");
+                //ipAddress = ipHostInfo.AddressList[0]; 
+                //remoteEP = new IPEndPoint(ipAddress, 65432);
            
 
                 //Nick's Test environment
-                //ipHostInfo = Dns.GetHostEntry("ec2-18-217-146-155.us-east-2.compute.amazonaws.com");
-                //ipAddress = ipHostInfo.AddressList[0]; 
-                //remoteEP = new IPEndPoint(ipAddress, 65432); 
+                ipHostInfo = Dns.GetHostEntry("ec2-18-217-146-155.us-east-2.compute.amazonaws.com");
+                ipAddress = ipHostInfo.AddressList[0]; 
+                remoteEP = new IPEndPoint(ipAddress, 65432); 
 
                 // Create a TCP/IP  socket.  
                 sender = new Socket(ipAddress.AddressFamily, 
@@ -95,6 +95,23 @@ namespace ServerManager{
 
             response[3] = receive();
             return response[3];
+        }
+
+        public string GetAccountInfo(string userID)
+        {
+            string[] response = new string[3];
+            Console.WriteLine("Socket connected to {0}", sender.RemoteEndPoint.ToString());
+            //Data buffer for incoming data.
+            byte[] msgFunction = EncodeToBytes("GetAccountInfo");
+            response[0] = Messenger(msgFunction);
+
+            byte[] msgUserID = EncodeToBytes(userID);
+            response[1] = Messenger(msgUserID);
+
+            EndMessages();
+
+            response[2] = receive();
+            return response[2];
         }
 
         public string GetLeaderboard()
