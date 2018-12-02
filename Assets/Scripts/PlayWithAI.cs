@@ -10,6 +10,7 @@ using UnityEngine.UI;
 public class PlayWithAI : MonoBehaviour {
     public Button Rock_Button, Paper_Button, Scissors_Button;
     public Text Match_Number_Text, Help_Text, Human_Number_Text, AI_Number_Text;
+    public GameObject skinList;
     string userId = "";
     string wins = "";
     string losses = "";
@@ -18,6 +19,9 @@ public class PlayWithAI : MonoBehaviour {
     int sessionResponse = 2;
     int localAiWin = 0;
     int localHumanWin = 0;
+    private static int skinInScreenPosition = 276;
+    private static int skinOutScreenPosition = 630;
+    private bool skinsOnScreen = false;
 
     ConnectionManager connectionManager;
     UserInfo userInfo;
@@ -41,6 +45,8 @@ public class PlayWithAI : MonoBehaviour {
                 // Rock_Button = Rock_Button.GetComponent<Button>();
                 // Paper_Button = Paper_Button.GetComponent<Button>();
                 // Scissors_Button = Scissors_Button.GetComponent<Button>();
+
+                skinList = GameObject.FindGameObjectWithTag("skinList");
 
                 Skin.setButtonSkin(Rock_Button, Paper_Button, Scissors_Button, skin);
                 
@@ -68,6 +74,21 @@ public class PlayWithAI : MonoBehaviour {
 	void Update () {
         
 	}
+
+    public void toggleSkinSelect()
+    {
+        skinsOnScreen = !skinsOnScreen;
+        Vector3 pos = skinList.transform.position;
+
+        if (skinsOnScreen)
+        {
+            skinList.transform.position.Set(skinInScreenPosition, pos.y, pos.z);
+        }
+        else
+        {
+            skinList.transform.position.Set(skinOutScreenPosition, pos.y, pos.z);
+        }
+    }
 
     public void TaskWithParameters(string move) {
         Debug.Log(move);
