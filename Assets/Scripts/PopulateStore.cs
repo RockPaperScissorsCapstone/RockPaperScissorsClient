@@ -60,15 +60,6 @@ public class PopulateStore : MonoBehaviour {
 
             newSkin.transform.parent = ScrollViewContent.transform;
             newSkin.transform.localScale = new Vector3(1, 1, 1);
-
-            /*newskin.transform.SetParent(ScrollViewContent.transform, false);
-            newskin.transform.Find("Skin_Name").gameObject.GetComponent<Text>().text = skin.getSkinTag();
-            newskin.transform.Find("Skin_Cost").gameObject.GetComponent<Text>().text = skin.price;
-            Skin.setImageSkin(newskin.GetComponent<Image>(),newskin.GetComponent<Image>(), );
-            Skin.setButtonSkin(newskin.transform.Find("Skin_Image_Rock"), newskin.transform.Find("Skin_Image_Paper"), newskin.transform.Find("Skin_Image_Scissors"), skin);
-            newskin.transform.Find("Skin_Image_Rock").gameObject.GetComponent<Image>().sprite = Resources.Load<Sprite>(skin.getRockPath());
-            newskin.transform.Find("Skin_Image_Paper").gameObject.GetComponent<Image>().sprite = Resources.Load<Sprite>(skin.getPaperPath());
-            newskin.transform.Find("Skin_Image_Scissors").gameObject.GetComponent<Image>().sprite = Resources.Load<Sprite>(skin.getScissorsPath());*/
         }
 
     }
