@@ -13,6 +13,7 @@ public class PlayWithAI : MonoBehaviour {
     string userId = "";
     string wins = "";
     string losses = "";
+    string skintag = "";
     int matchNumber = 1;
     int sessionResponse = 2;
     int localAiWin = 0;
@@ -20,6 +21,7 @@ public class PlayWithAI : MonoBehaviour {
 
     ConnectionManager connectionManager;
     UserInfo userInfo;
+    Skin skin;
 
 	// Use this for initialization
 	void Start () {
@@ -32,11 +34,16 @@ public class PlayWithAI : MonoBehaviour {
                 userId = userInfo.getUserId();
                 wins = userInfo.getWins();
                 losses = userInfo.getLosses();
+                skintag = userInfo.getSkintag();
+                skin = new Skin(skintag);
 
                 Debug.Log("add listener");
                 // Rock_Button = Rock_Button.GetComponent<Button>();
                 // Paper_Button = Paper_Button.GetComponent<Button>();
                 // Scissors_Button = Scissors_Button.GetComponent<Button>();
+
+                Skin.setButtonSkin(Rock_Button, Paper_Button, Scissors_Button, skin);
+                
                 Rock_Button.onClick.AddListener(delegate {TaskWithParameters("1");});
                 Paper_Button.onClick.AddListener(delegate {TaskWithParameters("2");});
                 Scissors_Button.onClick.AddListener(delegate {TaskWithParameters("3");});

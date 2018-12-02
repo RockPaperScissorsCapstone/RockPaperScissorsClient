@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 public class Skin {
 
-    public static string path = "Res/Graphics/";
+    public static string path = "Graphics/";
     public static string rock = "Hand-Rock";
     public static string paper = "Hand-Paper";
     public static string scissors = "Hand-Scissors";
@@ -29,17 +29,27 @@ public class Skin {
         string tmpPath = path + move;
         if (getSkinTag().Length > 0)
             tmpPath += '-' + getSkinTag();
-        else tmpPath += ".png"; 
 
         return tmpPath;
     }
 
-    //returns the path to the skin image resource from the Assets folder
-    public string getRockPath(){ return buildPath(rock); }
-    public string getPaperPath(){ return buildPath(paper); }
+    //returns the path to the skin image resource from the Resources folder
+    public string getRockPath() { return buildPath(rock); }
+    public string getPaperPath() { return buildPath(paper); }
     public string getScissorsPath() { return buildPath(scissors); }
 
+    public static void setButtonSkin(Button rock, Button paper, Button scissors, Skin skin)
+    {
+        setImageSprite(rock, skin.getRockPath());
+        setImageSprite(paper, skin.getPaperPath());
+        setImageSprite(scissors, skin.getScissorsPath());
 
+    }
+    private void setImageSprite(Button button, string url)
+    {
+        button.GetComponent<Image>().sprite = Resources.Load<Sprite>(url);
+    }
+        
     public LinkedList<Skin> getAllSkins()
     {
         LinkedList<Skin> skinList = new LinkedList<Skin>();
