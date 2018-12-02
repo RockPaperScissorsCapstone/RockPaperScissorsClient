@@ -35,7 +35,7 @@ public class FriendChallenges : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        Debug.Log("Hello");
+        // Debug.Log("Hello");
         if (checkupdates == 1)
         {
             i++;
@@ -68,9 +68,12 @@ public class FriendChallenges : MonoBehaviour {
          if (CM.StartClient() == 1)
          {
             // the server spits back comma separated string of friends
-             string response = CM.CheckChallengesFriendRquestsMessages(userId);
+            string response = CM.CheckChallengesFriendRquestsMessages(userId);
             //Destroy(ScrollViewContent.);
-             Debug.Log(response);
+            for (int i = 0; i < ScrollViewContent.transform.childCount; i++) {
+                Destroy(ScrollViewContent.transform.GetChild(i).gameObject);
+            }
+            Debug.Log(response);
 
             string[] usernameMessageList = response.Split(',');
             for (int i = 0; i < usernameMessageList.Length-1; i+=2){
