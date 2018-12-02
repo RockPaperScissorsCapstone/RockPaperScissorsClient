@@ -395,6 +395,16 @@ namespace ServerManager{
             return response;
         }
 
+        public string getSkinList()
+        {
+            Console.WriteLine("Socket connected to {0}", sender.RemoteEndPoint.ToString());
+            byte[] msgFunction = EncodeToBytes("getSkinList");
+            string response = Messenger(msgFunction);
+            EndMessages();
+            response = receive();
+            return response;
+        }
+
         private byte[] EncodeToBytes(string param)
         {
             return Encoding.ASCII.GetBytes(param);

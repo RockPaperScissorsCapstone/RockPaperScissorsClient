@@ -49,7 +49,7 @@ public class Skin {
     {
         button.GetComponent<Image>().sprite = Resources.Load<Sprite>(url);
     }
-        
+
     public LinkedList<Skin> getAllSkins()
     {
         LinkedList<Skin> skinList = new LinkedList<Skin>();
@@ -68,5 +68,5 @@ public class Skin {
         }
         return skinList;
     }
-    
+
 }
