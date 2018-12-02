@@ -26,6 +26,9 @@ TagManager:
   - Paper
   - Scissors
   - Rock
+  - RockPreview
+  - PaperPreview
+  - ScissorsPreview
   layers:
   - Default
   - TransparentFX
