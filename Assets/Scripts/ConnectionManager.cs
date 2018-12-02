@@ -388,6 +388,22 @@ namespace ServerManager{
             return response;
         }
 
+        public string buySkin(string[] param) {
+            byte[] msgFunction = EncodeToBytes("BuySkin");
+            string response = Messenger(msgFunction);
+            
+            byte[] userId = EncodeToBytes(param[0]);
+            response = Messenger(userId);
+
+            byte[] skinId = EncodeToBytes(param[1]);
+            response = Messenger(skinId);
+
+            EndMessages();
+
+            response = receive();
+            return response;
+        }
+
         private byte[] EncodeToBytes(string param)
         {
             return Encoding.ASCII.GetBytes(param);

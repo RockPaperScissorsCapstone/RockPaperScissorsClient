@@ -19,6 +19,8 @@ TagManager:
   - loginUserName
   - loginPassword
   - leaderboardContent
+  - shopItemHeading
+  - skin
   layers:
   - Default
   - TransparentFX
