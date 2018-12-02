@@ -45,7 +45,7 @@ public class Skin {
         setImageSprite(scissors, skin.getScissorsPath());
 
     }
-    private void setImageSprite(Button button, string url)
+    private static void setImageSprite(Button button, string url)
     {
         button.GetComponent<Image>().sprite = Resources.Load<Sprite>(url);
     }
