@@ -13,6 +13,7 @@ public class UserInfo {
     public string losses;
     public string currency;
     public string score;
+    public string skintag;
 
     public UserInfo(string firstname, string lastname, string email, string username)
     {
@@ -25,6 +26,7 @@ public class UserInfo {
         this.losses = "0";
         this.currency = "0";
         this.score = "0";
+        this.skintag = "";
     }
 
     public UserInfo()
@@ -38,6 +40,7 @@ public class UserInfo {
         this.losses = "";
         this.currency = "";
         this.score = "";
+        this.skintag = "";
     }
 
     public string getUserId()
@@ -83,7 +86,12 @@ public class UserInfo {
     {
         return this.losses;
     }
-
+    
+    public string getSkintag()
+    {
+        return this.skintag;
+    }
+    
     public void setFirstName(string new_firstname)
     {
         this.firstname = new_firstname;
@@ -122,6 +130,11 @@ public class UserInfo {
     public void setLosses(string new_losses)
     {
         this.losses = new_losses;
+    }
+
+    public void setSkinTag(string skintag)
+    {
+        this.skintag = skintag;
     }
 
 

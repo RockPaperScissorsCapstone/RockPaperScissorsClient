@@ -1,11 +1,21 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using UnityEngine;
-using UnityEngine.EventSystems;
-using UnityEngine.SceneManagement;
-using static SkinStatic;
 
-public class SelectSkin : MonoBehaviour, IPointerClickHandler {
+public class selectSkin : MonoBehaviour {
+
+    public void setSkin(string skintag)
+    {
+        string data = File.ReadAllText(Application.dataPath + "/MyInfo.json");
+        UserInfo playerinfo = JsonUtility.FromJson<UserInfo>(data);
+        playerinfo.setSkinTag(skintag);
+        data = JsonUtility.ToJson(playerinfo);
+        StreamWriter sw = File.CreateText(Application.dataPath + "/MyInfo.json");
+        sw.Close();
+        File.WriteAllText(Application.dataPath + "/MyInfo.json", data);
+    }
+
 	// Use this for initialization
 	void Start () {
 		
@@ -15,11 +25,4 @@ public class SelectSkin : MonoBehaviour, IPointerClickHandler {
 	void Update () {
 		
 	}
-
-	public void OnPointerClick(PointerEventData eventData)
-    {
-        Debug.Log(eventData.pointerPress);
-		SkinStatic.SelectedSkin = eventData.pointerPress;
-		SceneManager.LoadScene("BuySkin");
-    }
 }
