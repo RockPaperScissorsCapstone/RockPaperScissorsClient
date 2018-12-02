@@ -19,6 +19,7 @@ public class Skin {
     public Skin(string tag)
     {
         this.skinTag = tag;
+        this.price = "0";
     }
 
     public string getSkinTag()
@@ -47,26 +48,41 @@ public class Skin {
         setImageSprite(scissors, skin.getScissorsPath());
 
     }
+    public static void setImageSkin(Image rock, Image paper, Image scissors, Skin skin)
+    {
+        setImageSprite(rock, skin.getRockPath());
+        setImageSprite(paper, skin.getPaperPath());
+        setImageSprite(scissors, skin.getScissorsPath());
+    }
     private static void setImageSprite(Button button, string url)
     {
         button.GetComponent<Image>().sprite = Resources.Load<Sprite>(url);
     }
+    private static void setImageSprite(Image image, string url)
+    {
+        image.sprite = Resources.Load<Sprite>(url);
+    }
 
-    public LinkedList<Skin> getAllSkins()
+    public static LinkedList<Skin> getAllSkins()
     {
         LinkedList<Skin> skinList = new LinkedList<Skin>();
 
-        char[] trimArray = {'H', 'a', 'n', 'd', '-', 'R', 'o', 'c', 'k'};
+        Sprite[] images = Resources.LoadAll<Sprite>(path);
 
-        foreach (string file in Directory.EnumerateFiles(Application.persistentDataPath + path, "Hand-Roc*"))
+        foreach(Sprite image in images)
         {
-            string skinName = file.Remove(0, 8);
-            skinName = skinName.Substring(skinName.Length - 3);
-            if (skinName.Length == 0) { skinList.AddLast(new Skin("")); }
-            else
+            if (image.name.Contains(rock))
             {
+                int remove = 10;
+                if (image.name.Length == 9) {
+                    remove--;
+                }
+
+                string skinName = image.name.Remove(0, remove);
+
                 skinList.AddLast(new Skin(skinName));
             }
+            
         }
         return skinList;
     }
