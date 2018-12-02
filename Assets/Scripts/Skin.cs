@@ -11,6 +11,8 @@ public class Skin {
     public static string paper = "Hand-Paper";
     public static string scissors = "Hand-Scissors";
 
+    public string id, name, price;
+
 
     private string skinTag;
 
