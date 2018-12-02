@@ -32,7 +32,7 @@ public class PlayWithRandom : MonoBehaviour {
 	void Start () {
 		//initially, store the necessary info (user_id) into local variable to be ready to pass to playWithAI()
         try {
-            using (StreamReader streamReader = new StreamReader(Application.dataPath + "/MyInfo.json")){
+            using (StreamReader streamReader = new StreamReader(Application.persistentDataPath + "/MyInfo.json")){
                 String line = streamReader.ReadToEnd();
                 streamReader.Close();
                 userInfo = JsonUtility.FromJson<UserInfo>(line);
@@ -153,7 +153,7 @@ public class PlayWithRandom : MonoBehaviour {
             Debug.Log("Something wrong");
         }
         string json = JsonUtility.ToJson(userInfo);
-        File.WriteAllText(Application.dataPath + "/MyInfo.json", json);
+        File.WriteAllText(Application.persistentDataPath + "/MyInfo.json", json);
 
         //update to the DB
         connectionManager = new ConnectionManager();
