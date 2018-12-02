@@ -25,6 +25,7 @@ public class PlayWithRandom : MonoBehaviour {
 	int localPlayer2Win = 0;
 	ConnectionManager connectionManager;
     UserInfo userInfo;
+    Skin skin;
 
     Socket playWithRandom;
 
@@ -39,6 +40,8 @@ public class PlayWithRandom : MonoBehaviour {
                 player1Id = userInfo.getUserId();
                 wins = userInfo.getWins();
                 losses = userInfo.getLosses();
+                string skintag = userInfo.getSkintag();
+                skin = new Skin(skintag);
             }
         } catch(Exception e) {
             Debug.Log(e.Message, gameObject);
@@ -74,6 +77,7 @@ public class PlayWithRandom : MonoBehaviour {
                 Debug.Log("Multiplayer Session Start Complete. User can choose moves now");
                 Help_Text.text = "Choose your move!";
                 Debug.Log("add listener");
+                Skin.setButtonSkin(Rock_Button, Paper_Button, Scissors_Button, skin);
                 Rock_Button.onClick.AddListener(delegate {TaskWithParameters("1");});
                 Paper_Button.onClick.AddListener(delegate {TaskWithParameters("2");});
                 Scissors_Button.onClick.AddListener(delegate {TaskWithParameters("3");});
