@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657868, g: 0.49641263, b: 0.57481706, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657868, g: 0.4964127, b: 0.57481724, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1396,6 +1396,7 @@ GameObject:
   - component: {fileID: 1826334458}
   - component: {fileID: 1826334457}
   - component: {fileID: 1826334456}
+  - component: {fileID: 1826334459}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -1463,6 +1464,26 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1826334459
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1826334455}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6f78d1f6e3dab491093163729942afef, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Rock_Button: {fileID: 1027699592}
+  Paper_Button: {fileID: 1658178103}
+  Scissors_Button: {fileID: 696303050}
+  Match_Number_Text: {fileID: 2070185456}
+  Help_Text: {fileID: 606477922}
+  Player1_ID_Text: {fileID: 869865748}
+  Player1_Number_Text: {fileID: 898449930}
+  Player2_ID_Text: {fileID: 305619488}
+  Player2_Number_Text: {fileID: 144963954}
 --- !u!1 &2070185454
 GameObject:
   m_ObjectHideFlags: 0

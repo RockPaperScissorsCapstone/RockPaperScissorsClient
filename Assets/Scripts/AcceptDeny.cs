@@ -140,6 +140,7 @@ public class AcceptDeny : MonoBehaviour {
         if (CM.StartClient() == 1)
         {
             string response = CM.ChallengeDenied(param);
+            response = CM.ChallengeFriend(param);
 
             Debug.Log(response);
         }

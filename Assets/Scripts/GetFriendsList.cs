@@ -71,10 +71,6 @@ public class GetFriendsList : MonoBehaviour {
 				friendObject.transform.Find("Friend_Name").gameObject.GetComponent<Text>().text = friend;
                 Button challengeFriendButton = friendObject.transform.Find("ChallengeButton").gameObject.GetComponent<Button>();
 				challengeFriendButton.onClick.AddListener(delegate {ChallengeFriend(friend); });
-                challengeFriendButton.onClick.AddListener(delegate {
-                    SceneNavigator navi = new SceneNavigator();
-                    navi.GoToScene("GameScreen_Friend");
-                });
             }
 		}
 	}
@@ -96,6 +92,9 @@ public class GetFriendsList : MonoBehaviour {
             string[] response = CM.ChallengeFriend(param);
             Debug.Log(response[4]);
         }
+
+		SceneNavigator navi = new SceneNavigator();
+        navi.GoToScene("GameScreen_Friend");
         
     }
 }
