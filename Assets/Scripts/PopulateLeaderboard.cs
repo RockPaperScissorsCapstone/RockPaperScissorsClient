@@ -46,7 +46,7 @@ public class PopulateLeaderboard : MonoBehaviour {
                 points.GetComponent<Text>().text = UserData[1];
                 name.GetComponent<Text>().text = UserData[0];
 
-                leaderboardItem.transform.parent = leaderboardContent.transform;
+                leaderboardItem.transform.parent = leaderboardContent .transform;
                 leaderboardItem.transform.localScale = new Vector3(1, 1, 1);
             }
         }
