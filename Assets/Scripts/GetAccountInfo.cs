@@ -47,9 +47,9 @@ public class GetAccountInfo : MonoBehaviour {
                 }
                 UserInfo accountInfo = JsonUtility.FromJson<UserInfo>(responses);
                 string json = JsonUtility.ToJson(accountInfo);
-                StreamWriter sw = File.CreateText(Application.dataPath + "/MyInfo.json");
+                StreamWriter sw = File.CreateText(Application.persistentDataPath + "/MyInfo.json");
                 sw.Close();
-                File.WriteAllText(Application.dataPath + "/MyInfo.json", json);
+                File.WriteAllText(Application.persistentDataPath + "/MyInfo.json", json);
             }
         }
         else

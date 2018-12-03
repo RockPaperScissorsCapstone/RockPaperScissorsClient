@@ -17,6 +17,7 @@ public class GetFriendsList : MonoBehaviour {
     public Button ChallengeButton;
     string userId;
 
+	public Sprite Online_Icon;
 
 	// Use this for initialization
 	void Start () {
@@ -71,6 +72,7 @@ public class GetFriendsList : MonoBehaviour {
 				GameObject friendObject = Instantiate(Friend_Item);
 				friendObject.transform.SetParent(ScrollViewContent.transform, false);
 				friendObject.transform.Find("Friend_Name").gameObject.GetComponent<Text>().text = friend;
+				friendObject.tag = "Friend_Item";
                 Button challengeFriendButton = friendObject.transform.Find("ChallengeButton").gameObject.GetComponent<Button>();
 				challengeFriendButton.onClick.AddListener(delegate {ChallengeFriend(friend); });
             }
@@ -100,4 +102,13 @@ public class GetFriendsList : MonoBehaviour {
         navi.GoToScene("GameScreen_Friend");
         
     }
+
+	public void getOnlineStatus(){
+		ConnectionManager connectionManager = new ConnectionManager();
+		if (connectionManager.StartClient() == 1) {
+			
+		} else {
+			Debug.Log("Within getOnlineStatus. Unable to Start Client");
+		}
+	}
 }
