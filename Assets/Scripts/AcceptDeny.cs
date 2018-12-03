@@ -6,6 +6,7 @@ using UnityEngine.UI;
 using System.IO;
 using System.Text;
 using ServerManager;
+using Navigator;
 
 
 public class AcceptDeny : MonoBehaviour {
@@ -136,10 +137,14 @@ public class AcceptDeny : MonoBehaviour {
         param[1] = friendUsername.GetComponent<Text>().text;
         param[2] = "Challenge Accepted";
         ConnectionManager CM = new ConnectionManager();
-        string response = CM.ChallengeAccepted(param);
+        if (CM.StartClient() == 1)
+        {
+            string response = CM.ChallengeDenied(param);
 
-        Debug.Log(response);
-
+            Debug.Log(response);
+        }
+        SceneNavigator navi = new SceneNavigator();
+        navi.GoToScene("GameScreen_Friend");
     }
 
     public void DeleteResponse()
@@ -166,4 +171,5 @@ public class AcceptDeny : MonoBehaviour {
             Debug.Log("You messed up again");
         }
     }
+
 }

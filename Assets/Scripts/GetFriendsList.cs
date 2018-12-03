@@ -6,6 +6,7 @@ using UnityEngine.UI;
 using System.IO;
 using System.Text;
 using ServerManager;
+using Navigator;
 
 public class GetFriendsList : MonoBehaviour {
 	public ScrollRect scrollView;
@@ -70,7 +71,11 @@ public class GetFriendsList : MonoBehaviour {
 				friendObject.transform.Find("Friend_Name").gameObject.GetComponent<Text>().text = friend;
                 Button challengeFriendButton = friendObject.transform.Find("ChallengeButton").gameObject.GetComponent<Button>();
 				challengeFriendButton.onClick.AddListener(delegate {ChallengeFriend(friend); });
-			}
+                challengeFriendButton.onClick.AddListener(delegate {
+                    SceneNavigator navi = new SceneNavigator();
+                    navi.GoToScene("GameScreen_Friend");
+                });
+            }
 		}
 	}
     //Called when challenge button is pressed and sends Challenger's userid, challengee's username and message "Challenge Message" to the backend
