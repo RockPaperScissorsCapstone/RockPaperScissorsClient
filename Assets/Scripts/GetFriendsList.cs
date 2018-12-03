@@ -6,17 +6,24 @@ using UnityEngine.UI;
 using System.IO;
 using System.Text;
 using ServerManager;
+using Navigator;
+using static SocketPasser;
 
 public class GetFriendsList : MonoBehaviour {
 	public ScrollRect scrollView;
 	public GameObject Friend_Item;
 	public GameObject ScrollViewContent;
+    public GameObject FriendUsername;
+    public Button ChallengeButton;
+    string userId;
+
 
 	// Use this for initialization
 	void Start () {
 		string data = File.ReadAllText(Application.persistentDataPath + "/MyInfo.json");
 		UserInfo playerinfo = JsonUtility.FromJson<UserInfo>(data);
 		string username = playerinfo.getUsername();
+        userId = playerinfo.getUserId();
 		getFriends(username);
 	}
 	
@@ -42,7 +49,7 @@ public class GetFriendsList : MonoBehaviour {
 			//update UI method
 			fillFriends(friendsList);
 
-			scrollView.verticalNormalizedPosition = 1;
+			//scrollView.verticalNormalizedPosition = 1;
 		} else {
 			Debug.Log("Connection Manager start client failed.");
 		}
@@ -64,7 +71,33 @@ public class GetFriendsList : MonoBehaviour {
 				GameObject friendObject = Instantiate(Friend_Item);
 				friendObject.transform.SetParent(ScrollViewContent.transform, false);
 				friendObject.transform.Find("Friend_Name").gameObject.GetComponent<Text>().text = friend;
-			}
+                Button challengeFriendButton = friendObject.transform.Find("ChallengeButton").gameObject.GetComponent<Button>();
+				challengeFriendButton.onClick.AddListener(delegate {ChallengeFriend(friend); });
+            }
 		}
 	}
+    //Called when challenge button is pressed and sends Challenger's userid, challengee's username and message "Challenge Message" to the backend
+    public void ChallengeFriend(string friendUsername)
+    {
+        string[] param = new string[3];
+        //string friendUsername = FriendUsername.GetComponent<Text>().text;
+        param[0] = userId;
+        param[1] = friendUsername;
+        param[2] = "Challenge Message";
+
+
+        Debug.Log("This is the Username of the challenged player: " + friendUsername);
+        ConnectionManager CM = new ConnectionManager();
+
+        if (CM.StartClient() == 1)
+        {
+            string[] response = CM.ChallengeFriend(param);
+            Debug.Log(response[4]);
+			SocketPasser.setCM(CM);
+        }
+
+		SceneNavigator navi = new SceneNavigator();
+        navi.GoToScene("GameScreen_Friend");
+        
+    }
 }

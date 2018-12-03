@@ -240,7 +240,6 @@ namespace ServerManager{
 
 		}
 
-
         public string[] SubmitLogin(string[] param) {
             string[] response = new string[4];
             Console.WriteLine("Socket connected to {0}", sender.RemoteEndPoint.ToString());
@@ -411,23 +410,108 @@ namespace ServerManager{
                 return ("");
             }
 		}
-        public string[] AddNewFriend(string[] param){
-            string[] response = new string[4];
+        public string AddNewFriend(string[] param){
+            string response;
             Console.WriteLine("Socket connected to {0}", sender.RemoteEndPoint.ToString());
             //Data buffer for incoming data.
             byte[] msgFunction = EncodeToBytes("addFriend");
-            response[0] = Messenger(msgFunction);
+            response = Messenger(msgFunction);
 
             byte[] myUsername = EncodeToBytes(param[0]);
-            response[1] = Messenger(myUsername);
+            response = Messenger(myUsername);
+
+            byte[] friendUsername = EncodeToBytes(param[1]);
+            response = Messenger(friendUsername);
+
+            EndMessages();
+
+            response = receive();
+
+            return response;
+        }
+
+        public string CheckChallengesFriendRquestsMessages(string userId)
+        {
+            string response;
+            Console.WriteLine("Socket connected to {0}", sender.RemoteEndPoint.ToString());
+            //Data buffer for incoming data.
+            byte[] msgFunction = EncodeToBytes("returnMessages");
+            response = Messenger(msgFunction);
+
+            byte[] myUserId = EncodeToBytes(userId);
+            response = Messenger(myUserId);
+            Debug.Log(response);
+
+            EndMessages();
+
+            response = receive();
+            return response;
+        }
+
+        public string[] ChallengeFriend(string[] param)
+        {
+            string[] response = new string[5];
+            Console.WriteLine("Socket connected to {0}", sender.RemoteEndPoint.ToString());
+            //Data buffer for incoming data.
+            byte[] msgFunction = EncodeToBytes("addMessage");
+            response[0] = Messenger(msgFunction);
+
+            byte[] myUserId = EncodeToBytes(param[0]);
+            response[1] = Messenger(myUserId);
 
             byte[] friendUsername = EncodeToBytes(param[1]);
             response[2] = Messenger(friendUsername);
 
+            byte[] message = EncodeToBytes(param[2]);
+            response[3] = Messenger(message);
+
             EndMessages();
 
-            response[3] = receive();
+            response[4] = receive();
+            return response;
+        }
 
+        public string ChallengeDenied(string[] param)
+        {
+            string response;
+           // Console.WriteLine("Socket connected to {0}", sender.RemoteEndPoint.ToString());
+            //Data buffer for incoming data.
+            byte[] msgFunction = EncodeToBytes("deleteMessage");
+            response = Messenger(msgFunction);
+
+            byte[] myUserId = EncodeToBytes(param[0]);
+            response = Messenger(myUserId);
+
+            byte[] ChallengerUsername = EncodeToBytes(param[1]);
+            response = Messenger(ChallengerUsername);
+
+            byte[] message = EncodeToBytes(param[2]);
+            response = Messenger(message);
+            EndMessages();
+
+            response = receive();
+            return response;
+        }
+
+        public string ChallengeAccepted(string[] param)
+        {
+            string response;
+            Console.WriteLine("Socket connected to {0}", sender.RemoteEndPoint.ToString());
+            //Data buffer for incoming data.
+            byte[] msgFunction = EncodeToBytes("ChallengeAccepted");
+            response = Messenger(msgFunction);
+
+            byte[] myUserId = EncodeToBytes(param[0]);
+            response = Messenger(myUserId);
+
+            byte[] ChallengerUsername = EncodeToBytes(param[1]);
+            response = Messenger(ChallengerUsername);
+
+            byte[] message = EncodeToBytes(param[2]);
+            response = Messenger(message);
+            EndMessages();
+
+            response = receive();
             return response;
         }
         public string buySkin(string[] param) {
