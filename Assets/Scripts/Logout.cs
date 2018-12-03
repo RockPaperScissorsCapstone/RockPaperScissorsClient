@@ -23,7 +23,7 @@ public class Logout : MonoBehaviour {
 		ConnectionManager connectionManager = new ConnectionManager();
 		if (connectionManager.StartClient() == 1) { //successful connection to server
 			//get username from stored user data
-			string data = File.ReadAllText(Application.dataPath + "/MyInfo.json");
+			string data = File.ReadAllText(Application.persistentDataPath + "/MyInfo.json");
 			UserInfo playerinfo = JsonUtility.FromJson<UserInfo>(data);
 			string username = playerinfo.getUsername();
 
@@ -34,7 +34,7 @@ public class Logout : MonoBehaviour {
 			//clear stored MyInfo.json
 			UserInfo emptyPlayer = new UserInfo();
 			string emptyJSON = JsonUtility.ToJson(emptyPlayer);
-			File.WriteAllText(Application.dataPath + "/MyInfo.json", emptyJSON);
+			File.WriteAllText(Application.persistentDataPath + "/MyInfo.json", emptyJSON);
 
 			//navigate back to LoginScreen
 			SceneManager.LoadScene("LoginScreen");
