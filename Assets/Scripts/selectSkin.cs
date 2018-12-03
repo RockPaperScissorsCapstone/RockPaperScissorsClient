@@ -7,13 +7,13 @@ public class selectSkin : MonoBehaviour {
 
     public void setSkin(string skintag)
     {
-        string data = File.ReadAllText(Application.dataPath + "/MyInfo.json");
+        string data = File.ReadAllText(Application.persistentDataPath + "/MyInfo.json");
         UserInfo playerinfo = JsonUtility.FromJson<UserInfo>(data);
         playerinfo.setSkinTag(skintag);
         data = JsonUtility.ToJson(playerinfo);
-        StreamWriter sw = File.CreateText(Application.dataPath + "/MyInfo.json");
+        StreamWriter sw = File.CreateText(Application.persistentDataPath + "/MyInfo.json");
         sw.Close();
-        File.WriteAllText(Application.dataPath + "/MyInfo.json", data);
+        File.WriteAllText(Application.persistentDataPath + "/MyInfo.json", data);
     }
 
 	// Use this for initialization

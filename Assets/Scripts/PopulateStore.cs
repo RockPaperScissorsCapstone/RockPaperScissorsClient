@@ -155,7 +155,7 @@ public class PopulateStore : MonoBehaviour {
         ConnectionManager CM = new ConnectionManager();
         if (CM.StartClient() == 1)
         {
-            string data = File.ReadAllText(Application.dataPath + "/MyInfo.json");
+            string data = File.ReadAllText(Application.persistentDataPath + "/MyInfo.json");
             Debug.Log(data);
             UserInfo playerinfo = JsonUtility.FromJson<UserInfo>(data);
 

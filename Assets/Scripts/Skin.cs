@@ -73,20 +73,20 @@ public class Skin {
     public static void writeSkinToJson(Skin skin)
     {
         //read userinfo from json and set the new skin tag
-        string data = File.ReadAllText(Application.dataPath + "/MyInfo.json");
+        string data = File.ReadAllText(Application.persistentDataPath + "/MyInfo.json");
         UserInfo userInfo = JsonUtility.FromJson<UserInfo>(data);
         userInfo.setSkinTag(skin.getSkinTag());
 
         //save the modified userinfo
         data = JsonUtility.ToJson(userInfo);
-        StreamWriter sw = File.CreateText(Application.dataPath + "MyInfo.json");
+        StreamWriter sw = File.CreateText(Application.persistentDataPath + "MyInfo.json");
         sw.Close();
-        File.WriteAllText(Application.dataPath + "/MyInfo.json", data);
+        File.WriteAllText(Application.persistentDataPath + "/MyInfo.json", data);
 
     }
     public static string getCurrentSkinFromJson()
     {
-        string data = File.ReadAllText(Application.dataPath + "/MyInfo.json");
+        string data = File.ReadAllText(Application.persistentDataPath + "/MyInfo.json");
         UserInfo userInfo = JsonUtility.FromJson<UserInfo>(data);
         return userInfo.getSkintag();
     }

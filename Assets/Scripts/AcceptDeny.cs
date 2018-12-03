@@ -22,7 +22,7 @@ public class AcceptDeny : MonoBehaviour {
     string myusername;
 
     void Start () {
-        string data = File.ReadAllText(Application.dataPath + "/MyInfo.json");
+        string data = File.ReadAllText(Application.persistentDataPath + "/MyInfo.json");
         UserInfo playerinfo = JsonUtility.FromJson<UserInfo>(data);
         userId = playerinfo.getUserId();
         myusername = playerinfo.getUsername();

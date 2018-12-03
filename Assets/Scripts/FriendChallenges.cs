@@ -26,7 +26,7 @@ public class FriendChallenges : MonoBehaviour {
         //get userID from json file
         Debug.Log("Started");
 
-        string data = File.ReadAllText(Application.dataPath + "/MyInfo.json");
+        string data = File.ReadAllText(Application.persistentDataPath + "/MyInfo.json");
         UserInfo playerinfo = JsonUtility.FromJson<UserInfo>(data);
         userId = playerinfo.getUserId();
     
