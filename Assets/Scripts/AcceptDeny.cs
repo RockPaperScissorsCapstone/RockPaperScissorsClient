@@ -140,9 +140,14 @@ public class AcceptDeny : MonoBehaviour {
         if (CM.StartClient() == 1)
         {
             string response = CM.ChallengeDenied(param);
-            response = CM.ChallengeFriend(param);
 
             Debug.Log(response);
+        }
+
+        if(CM.StartClient() == 1)
+        {
+            string[] responses = CM.ChallengeFriend(param);
+            Debug.Log(responses[4]);
         }
         SceneNavigator navi = new SceneNavigator();
         navi.GoToScene("GameScreen_Friend");
