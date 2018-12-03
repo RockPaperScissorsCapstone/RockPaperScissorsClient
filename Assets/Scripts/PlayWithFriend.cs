@@ -33,6 +33,7 @@ public class PlayWithFriend : MonoBehaviour
     void Start()
     {
         //initially, store the necessary info (user_id) into local variable to be ready to pass to playWithAI()
+        Debug.Log("Starting the play with friends code");
         try
         {
             using (StreamReader streamReader = new StreamReader(Application.dataPath + "/MyInfo.json"))
@@ -57,43 +58,36 @@ public class PlayWithFriend : MonoBehaviour
         Help_Text.text = "Finding a Random Player...";
 
         connectionManager = new ConnectionManager();
-        if (connectionManager.StartClient() == 1) //successful start of client
+
+
+
+        //playWithRandom = connectionManager.ClientListener();
+
+        //this follow the sequence of MultiplayerSession.py in the server
+        //send player1ID
+        connectionManager.getResponse();
+        connectionManager.sendResponse("1");
+        connectionManager.sendUserId(player1Id);
+        //receive other player's ID
+        player2Id = connectionManager.getResponse();
+        Player2_ID_Text.text = player2Id;
+
+        //receive okay from the server to start game
+        sessionResponse = int.Parse(connectionManager.getResponse());
+        Debug.Log(sessionResponse);
+        if (sessionResponse == 1)
         {
-
-        
-
-            //playWithRandom = connectionManager.ClientListener();
-
-            //this follow the sequence of MultiplayerSession.py in the server
-            //send player1ID
-            connectionManager.getResponse();
-            connectionManager.sendResponse("1");
-            connectionManager.sendUserId(player1Id);
-            //receive other player's ID
-            player2Id = connectionManager.getResponse();
-            Player2_ID_Text.text = player2Id;
-
-            //receive okay from the server to start game
-            sessionResponse = int.Parse(connectionManager.getResponse());
-            Debug.Log(sessionResponse);
-            if (sessionResponse == 1)
-            {
-                Debug.Log("Multiplayer Session Start Complete. User can choose moves now");
-                Help_Text.text = "Choose your move!";
-                Debug.Log("add listener");
-                Rock_Button.onClick.AddListener(delegate { TaskWithParameters("1"); });
-                Paper_Button.onClick.AddListener(delegate { TaskWithParameters("2"); });
-                Scissors_Button.onClick.AddListener(delegate { TaskWithParameters("3"); });
-                Debug.Log("done adding listener");
-            }
-            else
-            {
-                Debug.Log("REJECTED");
-            }
+            Debug.Log("Multiplayer Session Start Complete. User can choose moves now");
+            Help_Text.text = "Choose your move!";
+            Debug.Log("add listener");
+            Rock_Button.onClick.AddListener(delegate { TaskWithParameters("1"); });
+            Paper_Button.onClick.AddListener(delegate { TaskWithParameters("2"); });
+            Scissors_Button.onClick.AddListener(delegate { TaskWithParameters("3"); });
+            Debug.Log("done adding listener");
         }
-        else //failed start of client
+        else
         {
-            Debug.Log("Failed to start ConnectionManager Client");
+            Debug.Log("REJECTED");
         }
     }
 
