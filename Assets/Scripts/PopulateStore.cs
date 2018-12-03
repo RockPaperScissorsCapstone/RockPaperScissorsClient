@@ -34,6 +34,12 @@ public class PopulateStore : MonoBehaviour {
        {
            print("Connection manager failed on client.");
        } */
+
+        string data = File.ReadAllText(Application.persistentDataPath + "/MyInfo.json");
+		UserInfo playerinfo = JsonUtility.FromJson<UserInfo>(data);
+        GameObject currencyObject = GameObject.Find("Money_Display");
+        string currency = playerinfo.getCurrency();
+        currencyObject.GetComponent<Text>().text = currency;
         skinDisplay = GameObject.FindGameObjectWithTag("currentSkinDisplay");
         skinDisplay.GetComponent<Text>().text = Skin.getCurrentSkinFromJson();
 
@@ -111,7 +117,7 @@ public class PopulateStore : MonoBehaviour {
             Debug.Log(data);
             UserInfo playerinfo = JsonUtility.FromJson<UserInfo>(data);
 
-            string[] skinsData = CM.getSkinsList().Split(';');
+            string[] skinsData = CM.getSkinsList().TrimEnd(';').Split(';');
             string[] skinsPurchased = CM.getSkinsPurchased(playerinfo.getUserId()).Split(';');
             int count = 0;
 
