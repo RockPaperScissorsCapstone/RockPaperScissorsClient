@@ -1,7 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
 using System.IO;
@@ -15,7 +14,7 @@ public class GetFriendsList : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		string data = File.ReadAllText(Application.dataPath + "/MyInfo.json");
+		string data = File.ReadAllText(Application.persistentDataPath + "/MyInfo.json");
 		UserInfo playerinfo = JsonUtility.FromJson<UserInfo>(data);
 		string username = playerinfo.getUsername();
 		getFriends(username);

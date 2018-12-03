@@ -50,9 +50,9 @@ public class Login : MonoBehaviour {
 	private void SaveInfo(UserInfo playerinfo)
     {
         string json = JsonUtility.ToJson(playerinfo);
-        StreamWriter sw = File.CreateText(Application.dataPath + "/MyInfo.json");
+        StreamWriter sw = File.CreateText(Application.persistentDataPath + "/MyInfo.json");
         sw.Close();
-        File.WriteAllText(Application.dataPath + "/MyInfo.json", json);
+        File.WriteAllText(Application.persistentDataPath + "/MyInfo.json", json);
 
     }
 
