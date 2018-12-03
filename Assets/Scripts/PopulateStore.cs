@@ -42,7 +42,8 @@ public class PopulateStore : MonoBehaviour {
         string data = File.ReadAllText(Application.persistentDataPath + "/MyInfo.json");
 		UserInfo playerinfo = JsonUtility.FromJson<UserInfo>(data);
         GameObject currencyObject = GameObject.Find("Money_Display");
-        playerCurrency = playerinfo.getCurrency();
+        // playerCurrency = playerinfo.getCurrency();
+        playerCurrency = "500";
         playerId = playerinfo.getUserId();
         currencyObject.GetComponent<Text>().text = playerCurrency;
         skinDisplay = GameObject.FindGameObjectWithTag("currentSkinDisplay");
@@ -97,6 +98,19 @@ public class PopulateStore : MonoBehaviour {
                 } else { //can buy skin
                     ConnectionManager CM = new ConnectionManager();
                     if (CM.StartClient() == 1) {
+                        string[] param = new string[2];
+                        param[0] = playerId;
+                        param[1] = selectedSkinId;
+                        string response = CM.buySkin(param);
+                        Debug.Log(response);
+                        selectedSkin.transform.Find("Skin_Cost").GetComponent<Text>().text = "Bought";
+                        GameObject.Find("Help_Text").GetComponent<Text>().text = "Bought Skin!";
+                        
+                        //update currency
+                        string data = File.ReadAllText(Application.persistentDataPath + "/MyInfo.json");
+		                UserInfo playerinfo = JsonUtility.FromJson<UserInfo>(data);
+                        playercurrency -= selectedskincost;
+                        playerinfo.setCurrency(playercurrency.ToString());
                     }
                 }
             }
