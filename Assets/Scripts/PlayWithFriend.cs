@@ -7,7 +7,7 @@ using Navigator;
 using System;
 using System.IO;
 using System.Net.Sockets;
-using SocketPasser;
+using static SocketPasser;
 
 public class PlayWithFriend : MonoBehaviour
 {

@@ -7,7 +7,7 @@ using System.IO;
 using System.Text;
 using ServerManager;
 using Navigator;
-using SocketPasser;
+using static SocketPasser;
 
 public class GetFriendsList : MonoBehaviour {
 	public ScrollRect scrollView;
