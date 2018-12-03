@@ -7,6 +7,7 @@ using Navigator;
 using System;
 using System.IO;
 using System.Net.Sockets;
+using SocketPasser;
 
 public class PlayWithFriend : MonoBehaviour
 {
@@ -26,7 +27,6 @@ public class PlayWithFriend : MonoBehaviour
     int localPlayer2Win = 0;
     ConnectionManager connectionManager;
     UserInfo userInfo;
-
     Socket playWithRandom;
 
     // Use this for initialization
@@ -57,7 +57,7 @@ public class PlayWithFriend : MonoBehaviour
         Debug.Log("Changing Help Text to show server is finding a match");
         Help_Text.text = "Finding a Random Player...";
 
-        connectionManager = new ConnectionManager();
+        connectionManager = SocketPasser.getCM();
 
 
 

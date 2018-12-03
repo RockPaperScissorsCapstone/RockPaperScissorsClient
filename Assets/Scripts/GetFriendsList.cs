@@ -7,6 +7,7 @@ using System.IO;
 using System.Text;
 using ServerManager;
 using Navigator;
+using SocketPasser;
 
 public class GetFriendsList : MonoBehaviour {
 	public ScrollRect scrollView;
@@ -15,6 +16,7 @@ public class GetFriendsList : MonoBehaviour {
     public GameObject FriendUsername;
     public Button ChallengeButton;
     string userId;
+
 
     // Use this for initialization
     void Start () {
@@ -91,6 +93,7 @@ public class GetFriendsList : MonoBehaviour {
         {
             string[] response = CM.ChallengeFriend(param);
             Debug.Log(response[4]);
+			SocketPasser.setCM(CM);
         }
 
 		SceneNavigator navi = new SceneNavigator();

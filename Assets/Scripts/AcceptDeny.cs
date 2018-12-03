@@ -7,6 +7,7 @@ using System.IO;
 using System.Text;
 using ServerManager;
 using Navigator;
+using SocketPasser;
 
 
 public class AcceptDeny : MonoBehaviour {
@@ -17,7 +18,6 @@ public class AcceptDeny : MonoBehaviour {
     public GameObject messageLabel;
     public Button Accept;
     public Button Deny;
-
     string userId;
     string myusername;
 
@@ -148,6 +148,7 @@ public class AcceptDeny : MonoBehaviour {
         {
             string[] responses = CM.ChallengeFriend(param);
             Debug.Log(responses[4]);
+            SocketPasser.setCM(CM);
         }
         SceneNavigator navi = new SceneNavigator();
         navi.GoToScene("GameScreen_Friend");
