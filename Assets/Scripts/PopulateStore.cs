@@ -111,6 +111,9 @@ public class PopulateStore : MonoBehaviour {
 		                UserInfo playerinfo = JsonUtility.FromJson<UserInfo>(data);
                         playercurrency -= selectedskincost;
                         playerinfo.setCurrency(playercurrency.ToString());
+
+                        GameObject currencyObject = GameObject.Find("Money_Display");
+                        currencyObject.GetComponent<Text>().text = playercurrency.ToString();
                     }
                 }
             }
