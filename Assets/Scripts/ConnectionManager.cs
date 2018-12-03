@@ -357,22 +357,22 @@ namespace ServerManager{
                 return ("");
             }
 		}
-        public string[] AddNewFriend(string[] param){
-            string[] response = new string[4];
+        public string AddNewFriend(string[] param){
+            string response;
             Console.WriteLine("Socket connected to {0}", sender.RemoteEndPoint.ToString());
             //Data buffer for incoming data.
             byte[] msgFunction = EncodeToBytes("addFriend");
-            response[0] = Messenger(msgFunction);
+            response = Messenger(msgFunction);
 
             byte[] myUsername = EncodeToBytes(param[0]);
-            response[1] = Messenger(myUsername);
+            response = Messenger(myUsername);
 
             byte[] friendUsername = EncodeToBytes(param[1]);
-            response[2] = Messenger(friendUsername);
+            response = Messenger(friendUsername);
 
             EndMessages();
 
-            response[3] = receive();
+            response = receive();
 
             return response;
         }
@@ -453,50 +453,6 @@ namespace ServerManager{
 
             byte[] ChallengerUsername = EncodeToBytes(param[1]);
             response = Messenger(ChallengerUsername);
-
-            byte[] message = EncodeToBytes(param[2]);
-            response = Messenger(message);
-            EndMessages();
-
-            response = receive();
-            return response;
-        }
-
-        public string FriendRequestAccepted(string[] param)
-        {
-            string response;
-            Console.WriteLine("Socket connected to {0}", sender.RemoteEndPoint.ToString());
-            //Data buffer for incoming data.
-            byte[] msgFunction = EncodeToBytes("FriendRequestAccepted");
-            response = Messenger(msgFunction);
-
-            byte[] myUserId = EncodeToBytes(param[0]);
-            response = Messenger(myUserId);
-
-            byte[] friendUsername = EncodeToBytes(param[1]);
-            response = Messenger(friendUsername);
-
-            byte[] message = EncodeToBytes(param[2]);
-            response = Messenger(message);
-            EndMessages();
-
-            response = receive();
-            return response;
-        }
-
-        public string FriendRequestRejected(string[] param)
-        {
-            string response;
-            Console.WriteLine("Socket connected to {0}", sender.RemoteEndPoint.ToString());
-            //Data buffer for incoming data.
-            byte[] msgFunction = EncodeToBytes("FriendRequestRejected");
-            response = Messenger(msgFunction);
-
-            byte[] myUserId = EncodeToBytes(param[0]);
-            response = Messenger(myUserId);
-
-            byte[] friendUsername = EncodeToBytes(param[1]);
-            response = Messenger(friendUsername);
 
             byte[] message = EncodeToBytes(param[2]);
             response = Messenger(message);

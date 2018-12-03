@@ -198,7 +198,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 114891204891319844}
-        m_MethodName: RejectChallenge
+        m_MethodName: DeleteResponse
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -318,6 +318,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   notice_Item: {fileID: 1849800378791746}
   friendUsername: {fileID: 1044629715797602}
+  messageLabel: {fileID: 1471260850596388}
   Accept: {fileID: 0}
   Deny: {fileID: 114783540896359236}
 --- !u!222 &222008350282961452

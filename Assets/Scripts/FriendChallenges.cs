@@ -1,7 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
 using System.IO;
@@ -46,7 +45,7 @@ public class FriendChallenges : MonoBehaviour {
     {
         //Update method stopped for every five seconds.
         checkupdates = 0;
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(5f);
         checkupdates = getChallenges();
     }
     //Receives all challenging usernames from the backend.
