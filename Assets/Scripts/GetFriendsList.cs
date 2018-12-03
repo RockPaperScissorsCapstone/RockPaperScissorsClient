@@ -63,19 +63,37 @@ public class GetFriendsList : MonoBehaviour {
 
 	//update the UI with the friends list
 	public void fillFriends(string[] friendsList) {
-		foreach(var friend in friendsList) {
-			Debug.Log(friend.Length);
-			if (friend.Length > 0 & friend.Length < 46){
-				Debug.Log(friend);
+		ConnectionManager CM = new ConnectionManager();
+		if (CM.StartClient() == 1) {
+			string onlineUsersList = CM.GetOnlineUsers();
+			Debug.Log(onlineUsersList);
+			string[] onlineUsers = onlineUsersList.Split(',');
 
-				//instantiate a Friend_Item prefab, set the parent to scrollview's content, and change the text to friend var from friendsList
-				GameObject friendObject = Instantiate(Friend_Item);
-				friendObject.transform.SetParent(ScrollViewContent.transform, false);
-				friendObject.transform.Find("Friend_Name").gameObject.GetComponent<Text>().text = friend;
-				friendObject.tag = "Friend_Item";
-                Button challengeFriendButton = friendObject.transform.Find("ChallengeButton").gameObject.GetComponent<Button>();
-				challengeFriendButton.onClick.AddListener(delegate {ChallengeFriend(friend); });
-            }
+			foreach (var online in onlineUsers) {
+				Debug.Log(online.Length);
+			}
+
+			foreach(var friend in friendsList) {
+				Debug.Log(friend.Length);
+				if (friend.Length > 0 & friend.Length < 46){
+					Debug.Log(friend);
+
+					//instantiate a Friend_Item prefab, set the parent to scrollview's content, and change the text to friend var from friendsList
+					GameObject friendObject = Instantiate(Friend_Item);
+					friendObject.transform.SetParent(ScrollViewContent.transform, false);
+					friendObject.transform.Find("Friend_Name").gameObject.GetComponent<Text>().text = friend;
+					friendObject.tag = "Friend_Item";
+
+					foreach (var online in onlineUsers) {
+						if (online.Equals(friend)) {
+							Debug.Log("Online user found!");
+							friendObject.transform.Find("Friend_Image").gameObject.GetComponent<Image>().sprite = Online_Icon;
+							Button challengeFriendButton = friendObject.transform.Find("ChallengeButton").gameObject.GetComponent<Button>();
+						challengeFriendButton.onClick.AddListener(delegate {ChallengeFriend(friend); });
+						}
+					}
+				}
+			}
 		}
 	}
     //Called when challenge button is pressed and sends Challenger's userid, challengee's username and message "Challenge Message" to the backend
@@ -102,13 +120,4 @@ public class GetFriendsList : MonoBehaviour {
         navi.GoToScene("GameScreen_Friend");
         
     }
-
-	public void getOnlineStatus(){
-		ConnectionManager connectionManager = new ConnectionManager();
-		if (connectionManager.StartClient() == 1) {
-			
-		} else {
-			Debug.Log("Within getOnlineStatus. Unable to Start Client");
-		}
-	}
 }

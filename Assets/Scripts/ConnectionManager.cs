@@ -563,6 +563,17 @@ namespace ServerManager{
             return response[2];
         }
 
+        public string GetOnlineUsers() {
+            byte[] msgFunction = EncodeToBytes("GetOnlineUsers");
+            string response = Messenger(msgFunction);
+
+            EndMessages();
+
+            response = steve_receive();
+
+            return response;
+        }
+
         private byte[] EncodeToBytes(string param)
         {
             return Encoding.ASCII.GetBytes(param);

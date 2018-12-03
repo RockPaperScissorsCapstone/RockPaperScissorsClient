@@ -9,6 +9,12 @@ using UnityShortCuts;
 using Navigator;
 
 public class Login : MonoBehaviour {
+	void Start() {
+		if (Application.platform == RuntimePlatform.WindowsPlayer || Application.platform == RuntimePlatform.WindowsEditor) {
+			Debug.Log("windows!");
+			Screen.SetResolution(450, 800, false, 60);
+		}
+	}
 
 	public void login() {
 		//this is the parameter sent to the server to verify credentials for login
