@@ -36,6 +36,6 @@ EditorBuildSettings:
     path: Assets/Scenes/Shop.unity
     guid: 1704de8f5e1842345bbf75c717d6aa2d
   - enabled: 1
-    path: Assets/Scenes/BuySkin.unity
-    guid: 98a9b75fc528bf3438f9e1b406c7ca7a
+    path: Assets/Scenes/GameChallenges.unity
+    guid: 227a9814b60997b4285e96dfbdd6946f
   m_configObjects: {}
