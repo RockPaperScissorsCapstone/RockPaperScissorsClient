@@ -20,24 +20,29 @@ namespace ServerManager{
         public ConnectionManager(){
 
         }
-        public int StartClient() { 
+        public int StartClient() {
             // Connect to a remote device.  
-                // Establish the remote endpoint for the socket.  
-                // This example uses port 11000 on the local computer.  
-             
-                // //Production (Steve's Server)
-                //ipHostInfo = Dns.GetHostEntry("ec2-18-224-97-127.us-east-2.compute.amazonaws.com");
-                //ipAddress = ipHostInfo.AddressList[0]; 
-                //remoteEP = new IPEndPoint(ipAddress, 65432);
-           
+            // Establish the remote endpoint for the socket.  
+            // This example uses port 11000 on the local computer.  
 
-                //Nick's Test environment
-                ipHostInfo = Dns.GetHostEntry("ec2-18-217-146-155.us-east-2.compute.amazonaws.com");
-                ipAddress = ipHostInfo.AddressList[0]; 
-                remoteEP = new IPEndPoint(ipAddress, 65432); 
+            // //Production (Steve's Server)
+            //ipHostInfo = Dns.GetHostEntry("ec2-18-224-97-127.us-east-2.compute.amazonaws.com");
+            //ipAddress = ipHostInfo.AddressList[0]; 
+            //remoteEP = new IPEndPoint(ipAddress, 65432);
 
-                // Create a TCP/IP  socket.  
-                sender = new Socket(ipAddress.AddressFamily, 
+
+            //Nick's Test environment
+            //ipHostInfo = Dns.GetHostEntry("ec2-18-217-146-155.us-east-2.compute.amazonaws.com");
+            //ipAddress = ipHostInfo.AddressList[0]; 
+            //remoteEP = new IPEndPoint(ipAddress, 65432); 
+
+            //Matt's Test environment
+            ipHostInfo = Dns.GetHostEntry("ec2-18-218-9-3.us-east-2.compute.amazonaws.com");
+            ipAddress = ipHostInfo.AddressList[0]; 
+            remoteEP = new IPEndPoint(ipAddress, 65432); 
+
+            // Create a TCP/IP  socket.  
+            sender = new Socket(ipAddress.AddressFamily, 
                     SocketType.Stream, ProtocolType.Tcp ); 
 
                 // Connect the socket to the remote endpoint. Catch any errors.  
@@ -126,6 +131,37 @@ namespace ServerManager{
 
             response[1] = receive();
             return response[1];
+        }
+        
+        public string getSkinsList()
+        {
+            string[] response = new string[2];
+            Console.WriteLine("Socket connected to {0}", sender.RemoteEndPoint.ToString());
+
+            byte[] msgFuction = EncodeToBytes("Shop");
+            response[0] = Messenger(msgFuction);
+
+            EndMessages();
+
+            response[1] = receive();
+            return response[1];
+        }
+
+        public string getSkinsPurchased(String userID)
+        {
+            string[] response = new string[3];
+            Console.WriteLine("Socket connected to {0}", sender.RemoteEndPoint.ToString());
+
+            byte[] msgFunction = EncodeToBytes("Inventory");
+            response[0] = Messenger(msgFunction);
+
+            byte[] msgUserID = EncodeToBytes(userID);
+            response[1] = Messenger(msgUserID);
+
+            EndMessages();
+
+            response[2] = receive();
+            return response[2];
         }
 
 		private void EndMessages(){
@@ -394,17 +430,6 @@ namespace ServerManager{
 
             return response;
         }
-
-        public string getSkinList()
-        {
-            Console.WriteLine("Socket connected to {0}", sender.RemoteEndPoint.ToString());
-            byte[] msgFunction = EncodeToBytes("getSkinList");
-            string response = Messenger(msgFunction);
-            EndMessages();
-            response = receive();
-            return response;
-        }
-
         public string buySkin(string[] param) {
             byte[] msgFunction = EncodeToBytes("BuySkin");
             string response = Messenger(msgFunction);

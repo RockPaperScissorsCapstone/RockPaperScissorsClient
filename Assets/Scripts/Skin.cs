@@ -54,6 +54,13 @@ public class Skin {
         setImageSprite(paper, skin.getPaperPath());
         setImageSprite(scissors, skin.getScissorsPath());
     }
+    public static void setImageSkin(GameObject[] elements, Skin skin)
+    {
+        Image Rock = elements[(int)PopulateStore.SkinElements.Rock].GetComponent<Image>();
+        Image Scissors = elements[(int)PopulateStore.SkinElements.Scissors].GetComponent<Image>();
+        Image Paper = elements[(int)PopulateStore.SkinElements.Paper].GetComponent<Image>();
+        Skin.setImageSkin(Rock, Paper, Scissors, skin);
+    }
     private static void setImageSprite(Button button, string url)
     {
         button.GetComponent<Image>().sprite = Resources.Load<Sprite>(url);
