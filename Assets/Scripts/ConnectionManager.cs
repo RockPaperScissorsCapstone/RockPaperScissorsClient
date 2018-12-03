@@ -293,11 +293,11 @@ namespace ServerManager{
         }
 
         public string getResponse(){
-            byte[] bytes = new byte[10];
+            byte[] bytes = new byte[1024];
 			int bytesRec = sender.Receive(bytes);
             Debug.Log(bytesRec);
-            if(bytes.Length > 0){
-			    string results = (DecodeToString(bytes));
+            if(bytesRec > 0){
+			    string results = Encoding.ASCII.GetString(bytes, 0, bytesRec);
                 Debug.Log("This is in the getResponse method " + results);
                 return (results);
             }
@@ -307,11 +307,11 @@ namespace ServerManager{
         }
 
         public string getOneResponse(){
-            byte[] bytes = new byte[1];
+            byte[] bytes = new byte[1024];
 			int bytesRec = sender.Receive(bytes);
             Debug.Log(bytesRec);
-            if(bytes.Length > 0){
-			    string results = (DecodeToString(bytes));
+            if(bytesRec > 0){
+			    string results = Encoding.ASCII.GetString(bytes, 0, bytesRec);
                 Debug.Log("This is in the getResponse method " + results);
                 return (results);
             }
@@ -530,7 +530,7 @@ namespace ServerManager{
             return response;
         }
 
-        public string[] UpdateCurrency(string[] param) {
+        public string UpdateCurrency(string[] param) {
             string[] response = new string[4];
             byte[] msgFunction = EncodeToBytes("UpdateCurrency");
             response[0] = Messenger(msgFunction);
@@ -545,7 +545,7 @@ namespace ServerManager{
 
             response[3] = receive();
 
-            return response;
+            return response[3];
         }
 
         public string LogOut(string username) {

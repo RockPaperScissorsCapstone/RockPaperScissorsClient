@@ -135,9 +135,7 @@ public class PlayWithRandom : MonoBehaviour {
     public void EndGame() {
         sessionResponse = int.Parse(connectionManager.getResponse());
         connectionManager.LogOff();
-
-        connectionManager = new ConnectionManager();
-        connectionManager.StartClient();
+        
         if (sessionResponse == 2) { //Player1 Won! Good ending.
             // localPlayer1Win++;
             Player1_Number_Text.text = localPlayer1Win.ToString();
@@ -152,7 +150,14 @@ public class PlayWithRandom : MonoBehaviour {
             string[] currencyParam = new string[2];
             currencyParam[0] = player1Id;
             currencyParam[1] = player2Id;
-            connectionManager.UpdateCurrency(currencyParam);
+
+            ConnectionManager CM = new ConnectionManager();
+            CM.StartClient();
+            Debug.Log("trying to update currency");
+            string updatedCurrency = CM.UpdateCurrency(currencyParam); //updates and receives updated currency as response
+            Debug.Log(updatedCurrency);
+            Debug.Log("setting currency");
+            userInfo.setCurrency(updatedCurrency);
         } else if (sessionResponse == -2) { //Player2 Won! Bad ending.
             // localPlayer2Win++;
             Player2_Number_Text.text = localPlayer2Win.ToString();
@@ -168,7 +173,10 @@ public class PlayWithRandom : MonoBehaviour {
         string json = JsonUtility.ToJson(userInfo);
         File.WriteAllText(Application.persistentDataPath + "/MyInfo.json", json);
 
-        //update to the DB Win and Loss
+        
+        connectionManager = new ConnectionManager();
+        connectionManager.StartClient();
+        // //update to the DB Win and Loss
         string[] param = new string[4];
         param[0] = wins;
         param[1] = losses;
