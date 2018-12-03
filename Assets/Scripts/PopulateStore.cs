@@ -83,7 +83,7 @@ public class PopulateStore : MonoBehaviour {
             GameObject selectedSkin = ((PointerEventData) eventData).pointerPress; //get the selected gameobject
             string selectedSkinCost = selectedSkin.transform.Find("Skin_Cost").GetComponent<Text>().text;//get the cost
             string selectedSkinName = selectedSkin.transform.Find("Skin_Name").GetComponent<Text>().text;
-            string selectedSkinId = selectedSkin.transform.Find("Skin_Tag").GetComponent<Text>().text;
+            string selectedSkinId = selectedSkin.transform.tag;
 
             Debug.Log(selectedSkinCost); 
             if (selectedSkinCost.Equals("Bought")) { //already bought, then just set the skin
