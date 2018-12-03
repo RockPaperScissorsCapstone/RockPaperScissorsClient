@@ -55,7 +55,6 @@ GameObject:
   - component: {fileID: 224313810391338334}
   - component: {fileID: 222712260810950556}
   - component: {fileID: 114974627821732984}
-  - component: {fileID: 114628683111922916}
   m_Layer: 5
   m_Name: Shop_Item
   m_TagString: Untagged
@@ -201,17 +200,6 @@ MonoBehaviour:
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
---- !u!114 &114628683111922916
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1736121517053590}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 806eeac8b4bb2b9468c5d3b460df5f94, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &114693889768851952
 MonoBehaviour:
   m_ObjectHideFlags: 1

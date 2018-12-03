@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
+using System;
 using System.IO;
 using System.Text;
 using ServerManager;
@@ -19,6 +20,9 @@ public class PopulateStore : MonoBehaviour {
     public GameObject skinDisplay;
     public LinkedList<Skin> skinList;
     public SkinList skinlist = new SkinList();
+
+    string playerCurrency = "";
+    string playerId = "";
 	void Start () {
         /*ConnectionManager CM = new ConnectionManager();
         if(CM.StartClient() == 1)
@@ -38,8 +42,9 @@ public class PopulateStore : MonoBehaviour {
         string data = File.ReadAllText(Application.persistentDataPath + "/MyInfo.json");
 		UserInfo playerinfo = JsonUtility.FromJson<UserInfo>(data);
         GameObject currencyObject = GameObject.Find("Money_Display");
-        string currency = playerinfo.getCurrency();
-        currencyObject.GetComponent<Text>().text = currency;
+        playerCurrency = playerinfo.getCurrency();
+        playerId = playerinfo.getUserId();
+        currencyObject.GetComponent<Text>().text = playerCurrency;
         skinDisplay = GameObject.FindGameObjectWithTag("currentSkinDisplay");
         skinDisplay.GetComponent<Text>().text = Skin.getCurrentSkinFromJson();
 
@@ -74,8 +79,28 @@ public class PopulateStore : MonoBehaviour {
         entry.eventID = EventTriggerType.PointerClick;
         entry.callback.AddListener((eventData) =>
         {
-            Skin.writeSkinToJson(skin);
-            skinDisplay.GetComponent<Text>().text = skin.getSkinTag();
+            Debug.Log(eventData);
+            GameObject selectedSkin = ((PointerEventData) eventData).pointerPress; //get the selected gameobject
+            string selectedSkinCost = selectedSkin.transform.Find("Skin_Cost").GetComponent<Text>().text;//get the cost
+            string selectedSkinName = selectedSkin.transform.Find("Skin_Name").GetComponent<Text>().text;
+            string selectedSkinId = selectedSkin.transform.Find("Skin_Tag").GetComponent<Text>().text;
+
+            Debug.Log(selectedSkinCost); 
+            if (selectedSkinCost.Equals("Bought")) { //already bought, then just set the skin
+                Skin.writeSkinToJson(skin);
+                skinDisplay.GetComponent<Text>().text = skin.getSkinTag();
+            } else { //skin not bought 
+                int playercurrency = Convert.ToInt32(playerCurrency);
+                int selectedskincost = Convert.ToInt32(selectedSkinCost);
+                if (playercurrency < selectedskincost) { //can't buy skin
+                    GameObject.Find("Help_Text").GetComponent<Text>().text = "You do not have enough money to buy this skin!";
+                } else { //can buy skin
+                    ConnectionManager CM = new ConnectionManager();
+                    if (CM.StartClient() == 1) {
+                    }
+                }
+            }
+            
         });
         trigger.triggers.Add(entry);
     }
@@ -119,7 +144,7 @@ public class PopulateStore : MonoBehaviour {
 
             string[] skinsData = CM.getSkinsList().TrimEnd(';').Split(';');
             string[] skinsPurchased = CM.getSkinsPurchased(playerinfo.getUserId()).Split(';');
-            int count = 0;
+            // int count = 0;
 
             foreach (string skin in skinsData)
             {
@@ -129,10 +154,16 @@ public class PopulateStore : MonoBehaviour {
                 string cost = skinDetails[2];
                 Skin skinObject = new Skin(tag);
 
-                if (tag.Equals(skinsPurchased[count]))
-                {
-                    cost = "0";
-                    count++;
+                // if (tag.Equals(skinsPurchased[count]))
+                // {
+                //     cost = "0";
+                //     count++;
+                // }
+
+                foreach (var purchased in skinsPurchased) {
+                    if (tag.Equals(purchased)) {
+                        cost = "Bought";
+                    }
                 }
 
                 GameObject newSkin = getSkinPrefab();
