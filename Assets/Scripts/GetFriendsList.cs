@@ -15,7 +15,7 @@ public class GetFriendsList : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		string data = File.ReadAllText(Application.dataPath + "/MyInfo.json");
+		string data = File.ReadAllText(Application.persistentDataPath + "/MyInfo.json");
 		UserInfo playerinfo = JsonUtility.FromJson<UserInfo>(data);
 		string username = playerinfo.getUsername();
 		getFriends(username);

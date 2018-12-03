@@ -18,7 +18,7 @@ public class AddFriend : MonoBehaviour {
         string[] responses = new string[4];
         usc = new ShortCuts();
 
-        data = File.ReadAllText(Application.dataPath + "/MyInfo.json");
+        data = File.ReadAllText(Application.persistentDataPath + "/MyInfo.json");
         playerinfo = JsonUtility.FromJson<UserInfo>(data);
         param[0] = playerinfo.getUsername();
         Debug.Log(param[0]);
