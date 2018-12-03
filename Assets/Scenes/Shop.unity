@@ -1043,9 +1043,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f77aeb3f1213dff4fa33d73ded055ac5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  SkinObject: {fileID: 0}
-  scrollView: {fileID: 0}
-  ScrollViewContent: {fileID: 0}
+  SkinObject: {fileID: 1736121517053590, guid: 43e19e9d98c1d7a448795e7bcebf8b4c, type: 2}
+  scrollView: {fileID: 749941396}
+  ScrollViewContent: {fileID: 1795088642}
   skinDisplay: {fileID: 0}
 --- !u!114 &1402001008
 MonoBehaviour:

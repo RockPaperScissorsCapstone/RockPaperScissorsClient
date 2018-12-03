@@ -143,7 +143,7 @@ public class PopulateStore : MonoBehaviour {
 
                 setOnClickListener(newSkin, skinObject);
 
-                newSkin.transform.parent = ScrollViewContent.transform;
+                newSkin.transform.SetParent(ScrollViewContent.transform, false);
                 newSkin.transform.localScale = new Vector3(1, 1, 1);
             }
         }
