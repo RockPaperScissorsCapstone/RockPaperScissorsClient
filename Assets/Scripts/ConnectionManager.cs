@@ -350,9 +350,9 @@ namespace ServerManager{
 			int bytesRec = sender.Receive(bytes);
             Debug.Log(bytesRec);
             if(bytesRec > 0){
-			    string results = (DecodeToString(bytes));
-                Debug.Log("This is in the receive class " + results);
-                return (results);
+			    // string results = (DecodeToString(bytes));
+                // Debug.Log("This is in the receive class " + results);
+                return Encoding.ASCII.GetString(bytes, 0, bytesRec);
             }
             else{
                 return ("");
@@ -374,6 +374,17 @@ namespace ServerManager{
             EndMessages();
 
             response[3] = receive();
+
+            return response;
+        }
+
+        public string GetOnlineUsers() {
+            byte[] msgFunction = EncodeToBytes("GetOnlineUsers");
+            string response = Messenger(msgFunction);
+
+            EndMessages();
+
+            response = steve_receive();
 
             return response;
         }

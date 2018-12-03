@@ -1,7 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
 using System.IO;
@@ -12,6 +11,8 @@ public class GetFriendsList : MonoBehaviour {
 	public ScrollRect scrollView;
 	public GameObject Friend_Item;
 	public GameObject ScrollViewContent;
+
+	public Sprite Profile_Button_Online;
 
 	// Use this for initialization
 	void Start () {
@@ -30,6 +31,7 @@ public class GetFriendsList : MonoBehaviour {
 	public void getFriends(string username) {
 		ConnectionManager CM = new ConnectionManager();
 		if (CM.StartClient() == 1) {
+			
 			//the server spits back comma separated string of friends
 			string response = CM.getFriendsList(username);
 			
@@ -56,16 +58,36 @@ public class GetFriendsList : MonoBehaviour {
 
 	//update the UI with the friends list
 	public void fillFriends(string[] friendsList) {
-		foreach(var friend in friendsList) {
-			Debug.Log(friend.Length);
-			if (friend.Length > 0 & friend.Length < 46){
-				Debug.Log(friend);
+		ConnectionManager CM = new ConnectionManager();
+		if (CM.StartClient() == 1) {
+			string onlineUsersList = CM.GetOnlineUsers();
+			Debug.Log(onlineUsersList);
+			string[] onlineUsers = onlineUsersList.Split(',');
 
-				//instantiate a Friend_Item prefab, set the parent to scrollview's content, and change the text to friend var from friendsList
-				GameObject friendObject = Instantiate(Friend_Item);
-				friendObject.transform.SetParent(ScrollViewContent.transform, false);
-				friendObject.transform.Find("Friend_Name").gameObject.GetComponent<Text>().text = friend;
+			foreach (var online in onlineUsers) {
+				Debug.Log(online.Length);
 			}
+
+			foreach(var friend in friendsList) {
+				Debug.Log(friend.Length);
+				if (friend.Length > 0 & friend.Length < 46){
+					Debug.Log(friend);
+
+					//instantiate a Friend_Item prefab, set the parent to scrollview's content, and change the text to friend var from friendsList
+					GameObject friendObject = Instantiate(Friend_Item);
+					friendObject.transform.SetParent(ScrollViewContent.transform, false);
+					friendObject.transform.Find("Friend_Name").gameObject.GetComponent<Text>().text = friend;
+
+					foreach(var online in onlineUsers) {
+						if (online.Equals(friend)) {
+							Debug.Log("Online user found!");
+							friendObject.transform.Find("Friend_Image").gameObject.GetComponent<Image>().sprite = Profile_Button_Online;
+						}
+					}
+				}
+			}
+		} else {
+			Debug.Log("Error starting the CM client!");
 		}
 	}
 }

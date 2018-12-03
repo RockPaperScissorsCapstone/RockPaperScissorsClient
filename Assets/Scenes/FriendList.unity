@@ -376,6 +376,8 @@ MonoBehaviour:
   Friend_Item: {fileID: 1802133379763484, guid: 2fb3888d023408d46a7fb4fc16c22f88,
     type: 2}
   ScrollViewContent: {fileID: 404467763}
+  Profile_Button_Online: {fileID: 21300000, guid: f9cb83c8f821dea4e8a04c488a25489b,
+    type: 3}
 --- !u!1 &404467763
 GameObject:
   m_ObjectHideFlags: 0
