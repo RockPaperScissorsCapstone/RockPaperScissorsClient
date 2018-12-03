@@ -548,6 +548,21 @@ namespace ServerManager{
             return response;
         }
 
+        public string LogOut(string username) {
+            string[] response = new string[4];
+            byte[] msgFunction = EncodeToBytes("Logout");
+            response[0] = Messenger(msgFunction);
+
+            byte[] myUsername = EncodeToBytes(username);
+            response[1] = Messenger(myUsername);
+
+            EndMessages();
+
+            response[2] = receive();
+
+            return response[2];
+        }
+
         private byte[] EncodeToBytes(string param)
         {
             return Encoding.ASCII.GetBytes(param);
