@@ -307,7 +307,7 @@ namespace ServerManager{
         }
 
         public string getOneResponse(){
-            byte[] bytes = new byte[1024];
+            byte[] bytes = new byte[1];
 			int bytesRec = sender.Receive(bytes);
             Debug.Log(bytesRec);
             if(bytesRec > 0){
