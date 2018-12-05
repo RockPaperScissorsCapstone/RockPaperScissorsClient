@@ -113,7 +113,7 @@ public class PlayWithRandom : MonoBehaviour {
         if (sessionResponse == 0) { //a tie
             matchNumber++;
             Match_Number_Text.text = matchNumber.ToString();
-            ShowMoveIU.run(move, "T");
+            ShowMoveIU.Run(move, "T");
         } else if (sessionResponse == 1) { //a win
             localPlayer1Win++;
             Player1_Number_Text.text = localPlayer1Win.ToString();

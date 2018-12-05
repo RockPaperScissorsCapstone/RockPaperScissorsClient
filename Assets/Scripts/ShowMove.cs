@@ -41,6 +41,7 @@ public class ShowMove : MonoBehaviour {
 
         if(WinLossSituation == "W")//You Won
         {
+            Debug.Log("You won!");
             Text TEXTSITUATION = WinLossText.GetComponent<Text>();
             TEXTSITUATION.text = "You Won";
             if (Move == "1")//Set your sprite to Rock, opponent to Scissors
@@ -137,11 +138,11 @@ public class ShowMove : MonoBehaviour {
 //     //This will Toggle the move frame
     void Start () {
 
-        Panel = GameObject.Find("ShowMove_UI");
-        PlayerSprite = GameObject.Find("UI_Show_move_YourSprite");
-        OpponentSprite = GameObject.Find("UI_Show_move_OpponentSprite");
-        WinLossText = GameObject.Find("UI_Show_move_result_text");
-        CloseButton = GameObject.Find("UI_Show_move_Closebutton");
+        Panel = GameObject.Find("DisplayMovePanel");
+        PlayerSprite = GameObject.Find("Your_move");
+        OpponentSprite = GameObject.Find("Opponent_Move");
+        WinLossText = GameObject.Find("Result_Text_Show_move");
+        CloseButton = GameObject.Find("Close_Button_DisplayMove");
         TheButton = CloseButton.GetComponent<Button>();
 
 	}
