@@ -8,6 +8,7 @@ using System;
 using System.IO;
 using System.Net.Sockets;
 
+
 public class PlayWithRandom : MonoBehaviour {
 	//Player 1 is the player running this instance.
 	//Player 2 is the randomly matched user
@@ -26,6 +27,7 @@ public class PlayWithRandom : MonoBehaviour {
 	ConnectionManager connectionManager;
     UserInfo userInfo;
     Skin skin;
+    ShowMove ShowMoveIU = new ShowMove();
 
     Socket playWithRandom;
 
@@ -111,9 +113,11 @@ public class PlayWithRandom : MonoBehaviour {
         if (sessionResponse == 0) { //a tie
             matchNumber++;
             Match_Number_Text.text = matchNumber.ToString();
+            ShowMoveIU.run(move, "T");
         } else if (sessionResponse == 1) { //a win
             localPlayer1Win++;
             Player1_Number_Text.text = localPlayer1Win.ToString();
+            ShowMoveIU.Run(move, "W");
             if (localPlayer1Win == 2) {
                 EndGame();
             } else {
@@ -123,6 +127,7 @@ public class PlayWithRandom : MonoBehaviour {
         } else if (sessionResponse == -1) { //a loss
             localPlayer2Win++;
             Player2_Number_Text.text = localPlayer2Win.ToString();
+            ShowMoveIU.Run(move, "L");
             if (localPlayer2Win == 2) {
                 EndGame();
             } else {

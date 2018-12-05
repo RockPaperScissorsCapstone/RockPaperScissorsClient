@@ -21,6 +21,14 @@ TagManager:
   - leaderboardContent
   - shopItemHeading
   - skin
+  - RockSKin
+  - PaperSkin
+  - ScissorsSKin
+  - ShowMove_UI
+  - UI_Show_move_YourSprite
+  - UI_Show_move_OpponentSprite
+  - UI_Show_move_Closebutton
+  - UI_Show_move_result_text
   layers:
   - Default
   - TransparentFX

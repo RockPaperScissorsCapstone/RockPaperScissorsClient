@@ -97,7 +97,7 @@ public class PlayWithAI : MonoBehaviour {
             Match_Number_Text.text = matchNumber.ToString();
             string playerWinResponse = connectionManager.getOneResponse();
             string AIWinResponse = connectionManager.getOneResponse();
-
+            
             localHumanWin = Convert.ToInt32(playerWinResponse);
             localAiWin = Convert.ToInt32(AIWinResponse);
 
@@ -118,6 +118,7 @@ public class PlayWithAI : MonoBehaviour {
             wins = newWin.ToString();
             localHumanWin++;
             Human_Number_Text.text = (localHumanWin).ToString();
+
         } else if (sessionResponse == 0){
             Help_Text.text = "AI won!";
             int newLosses = int.Parse(losses);
