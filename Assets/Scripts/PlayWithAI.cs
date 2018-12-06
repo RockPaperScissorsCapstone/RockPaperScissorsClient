@@ -23,6 +23,7 @@ public class PlayWithAI : MonoBehaviour {
     private static int skinOutScreenPosition = 630;
     private bool skinsOnScreen = false;
 
+
     ConnectionManager connectionManager;
     UserInfo userInfo;
     Skin skin;
@@ -76,6 +77,7 @@ public class PlayWithAI : MonoBehaviour {
 	}
 
     public void TaskWithParameters(string move) {
+        ShowMove ShowMoveUI = new ShowMove();
         Debug.Log(move);
         connectionManager.sendUserId(userId);
         Debug.Log("Sent User Id");
@@ -97,10 +99,21 @@ public class PlayWithAI : MonoBehaviour {
             Match_Number_Text.text = matchNumber.ToString();
             string playerWinResponse = connectionManager.getOneResponse();
             string AIWinResponse = connectionManager.getOneResponse();
-            
+
             localHumanWin = Convert.ToInt32(playerWinResponse);
             localAiWin = Convert.ToInt32(AIWinResponse);
+            if (playerWinResponse == "1") { 
 
+            ShowMoveUI.Run(move, "W");
+             }
+            else if (playerWinResponse == "-1")
+            {
+                ShowMoveUI.Run(move, "L");
+            }
+            else
+            {
+                ShowMoveUI.Run(move, "T");
+            }
             Human_Number_Text.text = playerWinResponse;
             AI_Number_Text.text = AIWinResponse;
         } else {

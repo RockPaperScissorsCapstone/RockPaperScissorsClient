@@ -99,6 +99,7 @@ public class PlayWithFriend : MonoBehaviour
 
     public void TaskWithParameters(string move)
     {
+        ShowMove ShowMoveUI = new ShowMove();
         //send the move to server
         Debug.Log(move);
         connectionManager.sendMove(move);
@@ -114,11 +115,14 @@ public class PlayWithFriend : MonoBehaviour
         { //a tie
             matchNumber++;
             Match_Number_Text.text = matchNumber.ToString();
+            ShowMoveUI.Run(move, "T");
         }
         else if (sessionResponse == 1)
         { //a win
             localPlayer1Win++;
             Player1_Number_Text.text = localPlayer1Win.ToString();
+            ShowMoveUI.Run(move, "W");
+
             if (localPlayer1Win == 2)
             {
                 EndGame();
@@ -133,6 +137,8 @@ public class PlayWithFriend : MonoBehaviour
         { //a loss
             localPlayer2Win++;
             Player2_Number_Text.text = localPlayer2Win.ToString();
+            ShowMoveUI.Run(move, "L");
+
             if (localPlayer2Win == 2)
             {
                 EndGame();
