@@ -49,7 +49,10 @@ public class Login : MonoBehaviour {
 			else 
 			{
 				Debug.Log("Failed to start ConnectionsManager Client");
-			}
+                
+                SceneNavigator navi = new SceneNavigator();                 //Failed to Connect
+                navi.GoToScene("LoginScreen");                              //Goes to scene so it doesnt crash due to no action
+			}   
 		}
 	}
 
