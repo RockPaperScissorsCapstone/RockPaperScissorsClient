@@ -49,5 +49,27 @@ namespace UnityShortCuts{
 			}
 		}
 
+		public bool toggleValue(string tagName){
+			GameObject toggleObject = GameObject.FindGameObjectWithTag(tagName);
+			Toggle toggleObjectComponent = toggleObject.GetComponent<Toggle>();
+			return toggleObjectComponent.isOn;
+		}
+
+		public void enableObject(string tagName, string componentType){
+			GameObject gameObject = GameObject.FindGameObjectWithTag(tagName);
+			if(componentType.Equals("Text")){
+				Text textObjectComponent = gameObject.GetComponent<Text>();
+				textObjectComponent.enabled = true;
+			}
+		}
+
+		public void disableObject(string tagName, string componentType){
+			GameObject gameObject = GameObject.FindGameObjectWithTag(tagName);
+			if(componentType.Equals("Text")){
+				Text textObjectComponent = gameObject.GetComponent<Text>();
+				textObjectComponent.enabled = false;
+			}
+		}
+
 	}
 }
