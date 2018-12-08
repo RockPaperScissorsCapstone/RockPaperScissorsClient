@@ -140,6 +140,9 @@ public class PlayWithAI : MonoBehaviour {
         string updateWinLossResponse = connectionManager.updateWinLoss(param);
         Debug.Log(updateWinLossResponse);
 
-        //disable move buttons
+        //disable buttons
+        Rock_Button.onClick.RemoveListener(delegate {TaskWithParameters("1");});
+        Paper_Button.onClick.RemoveListener(delegate {TaskWithParameters("2");});
+        Scissors_Button.onClick.RemoveListener(delegate {TaskWithParameters("3");});
     }
 }
