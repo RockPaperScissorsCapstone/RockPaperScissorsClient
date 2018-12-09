@@ -198,8 +198,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 28a140b7c6f9a4f84b2f2382d5dce86b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Challenge_Item: {fileID: 1802133379763484}
-  Friend_name: {fileID: 1173440405194472}
 --- !u!114 &114507669389195024
 MonoBehaviour:
   m_ObjectHideFlags: 1
