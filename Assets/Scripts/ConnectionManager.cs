@@ -25,16 +25,21 @@ namespace ServerManager{
             // Establish the remote endpoint for the socket.  
             // This example uses port 11000 on the local computer.  
 
+            // //Production (Krishna's Server)
+            // ipHostInfo = Dns.GetHostEntry("ec2-18-220-56-132.us-east-2.compute.amazonaws.com");
+            // ipAddress = ipHostInfo.AddressList[0]; 
+            // remoteEP = new IPEndPoint(ipAddress, 65432);
+
             // //Production (Steve's Server)
-            ipHostInfo = Dns.GetHostEntry("ec2-18-220-56-132.us-east-2.compute.amazonaws.com");
-            ipAddress = ipHostInfo.AddressList[0]; 
-            remoteEP = new IPEndPoint(ipAddress, 65432);
+            // ipHostInfo = Dns.GetHostEntry("ec2-18-224-97-127.us-east-2.compute.amazonaws.com");
+            // ipAddress = ipHostInfo.AddressList[0]; 
+            // remoteEP = new IPEndPoint(ipAddress, 65432);
 
 
             //Nick's Test environment
-            //ipHostInfo = Dns.GetHostEntry("ec2-18-217-146-155.us-east-2.compute.amazonaws.com");
-            //ipAddress = ipHostInfo.AddressList[0]; 
-            //remoteEP = new IPEndPoint(ipAddress, 65432); 
+            ipHostInfo = Dns.GetHostEntry("ec2-18-217-146-155.us-east-2.compute.amazonaws.com");
+            ipAddress = ipHostInfo.AddressList[0]; 
+            remoteEP = new IPEndPoint(ipAddress, 65432); 
 
             //Matt's Test environment
             // ipHostInfo = Dns.GetHostEntry("ec2-18-218-9-3.us-east-2.compute.amazonaws.com");

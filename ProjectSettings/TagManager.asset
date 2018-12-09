@@ -21,6 +21,12 @@ TagManager:
   - leaderboardContent
   - shopItemHeading
   - skin
+  - overThirteenFlag
+  - AgeLimitError
+  - userNameError
+  - fNameError
+  - lNameError
+  - emailError
   layers:
   - Default
   - TransparentFX
