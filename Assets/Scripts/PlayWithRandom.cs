@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Threading;
 using UnityEngine;
 using UnityEngine.UI;
 using ServerManager;
@@ -36,6 +37,8 @@ public class PlayWithRandom : MonoBehaviour {
 
     Socket playWithRandom;
 
+    List<string> methodsToCall = new List<string>();
+
 	// Use this for initialization
 	void Start () {
 		//initially, store the necessary info (user_id) into local variable to be ready to pass to playWithAI()
@@ -61,6 +64,11 @@ public class PlayWithRandom : MonoBehaviour {
         Debug.Log("Changing Help Text to show server is finding a match");
         Help_Text.text = "Finding a Random Player...";
 
+        var thread = new Thread(randomSession);
+        thread.Start();
+    }
+
+    private void randomSession() {
         connectionManager = new ConnectionManager();
         if (connectionManager.StartClient() == 1) //successful start of client
         {
@@ -81,14 +89,7 @@ public class PlayWithRandom : MonoBehaviour {
             sessionResponse = int.Parse(connectionManager.getResponse());
             Debug.Log(sessionResponse);
             if (sessionResponse == 1) {
-                Debug.Log("Multiplayer Session Start Complete. User can choose moves now");
-                Help_Text.text = "Choose your move!";
-                Debug.Log("add listener");
-                Skin.setButtonSkin(Rock_Button, Paper_Button, Scissors_Button, skin);
-                Rock_Button.onClick.AddListener(delegate {TaskWithParameters("1");});
-                Paper_Button.onClick.AddListener(delegate {TaskWithParameters("2");});
-                Scissors_Button.onClick.AddListener(delegate {TaskWithParameters("3");});
-                Debug.Log("done adding listener");
+                methodsToCall.Add("readyToRandomPlay");
             } else {
                 Debug.Log("REJECTED");
             }
@@ -98,13 +99,30 @@ public class PlayWithRandom : MonoBehaviour {
         }
 
         //player2Username = connectionManager.GetUsernameFromPlayerID(player2Id);
-        Player2_ID_Text.text = player2Username;
+        // Player2_ID_Text.text = player2Username;
     }
 	
 	// Update is called once per frame
 	void Update () {
-		
+		if (methodsToCall.Count > 0) {
+            foreach (string s in methodsToCall) {
+                Invoke(s, 0f);
+            }
+            methodsToCall.Clear();
+        }
 	}
+
+    void readyToRandomPlay() {
+        Debug.Log("Multiplayer Session Start Complete. User can choose moves now");
+        Help_Text.text = "Choose your move!";
+        Debug.Log("add listener");
+        Skin.setButtonSkin(Rock_Button, Paper_Button, Scissors_Button, skin);
+        Rock_Button.onClick.AddListener(delegate {TaskWithParameters("1");});
+        Paper_Button.onClick.AddListener(delegate {TaskWithParameters("2");});
+        Scissors_Button.onClick.AddListener(delegate {TaskWithParameters("3");});
+        Debug.Log("done adding listener");
+        Player2_ID_Text.text = player2Username;
+    }
     public void Run(string Move, string WINLOSS)
     {
 
