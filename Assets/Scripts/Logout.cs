@@ -42,4 +42,9 @@ public class Logout : MonoBehaviour {
 			Debug.Log("Connection Manager Failed to Start a Client");
 		}
 	}
+
+	void OnApplicationQuit() {
+		Debug.Log("Application died!");
+		logout();
+	}
 }
