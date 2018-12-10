@@ -306,15 +306,6 @@ public class PlayWithRandom : MonoBehaviour {
         string updateWinLossResponse = connectionManager.updateWinLoss(param);
         Debug.Log(updateWinLossResponse);
 
-        string respone = connectionManager.getResponse();
-        // //Get updated score
-        string userID = userInfo.getUserId();
-        int clientStart = 0;
-        while(clientStart != 1){
-            clientStart = connectionManager.StartClient();
-        }
-        string updatedScore = connectionManager.GetScore(userID);
-        userInfo.setScore(updatedScore);
         string json = JsonUtility.ToJson(userInfo);
         File.WriteAllText(Application.persistentDataPath + "/MyInfo.json", json);
         //disable buttons

@@ -17,6 +17,7 @@ public class GetAccountInfo : MonoBehaviour {
 	UserInfo playerinfo;
 	void Start() 
 	{
+		ConnectionManager cm = new ConnectionManager();
 		usc = new ShortCuts(); 
 		data = File.ReadAllText(Application.persistentDataPath + "/MyInfo.json");
 		Debug.Log(data);
@@ -25,6 +26,11 @@ public class GetAccountInfo : MonoBehaviour {
         Debug.Log(playerinfo.getFirstName());
 		string param = playerinfo.getUsername();
 		user_id = playerinfo.getUserId();
+		int clientStart = 0;
+        while(clientStart != 1){
+            clientStart = cm.StartClient();
+        }
+		playerinfo.setScore(cm.GetScore(user_id));
 		usc.updateInputValue("profileUserName", param);
 		string[] tagNames = {"profileScore", "profileCurrency", "profileWins", "profileLosses"};
 		string[] userParams = {playerinfo.getScore(), playerinfo.getCurrency(), playerinfo.getWins(), playerinfo.getLosses()};

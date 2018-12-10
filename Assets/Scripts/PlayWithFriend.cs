@@ -180,7 +180,7 @@ public class PlayWithFriend : MonoBehaviour
     public void EndGame(string move)
     {
         sessionResponse = int.Parse(connectionManager.getResponse());
-        connectionManager.LogOff();
+        // connectionManager.LogOff();
         if (sessionResponse == 2)
         { //Player1 Won! Good ending.
             // localPlayer1Win++;
@@ -218,15 +218,6 @@ public class PlayWithFriend : MonoBehaviour
         param[2] = player1Id;
         string updateWinLossResponse = connectionManager.updateWinLoss(param);
         Debug.Log(updateWinLossResponse);
-
-        //update client based on DB
-        string userID = userInfo.getUserId();
-        int clientStart = 0;
-        while(clientStart != 1){
-            clientStart = connectionManager.StartClient();
-        }
-        string updatedScore = connectionManager.GetScore(userID);
-        userInfo.setScore(updatedScore);
 
         string json = JsonUtility.ToJson(userInfo);
         File.WriteAllText(Application.persistentDataPath + "/MyInfo.json", json);
