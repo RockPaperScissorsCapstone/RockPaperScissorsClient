@@ -289,6 +289,7 @@ public class PlayWithRandom : MonoBehaviour {
         string updateWinLossResponse = connectionManager.updateWinLoss(param);
         Debug.Log(updateWinLossResponse);
 
+        string respone = connectionManager.getResponse();
         // //Get updated score
         string userID = userInfo.getUserId();
         connectionManager.StartClient();
