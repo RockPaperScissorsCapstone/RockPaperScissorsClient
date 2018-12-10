@@ -5,15 +5,18 @@ using ServerManager;
 using System.IO;
 using UnityShortCuts;
 using Navigator;
+using UnityEngine.UI;
 
-
-public class AddFriend : MonoBehaviour {
+public class AddFriend : MonoBehaviour
+{
 
     ShortCuts usc;
     string data;
     UserInfo playerinfo;
+    public GameObject resposneUI;
 
-    public void AddMyNewFriend(){
+    public void AddMyNewFriend()
+    {
         string[] param = new string[3];
         string[] responses = new string[4];
         usc = new ShortCuts();
@@ -27,9 +30,21 @@ public class AddFriend : MonoBehaviour {
         param[2] = "Friend Request";
         Debug.Log(param[2]);
         ConnectionManager CM = new ConnectionManager();
-        if(CM.StartClient() == 1){
+        if (CM.StartClient() == 1)
+        {
             responses = CM.ChallengeFriend(param);
-            Debug.Log(responses[3]);
+            Debug.Log(responses[4]);
+            if (responses[4].Equals("Challenge Made"))
+            {
+
+                resposneUI.GetComponent<Text>().text = "Request Sent!";
+
+            }
+            else
+            {
+                resposneUI.GetComponent<Text>().text = "No Such Username!";
+
+            }
         }
     }
 }
