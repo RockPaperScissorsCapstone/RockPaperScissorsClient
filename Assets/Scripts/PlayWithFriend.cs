@@ -109,7 +109,7 @@ public class PlayWithFriend : MonoBehaviour
 
     public void TaskWithParameters(string move)
     {
-        ShowMove ShowMoveUI = new ShowMove();
+        // ShowMove ShowMoveUI = new ShowMove();
         //send the move to server
         Debug.Log(move);
         connectionManager.sendMove(move);
