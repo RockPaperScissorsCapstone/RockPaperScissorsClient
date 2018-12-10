@@ -31,15 +31,15 @@ namespace ServerManager{
             // remoteEP = new IPEndPoint(ipAddress, 65432);
 
             // //Production (Steve's Server)
-            // ipHostInfo = Dns.GetHostEntry("ec2-18-224-97-127.us-east-2.compute.amazonaws.com");
-            // ipAddress = ipHostInfo.AddressList[0]; 
-            // remoteEP = new IPEndPoint(ipAddress, 65432);
+            ipHostInfo = Dns.GetHostEntry("ec2-18-224-97-127.us-east-2.compute.amazonaws.com");
+            ipAddress = ipHostInfo.AddressList[0]; 
+            remoteEP = new IPEndPoint(ipAddress, 65432);
 
 
             //Nick's Test environment
-            ipHostInfo = Dns.GetHostEntry("ec2-18-217-146-155.us-east-2.compute.amazonaws.com");
-            ipAddress = ipHostInfo.AddressList[0]; 
-            remoteEP = new IPEndPoint(ipAddress, 65432); 
+            // ipHostInfo = Dns.GetHostEntry("ec2-18-217-146-155.us-east-2.compute.amazonaws.com");
+            // ipAddress = ipHostInfo.AddressList[0]; 
+            // remoteEP = new IPEndPoint(ipAddress, 65432); 
 
             //Matt's Test environment
             // ipHostInfo = Dns.GetHostEntry("ec2-18-218-9-3.us-east-2.compute.amazonaws.com");
@@ -545,6 +545,9 @@ namespace ServerManager{
 
             byte[] skinId = EncodeToBytes(param[1]);
             response = Messenger(skinId);
+
+            byte[] skinCost = EncodeToBytes(param[2]);
+            response = Messenger(skinCost);
 
             EndMessages();
 
