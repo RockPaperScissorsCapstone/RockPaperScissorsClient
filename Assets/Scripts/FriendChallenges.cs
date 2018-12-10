@@ -13,6 +13,7 @@ using ServerManager;
         // Use this for initialization
         int checkupdates = 1;
         string userId;
+        string storedNotification;
 
         public GameObject Challenge_Item;
         public GameObject Friend_Request;
@@ -30,6 +31,21 @@ using ServerManager;
             UserInfo playerinfo = JsonUtility.FromJson<UserInfo>(data);
             userId = playerinfo.getUserId();
 
+            // storedNotification = File.ReadAllText(Application.persistentDataPath + "/Notification.txt");
+            // for (int i = 0; i < ScrollViewContent.transform.childCount; i++)
+            //     {
+            //         Destroy(ScrollViewContent.transform.GetChild(i).gameObject);
+            //     }
+
+            // string[] usernameMessageList = storedNotification.Split(',');
+            // for (int i = 0; i < usernameMessageList.Length - 1; i += 2)
+            //     {
+            //         string friendusername = usernameMessageList[i];
+            //         string message = usernameMessageList[i + 1];
+            //         addNewChallengesUI(friendusername, message);
+
+            //     }
+            // scrollView.verticalNormalizedPosition = 1;
         }
 
         // Update is called once per frame
@@ -45,7 +61,7 @@ using ServerManager;
         {
             //Update method stopped for every five seconds.
             checkupdates = 0;
-            yield return new WaitForSeconds(3f);
+            yield return new WaitForSecondsRealtime(1);
             checkupdates = getChallenges(userId);
         }
         //Receives all challenging usernames from the backend.

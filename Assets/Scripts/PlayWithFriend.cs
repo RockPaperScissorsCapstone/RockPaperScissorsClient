@@ -7,6 +7,7 @@ using Navigator;
 using System;
 using System.IO;
 using System.Net.Sockets;
+using System.Threading;
 using static SocketPasser;
 
 public class PlayWithFriend : MonoBehaviour
@@ -34,6 +35,8 @@ public class PlayWithFriend : MonoBehaviour
     public GameObject RockSkin;
     public GameObject PaperSkin;
     public GameObject ScissorsSkin;
+
+    List<string> methodsToCall = new List<string>();
 
 
     // Use this for initialization
@@ -63,11 +66,14 @@ public class PlayWithFriend : MonoBehaviour
         Player1_ID_Text.text = player1Username;
 
         Debug.Log("Changing Help Text to show server is finding a match");
-        Help_Text.text = "Finding a Random Player...";
+        Help_Text.text = "Waiting for your friend...";
 
+        var thread = new Thread(friendSession);
+        thread.Start();
+    }
+
+    private void friendSession() {
         connectionManager = SocketPasser.getCM();
-
-
 
         //playWithRandom = connectionManager.ClientListener();
 
@@ -84,13 +90,7 @@ public class PlayWithFriend : MonoBehaviour
         Debug.Log(sessionResponse);
         if (sessionResponse == 1)
         {
-            Debug.Log("Multiplayer Session Start Complete. User can choose moves now");
-            Help_Text.text = "Choose your move!";
-            Debug.Log("add listener");
-            Rock_Button.onClick.AddListener(delegate { TaskWithParameters("1"); });
-            Paper_Button.onClick.AddListener(delegate { TaskWithParameters("2"); });
-            Scissors_Button.onClick.AddListener(delegate { TaskWithParameters("3"); });
-            Debug.Log("done adding listener");
+            methodsToCall.Add("readyToFriendPlay");
         }
         else
         {
@@ -98,13 +98,29 @@ public class PlayWithFriend : MonoBehaviour
         }
 
         // player2Username = connectionManager.GetUsernameFromPlayerID(player2Id);
-        Player2_ID_Text.text = player2Username;
+        // Player2_ID_Text.text = player2Username;
     }
 
     // Update is called once per frame
     void Update()
     {
+        if (methodsToCall.Count > 0) {
+            foreach (string s in methodsToCall) {
+                Invoke(s, 0f);
+            }
+            methodsToCall.Clear();
+        }
+    }
 
+    void readyToFriendPlay() {
+        Debug.Log("Multiplayer Session Start Complete. User can choose moves now");
+        Help_Text.text = "Choose your move!";
+        Debug.Log("add listener");
+        Rock_Button.onClick.AddListener(delegate { TaskWithParameters("1"); });
+        Paper_Button.onClick.AddListener(delegate { TaskWithParameters("2"); });
+        Scissors_Button.onClick.AddListener(delegate { TaskWithParameters("3"); });
+        Debug.Log("done adding listener");
+        Player2_ID_Text.text = player2Username;
     }
 
     public void TaskWithParameters(string move)

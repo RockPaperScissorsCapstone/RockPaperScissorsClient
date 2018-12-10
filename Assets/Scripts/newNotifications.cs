@@ -16,11 +16,9 @@ public class newNotifications : MonoBehaviour {
         string data = File.ReadAllText(Application.persistentDataPath + "/MyInfo.json");
         UserInfo playerinfo = JsonUtility.FromJson<UserInfo>(data);
         userId = playerinfo.getUserId();
-
     }
     void Update()
     {
-
         if (breaktime == 1)
         {
             StartCoroutine("CheckMyNotices");
@@ -28,10 +26,10 @@ public class newNotifications : MonoBehaviour {
     }
     public IEnumerator CheckMyNotices()
     {
+        Debug.Log("Checking! " + Time.time);
         //Update method stopped for every five seconds.
         breaktime = 0;
-        yield return new WaitForSeconds(2f);
-
+        yield return new WaitForSecondsRealtime(1);
         breaktime = Getnotices();
     }
 
@@ -45,6 +43,9 @@ public class newNotifications : MonoBehaviour {
             int numberOfNotices = (int) (mynotices.Length / 2);
             newNotices.GetComponent<Text>().text = numberOfNotices.ToString();
 
+            // StreamWriter sw = File.CreateText(Application.persistentDataPath + "/Notification.txt");
+            // sw.Close();
+            // File.WriteAllText(Application.persistentDataPath + "/Notification.txt", response);
         }
         else
         {
