@@ -6,12 +6,15 @@ using Navigator;
 using System;
 using System.IO;
 using UnityEngine.UI;
+using static PatternStatic;
 
-public class PlayWithAI : MonoBehaviour {
-    public Button Rock_Button, Paper_Button, Scissors_Button;
-    public Text Match_Number_Text, Help_Text, Human_Number_Text, AI_Number_Text, Player_Name;
-    // public GameObject skinList;
-    string userId = "";
+public class PlayWithAI_Pattern : MonoBehaviour {
+    bool play = false;
+	public Button Rock_Button, Paper_Button, Scissors_Button, Play_Button;
+	public Text Match_Number_Text, Help_Text, Human_Number_Text, AI_Number_Text, Player_Name;
+    public Sprite playImage;
+    public Sprite stopImage;
+	string userId = "";
     string wins = "";
     string losses = "";
     string skintag = "";
@@ -20,24 +23,22 @@ public class PlayWithAI : MonoBehaviour {
     int sessionResponse = 2;
     int localAiWin = 0;
     int localHumanWin = 0;
-    private static int skinInScreenPosition = 276;
-    private static int skinOutScreenPosition = 630;
-    private bool skinsOnScreen = false;
-
-    public GameObject PlayerSprite;//Current Sprite, Yours or Opponents
+	public GameObject PlayerSprite;//Current Sprite, Yours or Opponents
     public GameObject OpponentSprite; //Your Opponent's sprite
     public GameObject RockSkin;
     public GameObject PaperSkin;
     public GameObject ScissorsSkin;
-
-
-    ConnectionManager connectionManager;
+    private IEnumerator keepSendingMoves;
+	ConnectionManager connectionManager;
     UserInfo userInfo;
-    Skin skin;
+	Skin skin;
+	string pattern;
+	string[] patternList;
+	int count = 0;
 
 	// Use this for initialization
 	void Start () {
-        //initially, store the necessary info (user_id) into local variable to be ready to pass to playWithAI()
+		//initially, store the necessary info (user_id) into local variable to be ready to pass to playWithAI()
         try {
             using (StreamReader streamReader = new StreamReader(Application.persistentDataPath + "/MyInfo.json")){
                 String line = streamReader.ReadToEnd();
@@ -48,28 +49,24 @@ public class PlayWithAI : MonoBehaviour {
                 losses = userInfo.getLosses();
                 skintag = userInfo.getSkintag();
                 username = userInfo.getUsername();
-                skin = new Skin(skintag);
-
-                Debug.Log("add listener");
-                // Rock_Button = Rock_Button.GetComponent<Button>();
-                // Paper_Button = Paper_Button.GetComponent<Button>();
-                // Scissors_Button = Scissors_Button.GetComponent<Button>();
-
-                // skinList = GameObject.FindGameObjectWithTag("skinList");
+				skin = new Skin(skintag);
+				Skin.setButtonSkin(Rock_Button, Paper_Button, Scissors_Button, skin);
 
                 Player_Name.text = username;
 
-                Skin.setButtonSkin(Rock_Button, Paper_Button, Scissors_Button, skin);
-                
-                Rock_Button.onClick.AddListener(delegate {TaskWithParameters("1");});
-                Paper_Button.onClick.AddListener(delegate {TaskWithParameters("2");});
-                Scissors_Button.onClick.AddListener(delegate {TaskWithParameters("3");});
-                Debug.Log("done adding listener");
+				pattern = PatternStatic.SelectedPattern;
+				patternList = new string[pattern.Length];
+				for (int i = 0; i < pattern.Length; i++) {
+					char temp = pattern[i];
+					patternList[i] = temp.ToString();
+				}
+
+                Play_Button.onClick.AddListener(delegate {PlayRandomAgainstAI();});
 
                 connectionManager = new ConnectionManager();
                 if (connectionManager.StartClient() == 1) //successful start of client
                 {
-                    string sessionStartResponse = connectionManager.startGameSession();
+                    string sessionStartResponse = connectionManager.startPlayWithAIRandom();
                     Debug.Log(sessionStartResponse);
                 } else //failed start of client
                 {
@@ -83,33 +80,37 @@ public class PlayWithAI : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        
+		
 	}
 
-    public void TaskWithParameters(string move) {
-        // ShowMove ShowMoveUI = new ShowMove();
-        Debug.Log(move);
-        connectionManager.sendUserId(userId);
-        Debug.Log("Sent User Id");
-        connectionManager.sendMove(move);
-        Debug.Log("Sent Move");
+    public void PlayRandomAgainstAI() {
+        if (play) { //stop the simulation
+            play = false;
+            Play_Button.GetComponent<Image>().sprite = null;
+            Play_Button.enabled = false;
+        } else { //start the simulation
+            play = true;
+            Play_Button.GetComponent<Image>().sprite = stopImage;
+            connectionManager.sendMove("1"); //this starts the while loop in server
 
-        
-        string stringResponse = connectionManager.getResponse();
-        Debug.Log(stringResponse);
+            keepSendingMoves = keepSending();
+            StartCoroutine(keepSendingMoves);
+        }
+    }
 
-        sessionResponse = Convert.ToInt32(stringResponse);
-
-        // Debug.Log(playerWinResponse);
-        // Debug.Log(AIWinResponse);
-        Debug.Log(sessionResponse);
-
-        if (sessionResponse == 2) {
+    private IEnumerator keepSending() {
+        bool stopNOW = true;
+        while (stopNOW) {
+            yield return new WaitForSeconds(1f);
+            Debug.Log("Play: " + play.ToString());
+            connectionManager.sendUserId(userId);
+            string nextMove = patternList[count];
+            Debug.Log("Next Move: " + nextMove);
+            connectionManager.sendMove(nextMove);
             matchNumber++;
             Match_Number_Text.text = matchNumber.ToString();
-            string playerWinResponse = connectionManager.getOneResponse();
-            string AIWinResponse = connectionManager.getOneResponse();
-
+            string playerWinResponse = connectionManager.getResponse();
+            string AIWinResponse = connectionManager.getResponse();
             localHumanWin = Convert.ToInt32(playerWinResponse);
             localAiWin = Convert.ToInt32(AIWinResponse);
 
@@ -117,66 +118,34 @@ public class PlayWithAI : MonoBehaviour {
             int previousAIWin = Convert.ToInt32(AI_Number_Text.text);
 
             if (localHumanWin > previousHumanWin) {
-                this.Run(move, "W");
+                this.Run(nextMove, "W");
             }
             else if (localAiWin > previousAIWin)
             {
-                this.Run(move, "L");
+                this.Run(nextMove, "L");
             }
             else
             {
-                this.Run(move, "T");
+                this.Run(nextMove, "T");
             }
+
             Human_Number_Text.text = playerWinResponse;
             AI_Number_Text.text = AIWinResponse;
-        } else {
-            Debug.Log(sessionResponse);
-            EndGame(move);
+
+            if (play == false) {
+                stopNOW = false;
+            } else {
+                //this is the 'code' in server
+            	connectionManager.sendMove("1");
+				count = (count + 1) % patternList.Length;
+            }
         }
+        connectionManager.sendMove("0");
+        string response = connectionManager.getResponse();
+        // connectionManager.LogOff();
+        Debug.Log(response);
     }
 
-    public void EndGame(string move) {
-        if (sessionResponse == 1) {
-            Help_Text.text = "You won!";
-            int newWin = int.Parse(wins);
-            newWin++;
-            userInfo.setWins(newWin.ToString());
-            wins = newWin.ToString();
-            localHumanWin++;
-            this.Run(move, "W");
-            Human_Number_Text.text = (localHumanWin).ToString();
-
-        } else if (sessionResponse == 0){
-            Help_Text.text = "AI won!";
-            int newLosses = int.Parse(losses);
-            newLosses++;
-            userInfo.setLosses(newLosses.ToString());
-            losses = newLosses.ToString();
-            localAiWin++;
-            this.Run(move, "L");
-            AI_Number_Text.text = (localAiWin).ToString();
-        }
-        string json = JsonUtility.ToJson(userInfo);
-        File.WriteAllText(Application.persistentDataPath + "/MyInfo.json", json);
-
-        //update to the DB
-        connectionManager = new ConnectionManager();
-        connectionManager.StartClient();
-        string[] param = new string[4];
-        param[0] = wins;
-        param[1] = losses;
-        param[2] = userId;
-        string updateWinLossResponse = connectionManager.updateWinLoss(param);
-        Debug.Log(updateWinLossResponse);
-
-        //disable buttons
-        Rock_Button.onClick.RemoveListener(delegate {TaskWithParameters("1");});
-        Paper_Button.onClick.RemoveListener(delegate {TaskWithParameters("2");});
-        Scissors_Button.onClick.RemoveListener(delegate {TaskWithParameters("3");});
-    }
-
-
-    //This is show move hard code because life
     public void Run(string Move, string WINLOSS)
     {
 
@@ -261,8 +230,8 @@ public class PlayWithAI : MonoBehaviour {
                 SetOpponentSpriteToObjectSprite(ScissorsSkin);//Set Sprite Scissors
             }
         }
-
     }
+
     public void SetPlayerSpriteToObjectSprite(GameObject GameObjectImage)//Sets PlayerSprite to gameobject's image
     {
         Image ChangedImage = PlayerSprite.GetComponent<Image>();

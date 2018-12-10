@@ -35,6 +35,9 @@ TagManager:
   - fNameError
   - lNameError
   - emailError
+  - usernameFriend
+  - currentSkinDisplay
+  - patternString
   layers:
   - Default
   - TransparentFX

@@ -41,4 +41,16 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/GameScreen_Friend.unity
     guid: 9cd1b91b6b4bd45c68bc96e4d964347b
+  - enabled: 1
+    path: Assets/Scenes/PlayAgainstAI_Option.unity
+    guid: 8e3e6fa6bb831be49bcd061bc8a46d84
+  - enabled: 1
+    path: Assets/Scenes/GameScreen_AI_Random.unity
+    guid: b0150b1de90395d49a8258c22b15bcaf
+  - enabled: 1
+    path: Assets/Scenes/PlayAgainstAI_Pattern_Option.unity
+    guid: 6eca0a32f35442a499a0c1db4436ed37
+  - enabled: 1
+    path: Assets/Scenes/GameScreen_AI_Pattern.unity
+    guid: d418773777f88144d948a34c744b0be8
   m_configObjects: {}

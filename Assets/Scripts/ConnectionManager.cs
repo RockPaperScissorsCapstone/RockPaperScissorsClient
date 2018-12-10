@@ -336,6 +336,19 @@ namespace ServerManager
             return response[0];
         }
 
+        public string startPlayWithAIRandom() {
+            string[] response = new string[2];
+
+            byte[] msgFunction = EncodeToBytes("PlayAgainstAIRandom");
+            response[0] = Messenger(msgFunction);
+
+            EndMessages();
+
+            Debug.Log(response[0]);
+
+            return response[0];
+        }
+
 
         public string startPlayerWithRandom()
         {
