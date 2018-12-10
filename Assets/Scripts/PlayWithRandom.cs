@@ -75,7 +75,7 @@ public class PlayWithRandom : MonoBehaviour {
             connectionManager.sendResponse("1");
             connectionManager.sendUserId(player1Id);
             //receive other player's ID
-            player2Id = connectionManager.getResponse();
+            player2Username = connectionManager.getResponse();
             
             //receive okay from the server to start game
             sessionResponse = int.Parse(connectionManager.getResponse());
@@ -97,7 +97,7 @@ public class PlayWithRandom : MonoBehaviour {
             Debug.Log("Failed to start ConnectionManager Client");
         }
 
-        player2Username = connectionManager.GetUsernameFromPlayerID(player2Id);
+        //player2Username = connectionManager.GetUsernameFromPlayerID(player2Id);
         Player2_ID_Text.text = player2Username;
     }
 	
