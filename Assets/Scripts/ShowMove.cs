@@ -1,131 +1,141 @@
-﻿// using System.Collections;
-// using System.Collections.Generic;
-// using UnityEngine;
-// using UnityEngine.UI;
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.UI;
 
-// public class ShowMove : MonoBehaviour {
+public class ShowMove
+{
 
-//     public GameObject PlayerSprite;//Current Sprite, Yours or Opponents
-//     public GameObject OpponentSprite; //Your Opponent's sprite
-//     public GameObject Panel; //The Panel
-//     public GameObject WinLossText; //Text To show if you win/lose/tie
+    public GameObject PlayerSprite;//Current Sprite, Yours or Opponents
+    public GameObject OpponentSprite; //Your Opponent's sprite
+    public GameObject RockSkin;
+    public GameObject PaperSkin;
+    public GameObject ScissorsSkin;
+
+
     
+    public void Run(string Move, string WINLOSS) 
+    {
+        PlayerSprite = GameObject.FindWithTag("UI_Show_move_YourSprite"); //Current Sprite, Yours or Opponents
+        OpponentSprite = GameObject.FindWithTag("UI_Show_move_OpponentSprite");  //Your Opponent's sprite
+        RockSkin = GameObject.FindWithTag("RockSKin");
+        PaperSkin = GameObject.FindWithTag("PaperSkin");
+        ScissorsSkin = GameObject.FindWithTag("ScissorSKin");
 
-//     public void showPanel() //Shows Panel
-//     {
-//         Panel.gameObject.SetActive(true);
- 
-//     }
-//     public void hidePanel() //Hides the panel
-//     {
-//         Panel.gameObject.SetActive(false);
-//     }
+        SetSprites(Move, WINLOSS);
+    }
 
-//     public void SetSprites(string Move, string WinLossSituation)
-//     {
-        
-//         if(WinLossSituation == "W")//You Won
-//         {
+    public void SetSprites(string Move, string WinLossSituation)
+    {
 
-//             WinLossText.text = "You Won";
-//             if (Move == "1")//Set your sprite to Rock, opponent to Scissors
-//             {
+        if(WinLossSituation == "W")//You Won
+        {
 
-//                 SetPlayerSpriteToObjectSprite(GameObject.Find("Rock"));
+            if (Move == "1")//Set your sprite to Rock, opponent to Scissors
+            {
 
-//                 SetOpponentSpriteToObjectSprite(GameObject.Find("Scissors"));
-//             }
-//             else if (Move == "2")//You picked Paper, set your sprite to paper and enemies to rock
-//             {
+                SetPlayerSpriteToObjectSprite(RockSkin);
 
-//                 SetPlayerSpriteToObjectSprite(GameObject.Find("Paper"));//Set Sprite Paper
+                SetOpponentSpriteToObjectSprite(ScissorsSkin);
+            }
+            else if (Move == "2")//You picked Paper, set your sprite to paper and enemies to rock
+            {
 
-//                 SetOpponentSpriteToObjectSprite(GameObject.Find("Rock"));//Set Sprite Rock
-//             }
-//             else//You Won with Scissors, set sprites
-//             {
+                SetPlayerSpriteToObjectSprite(PaperSkin);//Set Sprite Paper
 
-//                 SetPlayerSpriteToObjectSprite(GameObject.Find("Scissors"));//Set Sprite Scissors
+                SetOpponentSpriteToObjectSprite(RockSkin);//Set Sprite Rock
+            }
+            else//You Won with Scissors, set sprites
+            {
 
-//                 SetOpponentSpriteToObjectSprite(GameObject.Find("Paper"));//Set Sprite Paper
-//             }
-//         }
-//         else if(WinLossSituation=="L"){
+                SetPlayerSpriteToObjectSprite(ScissorsSkin);//Set Sprite Scissors
 
-//             WinLossText.text = "You Lost";
-//             if (Move == "1")//Set your sprite to Rock, opponent to Paper
-//             {
+                SetOpponentSpriteToObjectSprite(PaperSkin);//Set Sprite Paper
+            }
+        }
+        else if(WinLossSituation=="L"){
+            if (Move == "1")//Set your sprite to Rock, opponent to Paper
+            {
 
-//                 SetPlayerSpriteToObjectSprite(GameObject.Find("Rock"));
+                SetPlayerSpriteToObjectSprite(RockSkin);
 
-//                 SetOpponentSpriteToObjectSprite(GameObject.Find("Paper"));
-//             }
-//             else if (Move == "2")//You picked Paper, set your sprite to paper and enemies to Scissors
-//             {
+                SetOpponentSpriteToObjectSprite(PaperSkin);
+            }
+            else if (Move == "2")//You picked Paper, set your sprite to paper and enemies to Scissors
+            {
 
-//                 SetPlayerSpriteToObjectSprite(GameObject.Find("Paper"));//Set Sprite Paper
+                SetPlayerSpriteToObjectSprite(PaperSkin);//Set Sprite Paper
 
-//                 SetOpponentSpriteToObjectSprite(GameObject.Find("Scissors"));//Set Sprite Scissors
-//             }
-//             else//You Lost with Scissors, set sprites
-//             {
+                SetOpponentSpriteToObjectSprite(ScissorsSkin);//Set Sprite Scissors
+            }
+            else//You Lost with Scissors, set sprites
+            {
 
-//                 SetPlayerSpriteToObjectSprite(GameObject.Find("Scissors"));//Set Sprite Scissors
+                SetPlayerSpriteToObjectSprite(ScissorsSkin);//Set Sprite Scissors
 
-//                 SetOpponentSpriteToObjectSprite(GameObject.Find("Rock"));//Set Sprite Rock
-//             }
-//         }
-//         else//Tie, change both sprites to the same thing
-//         {
-//             WinLossText.text = "You Tied";
-//             if (Move == "1")//Set your sprite to Rock, opponent to Rock
-//             {
+                SetOpponentSpriteToObjectSprite(RockSkin);//Set Sprite Rock
+            }
+        }
+        else//Tie, change both sprites to the same thing
+        {
 
-//                 SetPlayerSpriteToObjectSprite(GameObject.Find("Rock"));
 
-//                 SetOpponentSpriteToObjectSprite(GameObject.Find("Rock"));
-//             }
-//             else if (Move == "2")//You picked Paper, set your sprite to paper and enemies to Paper
-//             {
+            if (Move == "1")//Set your sprite to Rock, opponent to Rock
+            {
 
-//                 SetPlayerSpriteToObjectSprite(GameObject.Find("Paper"));//Set Sprite Paper
+                SetPlayerSpriteToObjectSprite(RockSkin);
 
-//                 SetOpponentSpriteToObjectSprite(GameObject.Find("Paper"));//Set Sprite Paper
-//             }
-//             else//You Tie with Scissors, set sprites
-//             {
+                SetOpponentSpriteToObjectSprite(RockSkin);
+            }
+            else if (Move == "2")//You picked Paper, set your sprite to paper and enemies to Paper
+            {
 
-//                 SetPlayerSpriteToObjectSprite(GameObject.Find("Scissors"));//Set Sprite Scissors
+                SetPlayerSpriteToObjectSprite(PaperSkin);//Set Sprite Paper
 
-//                 SetOpponentSpriteToObjectSprite(GameObject.Find("Scissors"));//Set Sprite Scissors
-//             }
-//         }
+                SetOpponentSpriteToObjectSprite(PaperSkin);//Set Sprite Paper
+            }
+            else//You Tie with Scissors, set sprites
+            {
 
-//     }
+                SetPlayerSpriteToObjectSprite(ScissorsSkin);//Set Sprite Scissors
 
-//     public  SetPlayerSpriteToObjectSprite(GameObject GameObjectImage)//Sets PlayerSprite to gameobject's image
-//     {
-//         PlayerSprite.sprite = GameObjectImage.getComponent<image>();
-//     }
-//     public SetOpponentSpriteToObjectSprite(GameObject GameObjectImage)//Sets Opponent's sprite to gameobject's image
-//     {
-//         OpponentSprite.sprite = GameObjectImage.getComponent<image>();
-//     }
+                SetOpponentSpriteToObjectSprite(ScissorsSkin);//Set Sprite Scissors
+            }
+        }
+
+    }
+
+    public void SetPlayerSpriteToObjectSprite(GameObject GameObjectImage)//Sets PlayerSprite to gameobject's image
+    {
+        Image ChangedImage = PlayerSprite.GetComponent<Image>();
+        Image TheImage = GameObjectImage.GetComponent<Image>();
+        ChangedImage.sprite = TheImage.sprite;
+    }
+    public void SetOpponentSpriteToObjectSprite(GameObject GameObjectImage)//Sets Opponent's sprite to gameobject's image
+    {
+
+        Image ChangedImage = PlayerSprite.GetComponent<Image>();
+        Image TheImage = GameObjectImage.GetComponent<Image>();
+        ChangedImage.sprite = TheImage.sprite;
+    }
 
 //     // Use this for initialization
 //     //This will Toggle the move frame
-//     void Start () {
+    void Start () {
 
-//         Panel = GameObject.Find("MovePanel");
-//         PlayerSprite = GameObject.Find("PlayerSprite");
-//         OpponentSprite = GameObject.Find("OpponentSprite");
-//         WinLossText = GameObject.Find("MoveWinLoss");
-        
+        PlayerSprite = GameObject.FindWithTag("UI_Show_move_YourSprite"); //Current Sprite, Yours or Opponents
+        OpponentSprite = GameObject.FindWithTag("UI_Show_move_OpponentSprite");  //Your Opponent's sprite
+        RockSkin = GameObject.FindWithTag("RockSKin"); 
+        PaperSkin = GameObject.FindWithTag("PaperSkin"); 
+        ScissorsSkin = GameObject.FindWithTag("ScissorSKin"); 
 
-// 	}
-	
+
+}
+
 // 	// Update is called once per frame
-// 	void Update () {
-		
-// 	}
-// }
+	void Update () {
+
+
+
+	}
+}
