@@ -162,7 +162,11 @@ public class PopulateStore : MonoBehaviour {
             UserInfo playerinfo = JsonUtility.FromJson<UserInfo>(data);
 
             string[] skinsData = CM.getSkinsList().TrimEnd(';').Split(';');
+            CM.StartClient();
             string[] skinsPurchased = CM.getSkinsPurchased(playerinfo.getUserId()).Split(';');
+            foreach (var skin in skinsPurchased) {
+                Debug.Log(skin);
+            }
             // int count = 0;
 
             foreach (string skin in skinsData)
