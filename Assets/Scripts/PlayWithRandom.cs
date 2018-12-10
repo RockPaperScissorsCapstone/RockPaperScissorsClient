@@ -27,7 +27,12 @@ public class PlayWithRandom : MonoBehaviour {
 	ConnectionManager connectionManager;
     UserInfo userInfo;
     Skin skin;
-    ShowMove ShowMoveIU = new ShowMove();
+
+    public GameObject PlayerSprite;//Current Sprite, Yours or Opponents
+    public GameObject OpponentSprite; //Your Opponent's sprite
+    public GameObject RockSkin;
+    public GameObject PaperSkin;
+    public GameObject ScissorsSkin;
 
     Socket playWithRandom;
 
@@ -97,6 +102,106 @@ public class PlayWithRandom : MonoBehaviour {
 	void Update () {
 		
 	}
+    public void Run(string Move, string WINLOSS)
+    {
+
+        SetSprites(Move, WINLOSS);
+    }
+
+    public void SetSprites(string Move, string WinLossSituation)
+    {
+
+        if (WinLossSituation == "W")//You Won
+        {
+
+            if (Move == "1")//Set your sprite to Rock, opponent to Scissors
+            {
+
+                SetPlayerSpriteToObjectSprite(RockSkin);
+
+                SetOpponentSpriteToObjectSprite(ScissorsSkin);
+            }
+            else if (Move == "2")//You picked Paper, set your sprite to paper and enemies to rock
+            {
+
+                SetPlayerSpriteToObjectSprite(PaperSkin);//Set Sprite Paper
+
+                SetOpponentSpriteToObjectSprite(RockSkin);//Set Sprite Rock
+            }
+            else//You Won with Scissors, set sprites
+            {
+
+                SetPlayerSpriteToObjectSprite(ScissorsSkin);//Set Sprite Scissors
+
+                SetOpponentSpriteToObjectSprite(PaperSkin);//Set Sprite Paper
+            }
+        }
+        else if (WinLossSituation == "L")
+        {
+            if (Move == "1")//Set your sprite to Rock, opponent to Paper
+            {
+
+                SetPlayerSpriteToObjectSprite(RockSkin);
+
+                SetOpponentSpriteToObjectSprite(PaperSkin);
+            }
+            else if (Move == "2")//You picked Paper, set your sprite to paper and enemies to Scissors
+            {
+
+                SetPlayerSpriteToObjectSprite(PaperSkin);//Set Sprite Paper
+
+                SetOpponentSpriteToObjectSprite(ScissorsSkin);//Set Sprite Scissors
+            }
+            else//You Lost with Scissors, set sprites
+            {
+
+                SetPlayerSpriteToObjectSprite(ScissorsSkin);//Set Sprite Scissors
+
+                SetOpponentSpriteToObjectSprite(RockSkin);//Set Sprite Rock
+            }
+        }
+        else//Tie, change both sprites to the same thing
+        {
+
+
+            if (Move == "1")//Set your sprite to Rock, opponent to Rock
+            {
+
+                SetPlayerSpriteToObjectSprite(RockSkin);
+
+                SetOpponentSpriteToObjectSprite(RockSkin);
+            }
+            else if (Move == "2")//You picked Paper, set your sprite to paper and enemies to Paper
+            {
+
+                SetPlayerSpriteToObjectSprite(PaperSkin);//Set Sprite Paper
+
+                SetOpponentSpriteToObjectSprite(PaperSkin);//Set Sprite Paper
+            }
+            else//You Tie with Scissors, set sprites
+            {
+
+                SetPlayerSpriteToObjectSprite(ScissorsSkin);//Set Sprite Scissors
+
+                SetOpponentSpriteToObjectSprite(ScissorsSkin);//Set Sprite Scissors
+            }
+        }
+
+    }
+
+    public void SetPlayerSpriteToObjectSprite(GameObject GameObjectImage)//Sets PlayerSprite to gameobject's image
+    {
+        Image ChangedImage = PlayerSprite.GetComponent<Image>();
+        Image TheImage = GameObjectImage.GetComponent<Image>();
+        ChangedImage.sprite = TheImage.sprite;
+    }
+    public void SetOpponentSpriteToObjectSprite(GameObject GameObjectImage)//Sets Opponent's sprite to gameobject's image
+    {
+
+        Image ChangedImage = OpponentSprite.GetComponent<Image>();
+        Image TheImage = GameObjectImage.GetComponent<Image>();
+        ChangedImage.sprite = TheImage.sprite;
+    }
 
     public void TaskWithParameters(string move) {
         //send the move to server
@@ -113,11 +218,11 @@ public class PlayWithRandom : MonoBehaviour {
         if (sessionResponse == 0) { //a tie
             matchNumber++;
             Match_Number_Text.text = matchNumber.ToString();
-            ShowMoveIU.Run(move, "T");
+            this.Run(move, "T");
         } else if (sessionResponse == 1) { //a win
             localPlayer1Win++;
             Player1_Number_Text.text = localPlayer1Win.ToString();
-            ShowMoveIU.Run(move, "W");
+            this.Run(move, "W");
             if (localPlayer1Win == 2) {
                 EndGame();
             } else {
@@ -127,7 +232,7 @@ public class PlayWithRandom : MonoBehaviour {
         } else if (sessionResponse == -1) { //a loss
             localPlayer2Win++;
             Player2_Number_Text.text = localPlayer2Win.ToString();
-            ShowMoveIU.Run(move, "L");
+            this.Run(move, "L");
             if (localPlayer2Win == 2) {
                 EndGame();
             } else {

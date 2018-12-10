@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class ShowMove : MonoBehaviour {
+public class ShowMove
+{
 
     public GameObject PlayerSprite;//Current Sprite, Yours or Opponents
     public GameObject OpponentSprite; //Your Opponent's sprite
@@ -15,7 +16,12 @@ public class ShowMove : MonoBehaviour {
     
     public void Run(string Move, string WINLOSS) 
     {
-        
+        PlayerSprite = GameObject.FindWithTag("UI_Show_move_YourSprite"); //Current Sprite, Yours or Opponents
+        OpponentSprite = GameObject.FindWithTag("UI_Show_move_OpponentSprite");  //Your Opponent's sprite
+        RockSkin = GameObject.FindWithTag("RockSKin");
+        PaperSkin = GameObject.FindWithTag("PaperSkin");
+        ScissorsSkin = GameObject.FindWithTag("ScissorSKin");
+
         SetSprites(Move, WINLOSS);
     }
 
@@ -103,23 +109,28 @@ public class ShowMove : MonoBehaviour {
     {
         Image ChangedImage = PlayerSprite.GetComponent<Image>();
         Image TheImage = GameObjectImage.GetComponent<Image>();
-        ChangedImage = TheImage;
+        ChangedImage.sprite = TheImage.sprite;
     }
     public void SetOpponentSpriteToObjectSprite(GameObject GameObjectImage)//Sets Opponent's sprite to gameobject's image
     {
 
         Image ChangedImage = PlayerSprite.GetComponent<Image>();
         Image TheImage = GameObjectImage.GetComponent<Image>();
-        ChangedImage = TheImage;
+        ChangedImage.sprite = TheImage.sprite;
     }
 
 //     // Use this for initialization
 //     //This will Toggle the move frame
     void Start () {
-        
+
+        PlayerSprite = GameObject.FindWithTag("UI_Show_move_YourSprite"); //Current Sprite, Yours or Opponents
+        OpponentSprite = GameObject.FindWithTag("UI_Show_move_OpponentSprite");  //Your Opponent's sprite
+        RockSkin = GameObject.FindWithTag("RockSKin"); 
+        PaperSkin = GameObject.FindWithTag("PaperSkin"); 
+        ScissorsSkin = GameObject.FindWithTag("ScissorSKin"); 
 
 
-	}
+}
 
 // 	// Update is called once per frame
 	void Update () {
