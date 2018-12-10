@@ -248,7 +248,6 @@ public class PlayWithRandom : MonoBehaviour {
     public void EndGame(string move) {
         sessionResponse = int.Parse(connectionManager.getResponse());
         // connectionManager.LogOff();
-        
         if (sessionResponse == 2) { //Player1 Won! Good ending.
             // localPlayer1Win++;
             Player1_Number_Text.text = localPlayer1Win.ToString();
@@ -279,8 +278,6 @@ public class PlayWithRandom : MonoBehaviour {
             Debug.Log("Something wrong");
         }
         string json = JsonUtility.ToJson(userInfo);
-        File.WriteAllText(Application.persistentDataPath + "/MyInfo.json", json);
-
         
         connectionManager = new ConnectionManager();
         connectionManager.StartClient();
@@ -292,6 +289,13 @@ public class PlayWithRandom : MonoBehaviour {
         string updateWinLossResponse = connectionManager.updateWinLoss(param);
         Debug.Log(updateWinLossResponse);
 
+        // //Get updated score
+        string userID = userInfo.getUserId();
+        connectionManager.StartClient();
+        string updatedScore = connectionManager.GetScore(userID);
+        userInfo.setScore(updatedScore);
+
+        File.WriteAllText(Application.persistentDataPath + "/MyInfo.json", json);
         //disable buttons
         Rock_Button.onClick.RemoveListener(delegate {TaskWithParameters("1");});
         Paper_Button.onClick.RemoveListener(delegate {TaskWithParameters("2");});
