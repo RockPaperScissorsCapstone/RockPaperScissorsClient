@@ -82,7 +82,7 @@ public class GetFriendsList : MonoBehaviour {
 					GameObject friendObject = Instantiate(Friend_Item);
 					friendObject.transform.SetParent(ScrollViewContent.transform, false);
 					friendObject.transform.Find("Friend_Name").gameObject.GetComponent<Text>().text = friend;
-					friendObject.tag = "Friend_Item";
+					//friendObject.tag = "Friend_Item";
 
 					foreach (var online in onlineUsers) {
 						if (online.Equals(friend)) {

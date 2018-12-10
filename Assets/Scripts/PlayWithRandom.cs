@@ -244,7 +244,7 @@ public class PlayWithRandom : MonoBehaviour {
 
     public void EndGame() {
         sessionResponse = int.Parse(connectionManager.getResponse());
-        connectionManager.LogOff();
+        // connectionManager.LogOff();
         
         if (sessionResponse == 2) { //Player1 Won! Good ending.
             // localPlayer1Win++;
@@ -256,15 +256,8 @@ public class PlayWithRandom : MonoBehaviour {
             newWin++;
             userInfo.setWins(newWin.ToString());
 
-            //update currency
-            string[] currencyParam = new string[2];
-            currencyParam[0] = player1Id;
-            currencyParam[1] = player2Id;
-
-            ConnectionManager CM = new ConnectionManager();
-            CM.StartClient();
-            Debug.Log("trying to update currency");
-            string updatedCurrency = CM.UpdateCurrency(currencyParam); //updates and receives updated currency as response
+            //receive updated Currency
+            string updatedCurrency = connectionManager.getResponse();
             Debug.Log(updatedCurrency);
             Debug.Log("setting currency");
             userInfo.setCurrency(updatedCurrency);

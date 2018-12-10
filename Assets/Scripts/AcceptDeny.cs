@@ -135,7 +135,7 @@ public class AcceptDeny : MonoBehaviour {
         string[] param = new string[3];
         param[0] = userId;
         param[1] = friendUsername.GetComponent<Text>().text;
-        param[2] = "Challenge Accepted";
+        param[2] = messageLabel.GetComponent<Text>().text;
         ConnectionManager CM = new ConnectionManager();
         if (CM.StartClient() == 1)
         {
@@ -146,6 +146,7 @@ public class AcceptDeny : MonoBehaviour {
 
         if(CM.StartClient() == 1)
         {
+            param[2] = "Challenge Accepted";
             string[] responses = CM.ChallengeFriend(param);
             Debug.Log(responses[4]);
             SocketPasser.setCM(CM);

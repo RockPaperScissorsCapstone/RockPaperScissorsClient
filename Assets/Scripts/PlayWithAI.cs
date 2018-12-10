@@ -91,7 +91,7 @@ public class PlayWithAI : MonoBehaviour {
         Debug.Log("Sent Move");
 
         
-        string stringResponse = connectionManager.getOneResponse();
+        string stringResponse = connectionManager.getResponse();
         Debug.Log(stringResponse);
 
         sessionResponse = Convert.ToInt32(stringResponse);

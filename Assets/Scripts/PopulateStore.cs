@@ -42,8 +42,8 @@ public class PopulateStore : MonoBehaviour {
         string data = File.ReadAllText(Application.persistentDataPath + "/MyInfo.json");
 		UserInfo playerinfo = JsonUtility.FromJson<UserInfo>(data);
         GameObject currencyObject = GameObject.Find("Money_Display");
-        // playerCurrency = playerinfo.getCurrency();
-        playerCurrency = "500";
+        playerCurrency = playerinfo.getCurrency();
+        // playerCurrency = "500";
         playerId = playerinfo.getUserId();
         currencyObject.GetComponent<Text>().text = playerCurrency;
         skinDisplay = GameObject.FindGameObjectWithTag("currentSkinDisplay");
