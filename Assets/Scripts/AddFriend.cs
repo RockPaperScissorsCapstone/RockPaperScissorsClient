@@ -27,10 +27,9 @@ public class AddFriend : MonoBehaviour {
         param[2] = "Friend Request";
         Debug.Log(param[2]);
         ConnectionManager CM = new ConnectionManager();
-            if(CM.StartClient() == 1){
-                responses = CM.ChallengeFriend(param);
-                Debug.Log(responses[3]);
-            }
+        if(CM.StartClient() == 1){
+            responses = CM.ChallengeFriend(param);
+            Debug.Log(responses[3]);
         }
     }
-
+}
