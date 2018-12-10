@@ -107,6 +107,23 @@ namespace ServerManager{
             return response[3];
         }
 
+        public string GetUsernameFromPlayerID(string username)
+        {
+            string[] response = new string[3];
+            Console.WriteLine("Socket connected to {0}", sender.RemoteEndPoint.ToString());
+            //Data buffer for incoming data.
+            byte[] msgFunction = EncodeToBytes("GetUsernameFromPlayerID");
+            response[0] = Messenger(msgFunction);
+
+            byte[] msgUserID = EncodeToBytes(username);
+            response[1] = Messenger(msgUserID);
+
+            EndMessages();
+
+            response[2] = receive();
+            return response[2];
+        }
+
         public string GetAccountInfo(string userID)
         {
             string[] response = new string[3];
