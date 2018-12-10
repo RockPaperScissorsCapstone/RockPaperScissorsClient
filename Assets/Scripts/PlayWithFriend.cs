@@ -97,7 +97,7 @@ public class PlayWithFriend : MonoBehaviour
             Debug.Log("REJECTED");
         }
 
-        player2Username = connectionManager.GetUsernameFromPlayerID(player2Id);
+        // player2Username = connectionManager.GetUsernameFromPlayerID(player2Id);
         Player2_ID_Text.text = player2Username;
     }
 

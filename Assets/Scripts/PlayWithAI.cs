@@ -87,7 +87,7 @@ public class PlayWithAI : MonoBehaviour {
 	}
 
     public void TaskWithParameters(string move) {
-        ShowMove ShowMoveUI = new ShowMove();
+        // ShowMove ShowMoveUI = new ShowMove();
         Debug.Log(move);
         connectionManager.sendUserId(userId);
         Debug.Log("Sent User Id");
