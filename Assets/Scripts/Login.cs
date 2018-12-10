@@ -9,7 +9,9 @@ using UnityShortCuts;
 using Navigator;
 
 public class Login : MonoBehaviour {
-	void Start() {
+    public GameObject errorText;
+
+    void Start() {
 		if (Application.platform == RuntimePlatform.WindowsPlayer || Application.platform == RuntimePlatform.WindowsEditor) {
 			Debug.Log("windows!");
 			Screen.SetResolution(450, 800, false, 60);
@@ -45,13 +47,21 @@ public class Login : MonoBehaviour {
 					SceneNavigator navi = new SceneNavigator();
 					navi.GoToScene("MainMenu");
 				}
+                else
+                {
+                    Debug.Log("Invalid username/password");
+                    Text errorTextText = errorText.GetComponent<Text>();
+                    errorTextText.text = "Invalid username and/or password";
+                }
 			} 
 			else 
 			{
 				Debug.Log("Failed to start ConnectionsManager Client");
-                
-                SceneNavigator navi = new SceneNavigator();                 //Failed to Connect
-                navi.GoToScene("LoginScreen");                              //Goes to scene so it doesnt crash due to no action
+                Text errorTextText = errorText.GetComponent<Text>();
+                errorTextText.text = "Failed to Connect";
+                this.login();
+                //SceneNavigator navi = new SceneNavigator();                 //Failed to Connect
+                //navi.GoToScene("LoginScreen");                              //Goes to scene so it doesnt crash due to no action
 			}   
 		}
 	}

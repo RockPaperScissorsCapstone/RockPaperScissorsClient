@@ -1046,6 +1046,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: df5d081149788214e83add52828151a8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  errorText: {fileID: 1504099020}
 --- !u!114 &1425957048
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1223,7 +1224,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1504099021
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1274,9 +1275,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'Invalid Username and/or Password
-
-'
+  m_Text: 
 --- !u!222 &1504099023
 CanvasRenderer:
   m_ObjectHideFlags: 0
