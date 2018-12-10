@@ -192,7 +192,7 @@ public class PlayWithFriend : MonoBehaviour
             Debug.Log("Something wrong");
         }
         string json = JsonUtility.ToJson(userInfo);
-        File.WriteAllText(Application.persistentDataPath + "/MyInfo.json", json);
+        
 
         //update to the DB
         connectionManager = new ConnectionManager();
@@ -204,6 +204,13 @@ public class PlayWithFriend : MonoBehaviour
         string updateWinLossResponse = connectionManager.updateWinLoss(param);
         Debug.Log(updateWinLossResponse);
 
+        //update client based on DB
+        string userID = userInfo.getUserId();
+        connectionManager.StartClient();
+        string updatedScore = connectionManager.GetScore(userID);
+        userInfo.setScore(updatedScore);
+
+        File.WriteAllText(Application.persistentDataPath + "/MyInfo.json", json);
         //disable buttons
         Rock_Button.onClick.RemoveListener(delegate { TaskWithParameters("1"); });
         Paper_Button.onClick.RemoveListener(delegate { TaskWithParameters("2"); });
