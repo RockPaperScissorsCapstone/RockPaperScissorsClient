@@ -82,14 +82,17 @@ public class GetFriendsList : MonoBehaviour {
 					GameObject friendObject = Instantiate(Friend_Item);
 					friendObject.transform.SetParent(ScrollViewContent.transform, false);
 					friendObject.transform.Find("Friend_Name").gameObject.GetComponent<Text>().text = friend;
+					Button challengeFriendButton = friendObject.transform.Find("ChallengeButton").gameObject.GetComponent<Button>();
+					challengeFriendButton.interactable = false;
 					//friendObject.tag = "Friend_Item";
 
 					foreach (var online in onlineUsers) {
 						if (online.Equals(friend)) {
 							Debug.Log("Online user found!");
 							friendObject.transform.Find("Friend_Image").gameObject.GetComponent<Image>().sprite = Online_Icon;
-							Button challengeFriendButton = friendObject.transform.Find("ChallengeButton").gameObject.GetComponent<Button>();
-						challengeFriendButton.onClick.AddListener(delegate {ChallengeFriend(friend); });
+							challengeFriendButton.interactable = true;
+							challengeFriendButton = friendObject.transform.Find("ChallengeButton").gameObject.GetComponent<Button>();
+							challengeFriendButton.onClick.AddListener(delegate {ChallengeFriend(friend); });
 						}
 					}
 				}
