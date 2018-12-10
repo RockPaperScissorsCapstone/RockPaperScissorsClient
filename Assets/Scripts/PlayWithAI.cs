@@ -128,11 +128,11 @@ public class PlayWithAI : MonoBehaviour {
             AI_Number_Text.text = AIWinResponse;
         } else {
             Debug.Log(sessionResponse);
-            EndGame();
+            EndGame(move);
         }
     }
 
-    public void EndGame() {
+    public void EndGame(string move) {
         if (sessionResponse == 1) {
             Help_Text.text = "You won!";
             int newWin = int.Parse(wins);
@@ -140,6 +140,7 @@ public class PlayWithAI : MonoBehaviour {
             userInfo.setWins(newWin.ToString());
             wins = newWin.ToString();
             localHumanWin++;
+            this.Run(move, "W");
             Human_Number_Text.text = (localHumanWin).ToString();
 
         } else if (sessionResponse == 0){
@@ -149,6 +150,7 @@ public class PlayWithAI : MonoBehaviour {
             userInfo.setLosses(newLosses.ToString());
             losses = newLosses.ToString();
             localAiWin++;
+            this.Run(move, "L");
             AI_Number_Text.text = (localAiWin).ToString();
         }
         string json = JsonUtility.ToJson(userInfo);
