@@ -77,7 +77,7 @@ public class PlayWithFriend : MonoBehaviour
         connectionManager.sendResponse("1");
         connectionManager.sendUserId(player1Id);
         //receive other player's ID
-        player2Id = connectionManager.getResponse();
+        player2Username = connectionManager.getResponse();
 
         //receive okay from the server to start game
         sessionResponse = int.Parse(connectionManager.getResponse());
