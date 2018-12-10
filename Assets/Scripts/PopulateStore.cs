@@ -84,12 +84,13 @@ public class PopulateStore : MonoBehaviour {
             GameObject selectedSkin = ((PointerEventData) eventData).pointerPress; //get the selected gameobject
             string selectedSkinCost = selectedSkin.transform.Find("Skin_Cost").GetComponent<Text>().text;//get the cost
             string selectedSkinName = selectedSkin.transform.Find("Skin_Name").GetComponent<Text>().text;
-            string selectedSkinId = selectedSkin.transform.tag;
+            // string selectedSkinId = selectedSkin.transform.tag;
+            string selectedSkinId = skin.getSkinTag();
 
             Debug.Log(selectedSkinCost); 
             if (selectedSkinCost.Equals("Bought")) { //already bought, then just set the skin
                 Skin.writeSkinToJson(skin);
-                skinDisplay.GetComponent<Text>().text = skin.getSkinTag();
+                skinDisplay.GetComponent<Text>().text = selectedSkinId;
             } else { //skin not bought 
                 int playercurrency = Convert.ToInt32(playerCurrency);
                 int selectedskincost = Convert.ToInt32(selectedSkinCost);
@@ -98,9 +99,10 @@ public class PopulateStore : MonoBehaviour {
                 } else { //can buy skin
                     ConnectionManager CM = new ConnectionManager();
                     if (CM.StartClient() == 1) {
-                        string[] param = new string[2];
+                        string[] param = new string[3];
                         param[0] = playerId;
                         param[1] = selectedSkinId;
+                        param[2] = selectedSkinCost;
                         string response = CM.buySkin(param);
                         Debug.Log(response);
                         selectedSkin.transform.Find("Skin_Cost").GetComponent<Text>().text = "Bought";
