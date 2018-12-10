@@ -227,7 +227,7 @@ public class PlayWithRandom : MonoBehaviour {
             Player1_Number_Text.text = localPlayer1Win.ToString();
             this.Run(move, "W");
             if (localPlayer1Win == 2) {
-                EndGame();
+                EndGame(move);
             } else {
                 matchNumber++;
                 Match_Number_Text.text = matchNumber.ToString();
@@ -237,7 +237,7 @@ public class PlayWithRandom : MonoBehaviour {
             Player2_Number_Text.text = localPlayer2Win.ToString();
             this.Run(move, "L");
             if (localPlayer2Win == 2) {
-                EndGame();
+                EndGame(move);
             } else {
                 matchNumber++;
                 Match_Number_Text.text = matchNumber.ToString();
@@ -245,7 +245,7 @@ public class PlayWithRandom : MonoBehaviour {
         }
     }
 
-    public void EndGame() {
+    public void EndGame(string move) {
         sessionResponse = int.Parse(connectionManager.getResponse());
         // connectionManager.LogOff();
         
@@ -258,6 +258,7 @@ public class PlayWithRandom : MonoBehaviour {
             int newWin = int.Parse(wins);
             newWin++;
             userInfo.setWins(newWin.ToString());
+            this.Run(move, "W");
 
             //receive updated Currency
             string updatedCurrency = connectionManager.getResponse();
@@ -273,6 +274,7 @@ public class PlayWithRandom : MonoBehaviour {
             int newLoss = int.Parse(losses);
             newLoss++;
             userInfo.setLosses(newLoss.ToString());
+            this.Run(move, "L");
         } else {
             Debug.Log("Something wrong");
         }

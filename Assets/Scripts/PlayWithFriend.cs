@@ -135,7 +135,7 @@ public class PlayWithFriend : MonoBehaviour
 
             if (localPlayer1Win == 2)
             {
-                EndGame();
+                EndGame(move);
             }
             else
             {
@@ -151,7 +151,7 @@ public class PlayWithFriend : MonoBehaviour
 
             if (localPlayer2Win == 2)
             {
-                EndGame();
+                EndGame(move);
             }
             else
             {
@@ -161,7 +161,7 @@ public class PlayWithFriend : MonoBehaviour
         }
     }
 
-    public void EndGame()
+    public void EndGame(string move)
     {
         sessionResponse = int.Parse(connectionManager.getResponse());
         connectionManager.LogOff();
@@ -170,7 +170,7 @@ public class PlayWithFriend : MonoBehaviour
             // localPlayer1Win++;
             Player1_Number_Text.text = localPlayer1Win.ToString();
             Help_Text.text = "You won!";
-
+            this.Run(move, "W");
             //adjust local data
             int newWin = int.Parse(wins);
             newWin++;
@@ -181,7 +181,7 @@ public class PlayWithFriend : MonoBehaviour
             // localPlayer2Win++;
             Player2_Number_Text.text = localPlayer2Win.ToString();
             Help_Text.text = "You lost...";
-
+            this.Run(move, "L");
             //adjust local data
             int newLoss = int.Parse(losses);
             newLoss++;
