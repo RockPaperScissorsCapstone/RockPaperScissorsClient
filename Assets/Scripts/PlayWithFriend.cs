@@ -42,6 +42,7 @@ public class PlayWithFriend : MonoBehaviour
                 streamReader.Close();
                 userInfo = JsonUtility.FromJson<UserInfo>(line);
                 player1Id = userInfo.getUserId();
+                player1Username = userInfo.getUsername();
                 wins = userInfo.getWins();
                 losses = userInfo.getLosses();
             }
@@ -52,7 +53,7 @@ public class PlayWithFriend : MonoBehaviour
         }
 
         Debug.Log("Changing Player1 Name");
-        Player1_ID_Text.text = player1Id;
+        Player1_ID_Text.text = player1Username;
 
         Debug.Log("Changing Help Text to show server is finding a match");
         Help_Text.text = "Finding a Random Player...";
@@ -70,7 +71,6 @@ public class PlayWithFriend : MonoBehaviour
         connectionManager.sendUserId(player1Id);
         //receive other player's ID
         player2Id = connectionManager.getResponse();
-        Player2_ID_Text.text = player2Id;
 
         //receive okay from the server to start game
         sessionResponse = int.Parse(connectionManager.getResponse());
@@ -89,6 +89,9 @@ public class PlayWithFriend : MonoBehaviour
         {
             Debug.Log("REJECTED");
         }
+
+        player2Username = connectionManager.GetUsernameFromPlayerID(player2Id);
+        Player2_ID_Text.text = player2Username;
     }
 
     // Update is called once per frame
