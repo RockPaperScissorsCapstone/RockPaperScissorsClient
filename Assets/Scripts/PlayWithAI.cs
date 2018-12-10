@@ -9,12 +9,13 @@ using UnityEngine.UI;
 
 public class PlayWithAI : MonoBehaviour {
     public Button Rock_Button, Paper_Button, Scissors_Button;
-    public Text Match_Number_Text, Help_Text, Human_Number_Text, AI_Number_Text;
+    public Text Match_Number_Text, Help_Text, Human_Number_Text, AI_Number_Text, Player_Name;
     // public GameObject skinList;
     string userId = "";
     string wins = "";
     string losses = "";
     string skintag = "";
+    string username = "";
     int matchNumber = 1;
     int sessionResponse = 2;
     int localAiWin = 0;
@@ -46,6 +47,7 @@ public class PlayWithAI : MonoBehaviour {
                 wins = userInfo.getWins();
                 losses = userInfo.getLosses();
                 skintag = userInfo.getSkintag();
+                username = userInfo.getUsername();
                 skin = new Skin(skintag);
 
                 Debug.Log("add listener");
@@ -54,6 +56,8 @@ public class PlayWithAI : MonoBehaviour {
                 // Scissors_Button = Scissors_Button.GetComponent<Button>();
 
                 // skinList = GameObject.FindGameObjectWithTag("skinList");
+
+                Player_Name.text = username;
 
                 Skin.setButtonSkin(Rock_Button, Paper_Button, Scissors_Button, skin);
                 
